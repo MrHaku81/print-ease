@@ -1,0 +1,225 @@
+# PrintEase — فارسی
+# Copyright (C) 2026 MrHaku81
+msgid ""
+msgstr ""
+"Project-Id-Version: PrintEase 0.1.0\n"
+"Report-Msgid-Bugs-To: haku81.kk@gmail.com\n"
+"PO-Revision-Date: 2026-05-01 00:00+0000\n"
+"Language: fa\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "Drucker aktualisieren"
+msgstr "به‌روزرسانی چاپگرها"
+
+msgid "Drucker hinzufügen"
+msgstr "افزودن چاپگر"
+
+msgid "Drucker werden geladen…"
+msgstr "در حال بارگذاری چاپگرها…"
+
+msgid "Bereit"
+msgstr "آماده"
+
+msgid "Druckt…"
+msgstr "در حال چاپ…"
+
+msgid "Gestoppt"
+msgstr "متوقف شده"
+
+msgid "Standard"
+msgstr "پیش‌فرض"
+
+msgid "Druckerinformationen"
+msgstr "اطلاعات چاپگر"
+
+msgid "Name"
+msgstr "نام"
+
+msgid "Beschreibung"
+msgstr "توضیحات"
+
+msgid "Standort"
+msgstr "مکان"
+
+msgid "Verbindung"
+msgstr "اتصال"
+
+msgid "Status"
+msgstr "وضعیت"
+
+msgid "Aktionen"
+msgstr "اقدامات"
+
+msgid "Als Standard setzen"
+msgstr "تنظیم به‌عنوان پیش‌فرض"
+
+msgid "✓ Ist Standard"
+msgstr "✓ پیش‌فرض است"
+
+msgid "Drucker pausieren"
+msgstr "مکث چاپگر"
+
+msgid "Pausieren"
+msgstr "مکث"
+
+msgid "Fortsetzen"
+msgstr "ادامه"
+
+msgid "Testseite drucken"
+msgstr "چاپ صفحه آزمایشی"
+
+msgid "Drucken"
+msgstr "چاپ"
+
+msgid "Aktive Druckjobs"
+msgstr "کارهای چاپ فعال"
+
+msgid "Keine aktiven Jobs"
+msgstr "هیچ کار فعالی وجود ندارد"
+
+msgid "Gefahrenzone"
+msgstr "منطقه خطر"
+
+msgid "Drucker entfernen"
+msgstr "حذف چاپگر"
+
+msgid "Entfernt den Drucker dauerhaft aus CUPS"
+msgstr "چاپگر را به‌طور دائمی از CUPS حذف می‌کند"
+
+msgid "Entfernen"
+msgstr "حذف"
+
+msgid "Scanner"
+msgstr "اسکنر"
+
+msgid "Auflösung"
+msgstr "وضوح"
+
+msgid "Farbmodus"
+msgstr "حالت رنگ"
+
+msgid "Quelle"
+msgstr "منبع"
+
+msgid "Scannen"
+msgstr "اسکن"
+
+msgid "Scan starten"
+msgstr "شروع اسکن"
+
+msgid "Gespeichert unter"
+msgstr "ذخیره شده به‌عنوان"
+
+msgid "Flachbett"
+msgstr "صفحه مسطح"
+
+msgid "Einzug (ADF)"
+msgstr "تغذیه‌کننده اسناد (ADF)"
+
+msgid "Farbe"
+msgstr "رنگی"
+
+msgid "Graustufen"
+msgstr "مقیاس خاکستری"
+
+msgid "Schwarzweiß"
+msgstr "سیاه و سفید"
+
+msgid "Manuell"
+msgstr "دستی"
+
+msgid "Netzwerk"
+msgstr "شبکه"
+
+msgid "Abbrechen"
+msgstr "لغو"
+
+msgid "Hinzufügen"
+msgstr "افزودن"
+
+msgid "Übernehmen"
+msgstr "استفاده"
+
+msgid "Netzwerkdrucker suchen"
+msgstr "جستجوی چاپگرهای شبکه"
+
+msgid "Erneut suchen"
+msgstr "جستجوی مجدد"
+
+msgid "Keine Drucker gefunden"
+msgstr "هیچ چاپگری یافت نشد"
+
+msgid "Kein Drucker ausgewählt"
+msgstr "هیچ چاپگری انتخاب نشده"
+
+msgid "Wähle einen Drucker aus der Liste."
+msgstr "یک چاپگر از فهرست انتخاب کنید."
+
+msgid "Keine Netzwerkdrucker gefunden"
+msgstr "هیچ چاپگر شبکه‌ای یافت نشد"
+
+msgid "Stelle sicher dass Avahi läuft und Drucker im Netzwerk sind."
+msgstr "مطمئن شوید Avahi در حال اجرا است و چاپگرها در شبکه هستند."
+
+msgid "Drucker hinzufügen oder CUPS-Verbindung prüfen."
+msgstr "یک چاپگر اضافه کنید یا اتصال CUPS را بررسی کنید."
+
+msgid "ADF-Einzug ist leer — bitte Dokument einlegen"
+msgstr "تغذیه‌کننده ADF خالی است — لطفاً سند وارد کنید"
+
+msgid "Drucker entfernen?"
+msgstr "حذف چاپگر؟"
+
+msgid "wird dauerhaft aus CUPS entfernt."
+msgstr "به‌طور دائمی از CUPS حذف خواهد شد."
+
+msgid "Standard setzen"
+msgstr "تنظیم به‌عنوان پیش‌فرض"
+
+msgid "Kein Papier im Einzug"
+msgstr "هیچ کاغذی در تغذیه‌کننده نیست"
+
+msgid "Drucker fortsetzen"
+msgstr "ادامه چاپگر"
+
+msgid "Scannt…"
+msgstr "در حال اسکن…"
+
+
+msgid "Einzug — Duplex (Software)"
+msgstr "تغذیه‌کننده — دو رو (نرم‌افزار)"
+
+msgid "Stapel umdrehen und erneut einlegen"
+msgstr "دسته را برگردانید و مجدداً بارگذاری کنید"
+
+msgid "Vorderseiten gescannt. Drehe den Stapel um, lege ihn erneut in den ADF ein und bestätige."
+msgstr "روی صفحات اسکن شد. دسته را برگردانید، در تغذیه‌کننده بارگذاری کنید و تأیید نمایید."
+
+msgid "Weiter"
+msgstr "ادامه"
+
+msgid "Vorderseiten werden gescannt…"
+msgstr "در حال اسکن روی صفحات…"
+
+msgid "Rückseiten werden gescannt…"
+msgstr "در حال اسکن پشت صفحات…"
+
+msgid "PDF wird erstellt…"
+msgstr "در حال ایجاد PDF…"
+
+msgid "Duplex-Scan abgebrochen"
+msgstr "اسکن دو رو لغو شد"
+
+msgid "Jobs werden geladen…"
+msgstr "در حال بارگذاری کارها…"
+
+msgid "Fehler beim Laden der Jobs"
+msgstr "خطا در بارگذاری کارها"
+
+msgid "Keine Seiten im ADF-Einzug gescannt"
+msgstr "هیچ صفحه‌ای از تغذیه‌کننده اسکن نشد"
+
+msgid "Pillow (python-pillow) nicht installiert — bitte installieren: sudo pacman -S python-pillow"
+msgstr "Pillow (python-pillow) نصب نشده است — نصب کنید: sudo pacman -S python-pillow"

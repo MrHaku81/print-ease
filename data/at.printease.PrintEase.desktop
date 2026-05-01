@@ -1,0 +1,20 @@
+[Desktop Entry]
+Name=PrintEase
+Comment=Universal Linux printer management — modern replacement for system-config-printer
+Comment[de]=Universelle Linux-Druckerverwaltung — moderner Ersatz für system-config-printer
+Comment[fr]=Gestion universelle d'imprimantes Linux — remplacement moderne de system-config-printer
+Comment[es]=Gestión universal de impresoras Linux — reemplazo moderno de system-config-printer
+Comment[it]=Gestione universale delle stampanti Linux — sostituto moderno di system-config-printer
+Comment[pl]=Uniwersalne zarządzanie drukarkami Linux — nowoczesna alternatywa dla system-config-printer
+Comment[pt]=Gestão universal de impressoras Linux — substituto moderno do system-config-printer
+Comment[nl]=Universeel Linux printerbeheer — moderne vervanger voor system-config-printer
+Comment[cs]=Univerzální správa tiskáren v Linuxu — moderní náhrada za system-config-printer
+Comment[ro]=Gestionare universală a imprimantelor Linux — înlocuitor modern pentru system-config-printer
+Exec=print-ease
+Icon=print-ease
+Type=Application
+Categories=System;Printing;Settings;
+Keywords=printer;scanner;CUPS;printing;print;printer management;AirScan;eSCL;
+Keywords[de]=Drucker;Scanner;CUPS;Drucken;Druckerverwaltung;AirScan;eSCL;
+StartupNotify=true
+StartupWMClass=PrintEase

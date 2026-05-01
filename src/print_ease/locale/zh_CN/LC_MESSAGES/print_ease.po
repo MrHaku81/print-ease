@@ -1,0 +1,225 @@
+# PrintEase — 中文(简体)
+# Copyright (C) 2026 MrHaku81
+msgid ""
+msgstr ""
+"Project-Id-Version: PrintEase 0.1.0\n"
+"Report-Msgid-Bugs-To: haku81.kk@gmail.com\n"
+"PO-Revision-Date: 2026-05-01 00:00+0000\n"
+"Language: zh_CN\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "Drucker aktualisieren"
+msgstr "刷新打印机"
+
+msgid "Drucker hinzufügen"
+msgstr "添加打印机"
+
+msgid "Drucker werden geladen…"
+msgstr "正在加载打印机…"
+
+msgid "Bereit"
+msgstr "就绪"
+
+msgid "Druckt…"
+msgstr "打印中…"
+
+msgid "Gestoppt"
+msgstr "已停止"
+
+msgid "Standard"
+msgstr "默认"
+
+msgid "Druckerinformationen"
+msgstr "打印机信息"
+
+msgid "Name"
+msgstr "名称"
+
+msgid "Beschreibung"
+msgstr "描述"
+
+msgid "Standort"
+msgstr "位置"
+
+msgid "Verbindung"
+msgstr "连接"
+
+msgid "Status"
+msgstr "状态"
+
+msgid "Aktionen"
+msgstr "操作"
+
+msgid "Als Standard setzen"
+msgstr "设为默认"
+
+msgid "✓ Ist Standard"
+msgstr "✓ 是默认"
+
+msgid "Drucker pausieren"
+msgstr "暂停打印机"
+
+msgid "Pausieren"
+msgstr "暂停"
+
+msgid "Fortsetzen"
+msgstr "恢复"
+
+msgid "Testseite drucken"
+msgstr "打印测试页"
+
+msgid "Drucken"
+msgstr "打印"
+
+msgid "Aktive Druckjobs"
+msgstr "活动打印任务"
+
+msgid "Keine aktiven Jobs"
+msgstr "无活动任务"
+
+msgid "Gefahrenzone"
+msgstr "危险区域"
+
+msgid "Drucker entfernen"
+msgstr "删除打印机"
+
+msgid "Entfernt den Drucker dauerhaft aus CUPS"
+msgstr "从CUPS中永久删除打印机"
+
+msgid "Entfernen"
+msgstr "删除"
+
+msgid "Scanner"
+msgstr "扫描仪"
+
+msgid "Auflösung"
+msgstr "分辨率"
+
+msgid "Farbmodus"
+msgstr "颜色模式"
+
+msgid "Quelle"
+msgstr "来源"
+
+msgid "Scannen"
+msgstr "扫描"
+
+msgid "Scan starten"
+msgstr "开始扫描"
+
+msgid "Gespeichert unter"
+msgstr "另存为"
+
+msgid "Flachbett"
+msgstr "平板"
+
+msgid "Einzug (ADF)"
+msgstr "文档送纸器 (ADF)"
+
+msgid "Farbe"
+msgstr "彩色"
+
+msgid "Graustufen"
+msgstr "灰度"
+
+msgid "Schwarzweiß"
+msgstr "黑白"
+
+msgid "Manuell"
+msgstr "手动"
+
+msgid "Netzwerk"
+msgstr "网络"
+
+msgid "Abbrechen"
+msgstr "取消"
+
+msgid "Hinzufügen"
+msgstr "添加"
+
+msgid "Übernehmen"
+msgstr "使用"
+
+msgid "Netzwerkdrucker suchen"
+msgstr "搜索网络打印机"
+
+msgid "Erneut suchen"
+msgstr "重新搜索"
+
+msgid "Keine Drucker gefunden"
+msgstr "未找到打印机"
+
+msgid "Kein Drucker ausgewählt"
+msgstr "未选择打印机"
+
+msgid "Wähle einen Drucker aus der Liste."
+msgstr "从列表中选择打印机。"
+
+msgid "Keine Netzwerkdrucker gefunden"
+msgstr "未找到网络打印机"
+
+msgid "Stelle sicher dass Avahi läuft und Drucker im Netzwerk sind."
+msgstr "请确保Avahi正在运行且打印机在网络上。"
+
+msgid "Drucker hinzufügen oder CUPS-Verbindung prüfen."
+msgstr "添加打印机或检查CUPS连接。"
+
+msgid "ADF-Einzug ist leer — bitte Dokument einlegen"
+msgstr "ADF送纸器为空 — 请放入文档"
+
+msgid "Drucker entfernen?"
+msgstr "删除打印机？"
+
+msgid "wird dauerhaft aus CUPS entfernt."
+msgstr "将从CUPS中永久删除。"
+
+msgid "Standard setzen"
+msgstr "设为默认"
+
+msgid "Kein Papier im Einzug"
+msgstr "送纸器中没有纸张"
+
+msgid "Drucker fortsetzen"
+msgstr "恢复打印机"
+
+msgid "Scannt…"
+msgstr "扫描中…"
+
+
+msgid "Einzug — Duplex (Software)"
+msgstr "进纸器 — 双面（软件）"
+
+msgid "Stapel umdrehen und erneut einlegen"
+msgstr "翻转纸叠并重新放入"
+
+msgid "Vorderseiten gescannt. Drehe den Stapel um, lege ihn erneut in den ADF ein und bestätige."
+msgstr "正面已扫描。请翻转纸叠，重新放入进纸器并确认。"
+
+msgid "Weiter"
+msgstr "继续"
+
+msgid "Vorderseiten werden gescannt…"
+msgstr "正在扫描正面…"
+
+msgid "Rückseiten werden gescannt…"
+msgstr "正在扫描背面…"
+
+msgid "PDF wird erstellt…"
+msgstr "正在创建PDF…"
+
+msgid "Duplex-Scan abgebrochen"
+msgstr "双面扫描已取消"
+
+msgid "Jobs werden geladen…"
+msgstr "正在加载任务…"
+
+msgid "Fehler beim Laden der Jobs"
+msgstr "加载任务时出错"
+
+msgid "Keine Seiten im ADF-Einzug gescannt"
+msgstr "未从进纸器扫描到任何页面"
+
+msgid "Pillow (python-pillow) nicht installiert — bitte installieren: sudo pacman -S python-pillow"
+msgstr "Pillow (python-pillow) 未安装 — 请安装: sudo pacman -S python-pillow"

@@ -1,0 +1,225 @@
+# PrintEase — Ελληνικά
+# Copyright (C) 2026 MrHaku81
+msgid ""
+msgstr ""
+"Project-Id-Version: PrintEase 0.1.0\n"
+"Report-Msgid-Bugs-To: haku81.kk@gmail.com\n"
+"PO-Revision-Date: 2026-05-01 00:00+0000\n"
+"Language: el\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "Drucker aktualisieren"
+msgstr "Ανανέωση εκτυπωτών"
+
+msgid "Drucker hinzufügen"
+msgstr "Προσθήκη εκτυπωτή"
+
+msgid "Drucker werden geladen…"
+msgstr "Φόρτωση εκτυπωτών…"
+
+msgid "Bereit"
+msgstr "Έτοιμος"
+
+msgid "Druckt…"
+msgstr "Εκτύπωση…"
+
+msgid "Gestoppt"
+msgstr "Σταματημένος"
+
+msgid "Standard"
+msgstr "Προεπιλογή"
+
+msgid "Druckerinformationen"
+msgstr "Πληροφορίες εκτυπωτή"
+
+msgid "Name"
+msgstr "Όνομα"
+
+msgid "Beschreibung"
+msgstr "Περιγραφή"
+
+msgid "Standort"
+msgstr "Τοποθεσία"
+
+msgid "Verbindung"
+msgstr "Σύνδεση"
+
+msgid "Status"
+msgstr "Κατάσταση"
+
+msgid "Aktionen"
+msgstr "Ενέργειες"
+
+msgid "Als Standard setzen"
+msgstr "Ορισμός ως προεπιλογή"
+
+msgid "✓ Ist Standard"
+msgstr "✓ Είναι προεπιλογή"
+
+msgid "Drucker pausieren"
+msgstr "Παύση εκτυπωτή"
+
+msgid "Pausieren"
+msgstr "Παύση"
+
+msgid "Fortsetzen"
+msgstr "Συνέχεια"
+
+msgid "Testseite drucken"
+msgstr "Εκτύπωση δοκιμαστικής σελίδας"
+
+msgid "Drucken"
+msgstr "Εκτύπωση"
+
+msgid "Aktive Druckjobs"
+msgstr "Ενεργές εργασίες εκτύπωσης"
+
+msgid "Keine aktiven Jobs"
+msgstr "Καμία ενεργή εργασία"
+
+msgid "Gefahrenzone"
+msgstr "Επικίνδυνη ζώνη"
+
+msgid "Drucker entfernen"
+msgstr "Αφαίρεση εκτυπωτή"
+
+msgid "Entfernt den Drucker dauerhaft aus CUPS"
+msgstr "Αφαιρεί μόνιμα τον εκτυπωτή από το CUPS"
+
+msgid "Entfernen"
+msgstr "Αφαίρεση"
+
+msgid "Scanner"
+msgstr "Σαρωτής"
+
+msgid "Auflösung"
+msgstr "Ανάλυση"
+
+msgid "Farbmodus"
+msgstr "Λειτουργία χρώματος"
+
+msgid "Quelle"
+msgstr "Πηγή"
+
+msgid "Scannen"
+msgstr "Σάρωση"
+
+msgid "Scan starten"
+msgstr "Έναρξη σάρωσης"
+
+msgid "Gespeichert unter"
+msgstr "Αποθηκεύτηκε ως"
+
+msgid "Flachbett"
+msgstr "Επίπεδη επιφάνεια"
+
+msgid "Einzug (ADF)"
+msgstr "Τροφοδότης (ADF)"
+
+msgid "Farbe"
+msgstr "Χρώμα"
+
+msgid "Graustufen"
+msgstr "Κλίμακα του γκρι"
+
+msgid "Schwarzweiß"
+msgstr "Ασπρόμαυρο"
+
+msgid "Manuell"
+msgstr "Χειροκίνητο"
+
+msgid "Netzwerk"
+msgstr "Δίκτυο"
+
+msgid "Abbrechen"
+msgstr "Ακύρωση"
+
+msgid "Hinzufügen"
+msgstr "Προσθήκη"
+
+msgid "Übernehmen"
+msgstr "Χρήση"
+
+msgid "Netzwerkdrucker suchen"
+msgstr "Αναζήτηση εκτυπωτών δικτύου"
+
+msgid "Erneut suchen"
+msgstr "Νέα αναζήτηση"
+
+msgid "Keine Drucker gefunden"
+msgstr "Δεν βρέθηκαν εκτυπωτές"
+
+msgid "Kein Drucker ausgewählt"
+msgstr "Δεν επιλέχθηκε εκτυπωτής"
+
+msgid "Wähle einen Drucker aus der Liste."
+msgstr "Επιλέξτε εκτυπωτή από τη λίστα."
+
+msgid "Keine Netzwerkdrucker gefunden"
+msgstr "Δεν βρέθηκαν εκτυπωτές δικτύου"
+
+msgid "Stelle sicher dass Avahi läuft und Drucker im Netzwerk sind."
+msgstr "Βεβαιωθείτε ότι το Avahi εκτελείται και οι εκτυπωτές είναι στο δίκτυο."
+
+msgid "Drucker hinzufügen oder CUPS-Verbindung prüfen."
+msgstr "Προσθέστε εκτυπωτή ή ελέγξτε τη σύνδεση CUPS."
+
+msgid "ADF-Einzug ist leer — bitte Dokument einlegen"
+msgstr "Ο τροφοδότης ADF είναι άδειος — τοποθετήστε έγγραφο"
+
+msgid "Drucker entfernen?"
+msgstr "Αφαίρεση εκτυπωτή;"
+
+msgid "wird dauerhaft aus CUPS entfernt."
+msgstr "θα αφαιρεθεί μόνιμα από το CUPS."
+
+msgid "Standard setzen"
+msgstr "Ορισμός ως προεπιλογή"
+
+msgid "Kein Papier im Einzug"
+msgstr "Δεν υπάρχει χαρτί στον τροφοδότη"
+
+msgid "Drucker fortsetzen"
+msgstr "Συνέχεια εκτυπωτή"
+
+msgid "Scannt…"
+msgstr "Σάρωση σε εξέλιξη…"
+
+
+msgid "Einzug — Duplex (Software)"
+msgstr "Τροφοδότης — Διπλής όψης (λογισμικό)"
+
+msgid "Stapel umdrehen und erneut einlegen"
+msgstr "Αναστρέψτε τη στοίβα και επανατοποθετήστε"
+
+msgid "Vorderseiten gescannt. Drehe den Stapel um, lege ihn erneut in den ADF ein und bestätige."
+msgstr "Οι μπροστινές πλευρές σαρώθηκαν. Αναστρέψτε τη στοίβα, τοποθετήστε την ξανά στον τροφοδότη και επιβεβαιώστε."
+
+msgid "Weiter"
+msgstr "Συνέχεια"
+
+msgid "Vorderseiten werden gescannt…"
+msgstr "Σάρωση μπροστινών πλευρών…"
+
+msgid "Rückseiten werden gescannt…"
+msgstr "Σάρωση πίσω πλευρών…"
+
+msgid "PDF wird erstellt…"
+msgstr "Δημιουργία PDF…"
+
+msgid "Duplex-Scan abgebrochen"
+msgstr "Η σάρωση διπλής όψης ακυρώθηκε"
+
+msgid "Jobs werden geladen…"
+msgstr "Φόρτωση εργασιών…"
+
+msgid "Fehler beim Laden der Jobs"
+msgstr "Σφάλμα κατά τη φόρτωση εργασιών"
+
+msgid "Keine Seiten im ADF-Einzug gescannt"
+msgstr "Δεν σαρώθηκαν σελίδες από τον τροφοδότη"
+
+msgid "Pillow (python-pillow) nicht installiert — bitte installieren: sudo pacman -S python-pillow"
+msgstr "Το Pillow (python-pillow) δεν είναι εγκατεστημένο — εγκαταστήστε: sudo pacman -S python-pillow"

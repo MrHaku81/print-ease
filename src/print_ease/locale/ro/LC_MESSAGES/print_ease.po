@@ -1,0 +1,225 @@
+# PrintEase — Română
+# Copyright (C) 2026 MrHaku81
+msgid ""
+msgstr ""
+"Project-Id-Version: PrintEase 0.1.0\n"
+"Report-Msgid-Bugs-To: haku81.kk@gmail.com\n"
+"PO-Revision-Date: 2026-05-01 00:00+0000\n"
+"Language: ro\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "Drucker aktualisieren"
+msgstr "Reîmprospătează imprimantele"
+
+msgid "Drucker hinzufügen"
+msgstr "Adaugă imprimantă"
+
+msgid "Drucker werden geladen…"
+msgstr "Se încarcă imprimantele…"
+
+msgid "Bereit"
+msgstr "Gata"
+
+msgid "Druckt…"
+msgstr "Se imprimă…"
+
+msgid "Gestoppt"
+msgstr "Oprită"
+
+msgid "Standard"
+msgstr "Implicit"
+
+msgid "Druckerinformationen"
+msgstr "Informații imprimantă"
+
+msgid "Name"
+msgstr "Nume"
+
+msgid "Beschreibung"
+msgstr "Descriere"
+
+msgid "Standort"
+msgstr "Locație"
+
+msgid "Verbindung"
+msgstr "Conexiune"
+
+msgid "Status"
+msgstr "Stare"
+
+msgid "Aktionen"
+msgstr "Acțiuni"
+
+msgid "Als Standard setzen"
+msgstr "Setează ca implicit"
+
+msgid "✓ Ist Standard"
+msgstr "✓ Este implicit"
+
+msgid "Drucker pausieren"
+msgstr "Întrerupe imprimanta"
+
+msgid "Pausieren"
+msgstr "Întrerupe"
+
+msgid "Fortsetzen"
+msgstr "Reia"
+
+msgid "Testseite drucken"
+msgstr "Imprimă pagină de test"
+
+msgid "Drucken"
+msgstr "Imprimă"
+
+msgid "Aktive Druckjobs"
+msgstr "Lucrări de imprimare active"
+
+msgid "Keine aktiven Jobs"
+msgstr "Nicio lucrare activă"
+
+msgid "Gefahrenzone"
+msgstr "Zonă de pericol"
+
+msgid "Drucker entfernen"
+msgstr "Elimină imprimanta"
+
+msgid "Entfernt den Drucker dauerhaft aus CUPS"
+msgstr "Elimină permanent imprimanta din CUPS"
+
+msgid "Entfernen"
+msgstr "Elimină"
+
+msgid "Scanner"
+msgstr "Scanner"
+
+msgid "Auflösung"
+msgstr "Rezoluție"
+
+msgid "Farbmodus"
+msgstr "Mod culoare"
+
+msgid "Quelle"
+msgstr "Sursă"
+
+msgid "Scannen"
+msgstr "Scanează"
+
+msgid "Scan starten"
+msgstr "Pornește scanarea"
+
+msgid "Gespeichert unter"
+msgstr "Salvat ca"
+
+msgid "Flachbett"
+msgstr "Platan"
+
+msgid "Einzug (ADF)"
+msgstr "Alimentator (ADF)"
+
+msgid "Farbe"
+msgstr "Culoare"
+
+msgid "Graustufen"
+msgstr "Tonuri de gri"
+
+msgid "Schwarzweiß"
+msgstr "Alb-negru"
+
+msgid "Manuell"
+msgstr "Manual"
+
+msgid "Netzwerk"
+msgstr "Rețea"
+
+msgid "Abbrechen"
+msgstr "Anulează"
+
+msgid "Hinzufügen"
+msgstr "Adaugă"
+
+msgid "Übernehmen"
+msgstr "Folosește"
+
+msgid "Netzwerkdrucker suchen"
+msgstr "Caută imprimante în rețea"
+
+msgid "Erneut suchen"
+msgstr "Caută din nou"
+
+msgid "Keine Drucker gefunden"
+msgstr "Nicio imprimantă găsită"
+
+msgid "Kein Drucker ausgewählt"
+msgstr "Nicio imprimantă selectată"
+
+msgid "Wähle einen Drucker aus der Liste."
+msgstr "Selectați o imprimantă din listă."
+
+msgid "Keine Netzwerkdrucker gefunden"
+msgstr "Nicio imprimantă de rețea găsită"
+
+msgid "Stelle sicher dass Avahi läuft und Drucker im Netzwerk sind."
+msgstr "Asigurați-vă că Avahi rulează și imprimantele sunt în rețea."
+
+msgid "Drucker hinzufügen oder CUPS-Verbindung prüfen."
+msgstr "Adăugați o imprimantă sau verificați conexiunea CUPS."
+
+msgid "ADF-Einzug ist leer — bitte Dokument einlegen"
+msgstr "Alimentatorul ADF este gol — introduceți un document"
+
+msgid "Drucker entfernen?"
+msgstr "Eliminați imprimanta?"
+
+msgid "wird dauerhaft aus CUPS entfernt."
+msgstr "va fi eliminată permanent din CUPS."
+
+msgid "Standard setzen"
+msgstr "Setează ca implicit"
+
+msgid "Kein Papier im Einzug"
+msgstr "Nicio hârtie în alimentator"
+
+msgid "Drucker fortsetzen"
+msgstr "Reia imprimanta"
+
+msgid "Scannt…"
+msgstr "Se scanează…"
+
+
+msgid "Einzug — Duplex (Software)"
+msgstr "Alimentator — Duplex (software)"
+
+msgid "Stapel umdrehen und erneut einlegen"
+msgstr "Întoarceți teancul și reîncărcați"
+
+msgid "Vorderseiten gescannt. Drehe den Stapel um, lege ihn erneut in den ADF ein und bestätige."
+msgstr "Fețele față scanate. Întoarceți teancul, reîncărcați-l în alimentator și confirmați."
+
+msgid "Weiter"
+msgstr "Continuați"
+
+msgid "Vorderseiten werden gescannt…"
+msgstr "Se scanează fețele față…"
+
+msgid "Rückseiten werden gescannt…"
+msgstr "Se scanează fețele verso…"
+
+msgid "PDF wird erstellt…"
+msgstr "Se creează PDF-ul…"
+
+msgid "Duplex-Scan abgebrochen"
+msgstr "Scanare duplex anulată"
+
+msgid "Jobs werden geladen…"
+msgstr "Se încarcă lucrările…"
+
+msgid "Fehler beim Laden der Jobs"
+msgstr "Eroare la încărcarea lucrărilor"
+
+msgid "Keine Seiten im ADF-Einzug gescannt"
+msgstr "Nu s-au scanat pagini din alimentator"
+
+msgid "Pillow (python-pillow) nicht installiert — bitte installieren: sudo pacman -S python-pillow"
+msgstr "Pillow (python-pillow) nu este instalat — instalați: sudo pacman -S python-pillow"

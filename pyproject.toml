@@ -1,0 +1,21 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "print-ease"
+version = "0.1.0"
+description = "Universal Linux printer management — a modern replacement for system-config-printer"
+readme = "README.md"
+license = { text = "GPL-3.0-or-later" }
+requires-python = ">=3.11"
+dependencies = [
+    "pycups",
+]
+
+[project.scripts]
+print-ease = "print_ease.__main__:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/print_ease"]
+artifacts = ["src/print_ease/locale/**/*.mo"]

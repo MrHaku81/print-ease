@@ -1,0 +1,225 @@
+# PrintEase — Tiếng Việt
+# Copyright (C) 2026 MrHaku81
+msgid ""
+msgstr ""
+"Project-Id-Version: PrintEase 0.1.0\n"
+"Report-Msgid-Bugs-To: haku81.kk@gmail.com\n"
+"PO-Revision-Date: 2026-05-01 00:00+0000\n"
+"Language: vi\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "Drucker aktualisieren"
+msgstr "Làm mới máy in"
+
+msgid "Drucker hinzufügen"
+msgstr "Thêm máy in"
+
+msgid "Drucker werden geladen…"
+msgstr "Đang tải máy in…"
+
+msgid "Bereit"
+msgstr "Sẵn sàng"
+
+msgid "Druckt…"
+msgstr "Đang in…"
+
+msgid "Gestoppt"
+msgstr "Đã dừng"
+
+msgid "Standard"
+msgstr "Mặc định"
+
+msgid "Druckerinformationen"
+msgstr "Thông tin máy in"
+
+msgid "Name"
+msgstr "Tên"
+
+msgid "Beschreibung"
+msgstr "Mô tả"
+
+msgid "Standort"
+msgstr "Vị trí"
+
+msgid "Verbindung"
+msgstr "Kết nối"
+
+msgid "Status"
+msgstr "Trạng thái"
+
+msgid "Aktionen"
+msgstr "Hành động"
+
+msgid "Als Standard setzen"
+msgstr "Đặt làm mặc định"
+
+msgid "✓ Ist Standard"
+msgstr "✓ Là mặc định"
+
+msgid "Drucker pausieren"
+msgstr "Tạm dừng máy in"
+
+msgid "Pausieren"
+msgstr "Tạm dừng"
+
+msgid "Fortsetzen"
+msgstr "Tiếp tục"
+
+msgid "Testseite drucken"
+msgstr "In trang thử"
+
+msgid "Drucken"
+msgstr "In"
+
+msgid "Aktive Druckjobs"
+msgstr "Công việc in đang hoạt động"
+
+msgid "Keine aktiven Jobs"
+msgstr "Không có công việc nào"
+
+msgid "Gefahrenzone"
+msgstr "Vùng nguy hiểm"
+
+msgid "Drucker entfernen"
+msgstr "Xóa máy in"
+
+msgid "Entfernt den Drucker dauerhaft aus CUPS"
+msgstr "Xóa vĩnh viễn máy in khỏi CUPS"
+
+msgid "Entfernen"
+msgstr "Xóa"
+
+msgid "Scanner"
+msgstr "Máy quét"
+
+msgid "Auflösung"
+msgstr "Độ phân giải"
+
+msgid "Farbmodus"
+msgstr "Chế độ màu"
+
+msgid "Quelle"
+msgstr "Nguồn"
+
+msgid "Scannen"
+msgstr "Quét"
+
+msgid "Scan starten"
+msgstr "Bắt đầu quét"
+
+msgid "Gespeichert unter"
+msgstr "Đã lưu là"
+
+msgid "Flachbett"
+msgstr "Mặt phẳng"
+
+msgid "Einzug (ADF)"
+msgstr "Khay nạp tài liệu (ADF)"
+
+msgid "Farbe"
+msgstr "Màu"
+
+msgid "Graustufen"
+msgstr "Thang độ xám"
+
+msgid "Schwarzweiß"
+msgstr "Đen trắng"
+
+msgid "Manuell"
+msgstr "Thủ công"
+
+msgid "Netzwerk"
+msgstr "Mạng"
+
+msgid "Abbrechen"
+msgstr "Hủy"
+
+msgid "Hinzufügen"
+msgstr "Thêm"
+
+msgid "Übernehmen"
+msgstr "Sử dụng"
+
+msgid "Netzwerkdrucker suchen"
+msgstr "Tìm kiếm máy in mạng"
+
+msgid "Erneut suchen"
+msgstr "Tìm kiếm lại"
+
+msgid "Keine Drucker gefunden"
+msgstr "Không tìm thấy máy in"
+
+msgid "Kein Drucker ausgewählt"
+msgstr "Chưa chọn máy in"
+
+msgid "Wähle einen Drucker aus der Liste."
+msgstr "Chọn máy in từ danh sách."
+
+msgid "Keine Netzwerkdrucker gefunden"
+msgstr "Không tìm thấy máy in mạng"
+
+msgid "Stelle sicher dass Avahi läuft und Drucker im Netzwerk sind."
+msgstr "Đảm bảo Avahi đang chạy và máy in có trong mạng."
+
+msgid "Drucker hinzufügen oder CUPS-Verbindung prüfen."
+msgstr "Thêm máy in hoặc kiểm tra kết nối CUPS."
+
+msgid "ADF-Einzug ist leer — bitte Dokument einlegen"
+msgstr "Khay ADF trống — vui lòng đặt tài liệu"
+
+msgid "Drucker entfernen?"
+msgstr "Xóa máy in?"
+
+msgid "wird dauerhaft aus CUPS entfernt."
+msgstr "sẽ bị xóa vĩnh viễn khỏi CUPS."
+
+msgid "Standard setzen"
+msgstr "Đặt làm mặc định"
+
+msgid "Kein Papier im Einzug"
+msgstr "Không có giấy trong khay"
+
+msgid "Drucker fortsetzen"
+msgstr "Tiếp tục máy in"
+
+msgid "Scannt…"
+msgstr "Đang quét…"
+
+
+msgid "Einzug — Duplex (Software)"
+msgstr "Khay nạp — Hai mặt (phần mềm)"
+
+msgid "Stapel umdrehen und erneut einlegen"
+msgstr "Lật chồng giấy và nạp lại"
+
+msgid "Vorderseiten gescannt. Drehe den Stapel um, lege ihn erneut in den ADF ein und bestätige."
+msgstr "Mặt trước đã quét. Lật chồng giấy, nạp lại vào khay và xác nhận."
+
+msgid "Weiter"
+msgstr "Tiếp tục"
+
+msgid "Vorderseiten werden gescannt…"
+msgstr "Đang quét mặt trước…"
+
+msgid "Rückseiten werden gescannt…"
+msgstr "Đang quét mặt sau…"
+
+msgid "PDF wird erstellt…"
+msgstr "Đang tạo PDF…"
+
+msgid "Duplex-Scan abgebrochen"
+msgstr "Đã hủy quét hai mặt"
+
+msgid "Jobs werden geladen…"
+msgstr "Đang tải công việc…"
+
+msgid "Fehler beim Laden der Jobs"
+msgstr "Lỗi khi tải công việc"
+
+msgid "Keine Seiten im ADF-Einzug gescannt"
+msgstr "Không có trang nào được quét từ khay nạp"
+
+msgid "Pillow (python-pillow) nicht installiert — bitte installieren: sudo pacman -S python-pillow"
+msgstr "Pillow (python-pillow) chưa được cài đặt — hãy cài: sudo pacman -S python-pillow"

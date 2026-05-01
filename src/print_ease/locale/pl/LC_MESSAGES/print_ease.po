@@ -1,0 +1,225 @@
+# PrintEase — Polski
+# Copyright (C) 2026 MrHaku81
+msgid ""
+msgstr ""
+"Project-Id-Version: PrintEase 0.1.0\n"
+"Report-Msgid-Bugs-To: haku81.kk@gmail.com\n"
+"PO-Revision-Date: 2026-05-01 00:00+0000\n"
+"Language: pl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "Drucker aktualisieren"
+msgstr "Odśwież drukarki"
+
+msgid "Drucker hinzufügen"
+msgstr "Dodaj drukarkę"
+
+msgid "Drucker werden geladen…"
+msgstr "Ładowanie drukarek…"
+
+msgid "Bereit"
+msgstr "Gotowa"
+
+msgid "Druckt…"
+msgstr "Drukowanie…"
+
+msgid "Gestoppt"
+msgstr "Zatrzymana"
+
+msgid "Standard"
+msgstr "Domyślna"
+
+msgid "Druckerinformationen"
+msgstr "Informacje o drukarce"
+
+msgid "Name"
+msgstr "Nazwa"
+
+msgid "Beschreibung"
+msgstr "Opis"
+
+msgid "Standort"
+msgstr "Lokalizacja"
+
+msgid "Verbindung"
+msgstr "Połączenie"
+
+msgid "Status"
+msgstr "Stan"
+
+msgid "Aktionen"
+msgstr "Akcje"
+
+msgid "Als Standard setzen"
+msgstr "Ustaw jako domyślną"
+
+msgid "✓ Ist Standard"
+msgstr "✓ Jest domyślna"
+
+msgid "Drucker pausieren"
+msgstr "Wstrzymaj drukarkę"
+
+msgid "Pausieren"
+msgstr "Wstrzymaj"
+
+msgid "Fortsetzen"
+msgstr "Wznów"
+
+msgid "Testseite drucken"
+msgstr "Drukuj stronę testową"
+
+msgid "Drucken"
+msgstr "Drukuj"
+
+msgid "Aktive Druckjobs"
+msgstr "Aktywne zadania drukowania"
+
+msgid "Keine aktiven Jobs"
+msgstr "Brak aktywnych zadań"
+
+msgid "Gefahrenzone"
+msgstr "Strefa niebezpieczna"
+
+msgid "Drucker entfernen"
+msgstr "Usuń drukarkę"
+
+msgid "Entfernt den Drucker dauerhaft aus CUPS"
+msgstr "Trwale usuwa drukarkę z CUPS"
+
+msgid "Entfernen"
+msgstr "Usuń"
+
+msgid "Scanner"
+msgstr "Skaner"
+
+msgid "Auflösung"
+msgstr "Rozdzielczość"
+
+msgid "Farbmodus"
+msgstr "Tryb koloru"
+
+msgid "Quelle"
+msgstr "Źródło"
+
+msgid "Scannen"
+msgstr "Skanuj"
+
+msgid "Scan starten"
+msgstr "Rozpocznij skanowanie"
+
+msgid "Gespeichert unter"
+msgstr "Zapisano jako"
+
+msgid "Flachbett"
+msgstr "Płyta"
+
+msgid "Einzug (ADF)"
+msgstr "Podajnik (ADF)"
+
+msgid "Farbe"
+msgstr "Kolor"
+
+msgid "Graustufen"
+msgstr "Odcienie szarości"
+
+msgid "Schwarzweiß"
+msgstr "Czarno-biały"
+
+msgid "Manuell"
+msgstr "Ręcznie"
+
+msgid "Netzwerk"
+msgstr "Sieć"
+
+msgid "Abbrechen"
+msgstr "Anuluj"
+
+msgid "Hinzufügen"
+msgstr "Dodaj"
+
+msgid "Übernehmen"
+msgstr "Użyj"
+
+msgid "Netzwerkdrucker suchen"
+msgstr "Szukaj drukarek sieciowych"
+
+msgid "Erneut suchen"
+msgstr "Szukaj ponownie"
+
+msgid "Keine Drucker gefunden"
+msgstr "Nie znaleziono drukarek"
+
+msgid "Kein Drucker ausgewählt"
+msgstr "Nie wybrano drukarki"
+
+msgid "Wähle einen Drucker aus der Liste."
+msgstr "Wybierz drukarkę z listy."
+
+msgid "Keine Netzwerkdrucker gefunden"
+msgstr "Nie znaleziono drukarek sieciowych"
+
+msgid "Stelle sicher dass Avahi läuft und Drucker im Netzwerk sind."
+msgstr "Upewnij się, że Avahi działa i drukarki są w sieci."
+
+msgid "Drucker hinzufügen oder CUPS-Verbindung prüfen."
+msgstr "Dodaj drukarkę lub sprawdź połączenie CUPS."
+
+msgid "ADF-Einzug ist leer — bitte Dokument einlegen"
+msgstr "Podajnik ADF jest pusty — włóż dokument"
+
+msgid "Drucker entfernen?"
+msgstr "Usunąć drukarkę?"
+
+msgid "wird dauerhaft aus CUPS entfernt."
+msgstr "zostanie trwale usunięta z CUPS."
+
+msgid "Standard setzen"
+msgstr "Ustaw jako domyślną"
+
+msgid "Kein Papier im Einzug"
+msgstr "Brak papieru w podajniku"
+
+msgid "Drucker fortsetzen"
+msgstr "Wznów drukarkę"
+
+msgid "Scannt…"
+msgstr "Skanowanie…"
+
+
+msgid "Einzug — Duplex (Software)"
+msgstr "Podajnik — Duplex (programowy)"
+
+msgid "Stapel umdrehen und erneut einlegen"
+msgstr "Odwróć stos i włóż ponownie"
+
+msgid "Vorderseiten gescannt. Drehe den Stapel um, lege ihn erneut in den ADF ein und bestätige."
+msgstr "Strony przednie zeskanowane. Odwróć stos, włóż go ponownie do podajnika i potwierdź."
+
+msgid "Weiter"
+msgstr "Kontynuuj"
+
+msgid "Vorderseiten werden gescannt…"
+msgstr "Skanowanie stron przednich…"
+
+msgid "Rückseiten werden gescannt…"
+msgstr "Skanowanie stron tylnych…"
+
+msgid "PDF wird erstellt…"
+msgstr "Tworzenie pliku PDF…"
+
+msgid "Duplex-Scan abgebrochen"
+msgstr "Skanowanie dwustronne anulowane"
+
+msgid "Jobs werden geladen…"
+msgstr "Ładowanie zadań…"
+
+msgid "Fehler beim Laden der Jobs"
+msgstr "Błąd ładowania zadań"
+
+msgid "Keine Seiten im ADF-Einzug gescannt"
+msgstr "Nie zeskanowano żadnych stron z podajnika"
+
+msgid "Pillow (python-pillow) nicht installiert — bitte installieren: sudo pacman -S python-pillow"
+msgstr "Pillow (python-pillow) nie zainstalowany — zainstaluj: sudo pacman -S python-pillow"

@@ -1,0 +1,225 @@
+# PrintEase — Türkçe
+# Copyright (C) 2026 MrHaku81
+msgid ""
+msgstr ""
+"Project-Id-Version: PrintEase 0.1.0\n"
+"Report-Msgid-Bugs-To: haku81.kk@gmail.com\n"
+"PO-Revision-Date: 2026-05-01 00:00+0000\n"
+"Language: tr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "Drucker aktualisieren"
+msgstr "Yazıcıları yenile"
+
+msgid "Drucker hinzufügen"
+msgstr "Yazıcı ekle"
+
+msgid "Drucker werden geladen…"
+msgstr "Yazıcılar yükleniyor…"
+
+msgid "Bereit"
+msgstr "Hazır"
+
+msgid "Druckt…"
+msgstr "Yazdırılıyor…"
+
+msgid "Gestoppt"
+msgstr "Durduruldu"
+
+msgid "Standard"
+msgstr "Varsayılan"
+
+msgid "Druckerinformationen"
+msgstr "Yazıcı bilgileri"
+
+msgid "Name"
+msgstr "Ad"
+
+msgid "Beschreibung"
+msgstr "Açıklama"
+
+msgid "Standort"
+msgstr "Konum"
+
+msgid "Verbindung"
+msgstr "Bağlantı"
+
+msgid "Status"
+msgstr "Durum"
+
+msgid "Aktionen"
+msgstr "Eylemler"
+
+msgid "Als Standard setzen"
+msgstr "Varsayılan olarak ayarla"
+
+msgid "✓ Ist Standard"
+msgstr "✓ Varsayılan"
+
+msgid "Drucker pausieren"
+msgstr "Yazıcıyı duraklat"
+
+msgid "Pausieren"
+msgstr "Duraklat"
+
+msgid "Fortsetzen"
+msgstr "Devam et"
+
+msgid "Testseite drucken"
+msgstr "Test sayfası yazdır"
+
+msgid "Drucken"
+msgstr "Yazdır"
+
+msgid "Aktive Druckjobs"
+msgstr "Etkin yazdırma işleri"
+
+msgid "Keine aktiven Jobs"
+msgstr "Etkin iş yok"
+
+msgid "Gefahrenzone"
+msgstr "Tehlike bölgesi"
+
+msgid "Drucker entfernen"
+msgstr "Yazıcıyı kaldır"
+
+msgid "Entfernt den Drucker dauerhaft aus CUPS"
+msgstr "Yazıcıyı CUPS'tan kalıcı olarak kaldırır"
+
+msgid "Entfernen"
+msgstr "Kaldır"
+
+msgid "Scanner"
+msgstr "Tarayıcı"
+
+msgid "Auflösung"
+msgstr "Çözünürlük"
+
+msgid "Farbmodus"
+msgstr "Renk modu"
+
+msgid "Quelle"
+msgstr "Kaynak"
+
+msgid "Scannen"
+msgstr "Tara"
+
+msgid "Scan starten"
+msgstr "Taramayı başlat"
+
+msgid "Gespeichert unter"
+msgstr "Kaydedildi olarak"
+
+msgid "Flachbett"
+msgstr "Düz yatak"
+
+msgid "Einzug (ADF)"
+msgstr "Belge besleyici (ADF)"
+
+msgid "Farbe"
+msgstr "Renkli"
+
+msgid "Graustufen"
+msgstr "Gri tonlamalı"
+
+msgid "Schwarzweiß"
+msgstr "Siyah beyaz"
+
+msgid "Manuell"
+msgstr "Manuel"
+
+msgid "Netzwerk"
+msgstr "Ağ"
+
+msgid "Abbrechen"
+msgstr "İptal"
+
+msgid "Hinzufügen"
+msgstr "Ekle"
+
+msgid "Übernehmen"
+msgstr "Kullan"
+
+msgid "Netzwerkdrucker suchen"
+msgstr "Ağ yazıcılarını ara"
+
+msgid "Erneut suchen"
+msgstr "Tekrar ara"
+
+msgid "Keine Drucker gefunden"
+msgstr "Yazıcı bulunamadı"
+
+msgid "Kein Drucker ausgewählt"
+msgstr "Yazıcı seçilmedi"
+
+msgid "Wähle einen Drucker aus der Liste."
+msgstr "Listeden bir yazıcı seçin."
+
+msgid "Keine Netzwerkdrucker gefunden"
+msgstr "Ağ yazıcısı bulunamadı"
+
+msgid "Stelle sicher dass Avahi läuft und Drucker im Netzwerk sind."
+msgstr "Avahi'nin çalıştığından ve yazıcıların ağda olduğundan emin olun."
+
+msgid "Drucker hinzufügen oder CUPS-Verbindung prüfen."
+msgstr "Yazıcı ekleyin veya CUPS bağlantısını kontrol edin."
+
+msgid "ADF-Einzug ist leer — bitte Dokument einlegen"
+msgstr "ADF besleyici boş — lütfen belge yerleştirin"
+
+msgid "Drucker entfernen?"
+msgstr "Yazıcı kaldırılsın mı?"
+
+msgid "wird dauerhaft aus CUPS entfernt."
+msgstr "CUPS'tan kalıcı olarak kaldırılacak."
+
+msgid "Standard setzen"
+msgstr "Varsayılan olarak ayarla"
+
+msgid "Kein Papier im Einzug"
+msgstr "Besleyicide kağıt yok"
+
+msgid "Drucker fortsetzen"
+msgstr "Yazıcıyı devam ettir"
+
+msgid "Scannt…"
+msgstr "Taranıyor…"
+
+
+msgid "Einzug — Duplex (Software)"
+msgstr "Besleyici — Çift yüz (yazılım)"
+
+msgid "Stapel umdrehen und erneut einlegen"
+msgstr "Kağıt destesini çevirin ve yeniden yükleyin"
+
+msgid "Vorderseiten gescannt. Drehe den Stapel um, lege ihn erneut in den ADF ein und bestätige."
+msgstr "Ön yüzler tarandı. Kağıt destesini çevirin, besleyiciye yeniden yükleyin ve onaylayın."
+
+msgid "Weiter"
+msgstr "Devam"
+
+msgid "Vorderseiten werden gescannt…"
+msgstr "Ön yüzler taranıyor…"
+
+msgid "Rückseiten werden gescannt…"
+msgstr "Arka yüzler taranıyor…"
+
+msgid "PDF wird erstellt…"
+msgstr "PDF oluşturuluyor…"
+
+msgid "Duplex-Scan abgebrochen"
+msgstr "Çift yüz tarama iptal edildi"
+
+msgid "Jobs werden geladen…"
+msgstr "İşler yükleniyor…"
+
+msgid "Fehler beim Laden der Jobs"
+msgstr "İşler yüklenirken hata oluştu"
+
+msgid "Keine Seiten im ADF-Einzug gescannt"
+msgstr "Besleyiciden hiçbir sayfa taranmadı"
+
+msgid "Pillow (python-pillow) nicht installiert — bitte installieren: sudo pacman -S python-pillow"
+msgstr "Pillow (python-pillow) yüklü değil — yükleyin: sudo pacman -S python-pillow"

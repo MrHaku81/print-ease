@@ -1,0 +1,225 @@
+# PrintEase — עברית
+# Copyright (C) 2026 MrHaku81
+msgid ""
+msgstr ""
+"Project-Id-Version: PrintEase 0.1.0\n"
+"Report-Msgid-Bugs-To: haku81.kk@gmail.com\n"
+"PO-Revision-Date: 2026-05-01 00:00+0000\n"
+"Language: he\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "Drucker aktualisieren"
+msgstr "רענן מדפסות"
+
+msgid "Drucker hinzufügen"
+msgstr "הוסף מדפסת"
+
+msgid "Drucker werden geladen…"
+msgstr "טוען מדפסות…"
+
+msgid "Bereit"
+msgstr "מוכנה"
+
+msgid "Druckt…"
+msgstr "מדפיסה…"
+
+msgid "Gestoppt"
+msgstr "עצורה"
+
+msgid "Standard"
+msgstr "ברירת מחדל"
+
+msgid "Druckerinformationen"
+msgstr "מידע על מדפסת"
+
+msgid "Name"
+msgstr "שם"
+
+msgid "Beschreibung"
+msgstr "תיאור"
+
+msgid "Standort"
+msgstr "מיקום"
+
+msgid "Verbindung"
+msgstr "חיבור"
+
+msgid "Status"
+msgstr "סטטוס"
+
+msgid "Aktionen"
+msgstr "פעולות"
+
+msgid "Als Standard setzen"
+msgstr "הגדר כברירת מחדל"
+
+msgid "✓ Ist Standard"
+msgstr "✓ היא ברירת מחדל"
+
+msgid "Drucker pausieren"
+msgstr "השהה מדפסת"
+
+msgid "Pausieren"
+msgstr "השהה"
+
+msgid "Fortsetzen"
+msgstr "המשך"
+
+msgid "Testseite drucken"
+msgstr "הדפס עמוד בדיקה"
+
+msgid "Drucken"
+msgstr "הדפס"
+
+msgid "Aktive Druckjobs"
+msgstr "משימות הדפסה פעילות"
+
+msgid "Keine aktiven Jobs"
+msgstr "אין משימות פעילות"
+
+msgid "Gefahrenzone"
+msgstr "אזור מסוכן"
+
+msgid "Drucker entfernen"
+msgstr "הסר מדפסת"
+
+msgid "Entfernt den Drucker dauerhaft aus CUPS"
+msgstr "מסיר את המדפסת לצמיתות מ-CUPS"
+
+msgid "Entfernen"
+msgstr "הסר"
+
+msgid "Scanner"
+msgstr "סורק"
+
+msgid "Auflösung"
+msgstr "רזולוציה"
+
+msgid "Farbmodus"
+msgstr "מצב צבע"
+
+msgid "Quelle"
+msgstr "מקור"
+
+msgid "Scannen"
+msgstr "סרוק"
+
+msgid "Scan starten"
+msgstr "התחל סריקה"
+
+msgid "Gespeichert unter"
+msgstr "שמור בשם"
+
+msgid "Flachbett"
+msgstr "משטח שטוח"
+
+msgid "Einzug (ADF)"
+msgstr "מזין מסמכים (ADF)"
+
+msgid "Farbe"
+msgstr "צבע"
+
+msgid "Graustufen"
+msgstr "גווני אפור"
+
+msgid "Schwarzweiß"
+msgstr "שחור-לבן"
+
+msgid "Manuell"
+msgstr "ידני"
+
+msgid "Netzwerk"
+msgstr "רשת"
+
+msgid "Abbrechen"
+msgstr "ביטול"
+
+msgid "Hinzufügen"
+msgstr "הוסף"
+
+msgid "Übernehmen"
+msgstr "השתמש"
+
+msgid "Netzwerkdrucker suchen"
+msgstr "חפש מדפסות רשת"
+
+msgid "Erneut suchen"
+msgstr "חפש שוב"
+
+msgid "Keine Drucker gefunden"
+msgstr "לא נמצאו מדפסות"
+
+msgid "Kein Drucker ausgewählt"
+msgstr "לא נבחרה מדפסת"
+
+msgid "Wähle einen Drucker aus der Liste."
+msgstr "בחר מדפסת מהרשימה."
+
+msgid "Keine Netzwerkdrucker gefunden"
+msgstr "לא נמצאו מדפסות רשת"
+
+msgid "Stelle sicher dass Avahi läuft und Drucker im Netzwerk sind."
+msgstr "ודא ש-Avahi פועל והמדפסות נמצאות ברשת."
+
+msgid "Drucker hinzufügen oder CUPS-Verbindung prüfen."
+msgstr "הוסף מדפסת או בדוק את חיבור CUPS."
+
+msgid "ADF-Einzug ist leer — bitte Dokument einlegen"
+msgstr "מזין ADF ריק — אנא הכנס מסמך"
+
+msgid "Drucker entfernen?"
+msgstr "להסיר את המדפסת?"
+
+msgid "wird dauerhaft aus CUPS entfernt."
+msgstr "יוסר לצמיתות מ-CUPS."
+
+msgid "Standard setzen"
+msgstr "הגדר כברירת מחדל"
+
+msgid "Kein Papier im Einzug"
+msgstr "אין נייר במזין"
+
+msgid "Drucker fortsetzen"
+msgstr "המשך מדפסת"
+
+msgid "Scannt…"
+msgstr "סורק…"
+
+
+msgid "Einzug — Duplex (Software)"
+msgstr "מזין — דו-צדדי (תוכנה)"
+
+msgid "Stapel umdrehen und erneut einlegen"
+msgstr "הפוך את הערימה וטען שוב"
+
+msgid "Vorderseiten gescannt. Drehe den Stapel um, lege ihn erneut in den ADF ein und bestätige."
+msgstr "הצדדים הקדמיים נסרקו. הפוך את הערימה, טען אותה שוב במזין ואשר."
+
+msgid "Weiter"
+msgstr "המשך"
+
+msgid "Vorderseiten werden gescannt…"
+msgstr "סורק צדדים קדמיים…"
+
+msgid "Rückseiten werden gescannt…"
+msgstr "סורק צדדים אחוריים…"
+
+msgid "PDF wird erstellt…"
+msgstr "יוצר PDF…"
+
+msgid "Duplex-Scan abgebrochen"
+msgstr "סריקה דו-צדדית בוטלה"
+
+msgid "Jobs werden geladen…"
+msgstr "טוען עבודות…"
+
+msgid "Fehler beim Laden der Jobs"
+msgstr "שגיאה בטעינת עבודות"
+
+msgid "Keine Seiten im ADF-Einzug gescannt"
+msgstr "לא נסרקו עמודים מהמזין"
+
+msgid "Pillow (python-pillow) nicht installiert — bitte installieren: sudo pacman -S python-pillow"
+msgstr "Pillow (python-pillow) אינו מותקן — התקן: sudo pacman -S python-pillow"

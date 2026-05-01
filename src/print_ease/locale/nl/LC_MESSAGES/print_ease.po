@@ -1,0 +1,225 @@
+# PrintEase — Nederlands
+# Copyright (C) 2026 MrHaku81
+msgid ""
+msgstr ""
+"Project-Id-Version: PrintEase 0.1.0\n"
+"Report-Msgid-Bugs-To: haku81.kk@gmail.com\n"
+"PO-Revision-Date: 2026-05-01 00:00+0000\n"
+"Language: nl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "Drucker aktualisieren"
+msgstr "Printers vernieuwen"
+
+msgid "Drucker hinzufügen"
+msgstr "Printer toevoegen"
+
+msgid "Drucker werden geladen…"
+msgstr "Printers laden…"
+
+msgid "Bereit"
+msgstr "Gereed"
+
+msgid "Druckt…"
+msgstr "Bezig met afdrukken…"
+
+msgid "Gestoppt"
+msgstr "Gestopt"
+
+msgid "Standard"
+msgstr "Standaard"
+
+msgid "Druckerinformationen"
+msgstr "Printerinformatie"
+
+msgid "Name"
+msgstr "Naam"
+
+msgid "Beschreibung"
+msgstr "Beschrijving"
+
+msgid "Standort"
+msgstr "Locatie"
+
+msgid "Verbindung"
+msgstr "Verbinding"
+
+msgid "Status"
+msgstr "Status"
+
+msgid "Aktionen"
+msgstr "Acties"
+
+msgid "Als Standard setzen"
+msgstr "Als standaard instellen"
+
+msgid "✓ Ist Standard"
+msgstr "✓ Is standaard"
+
+msgid "Drucker pausieren"
+msgstr "Printer pauzeren"
+
+msgid "Pausieren"
+msgstr "Pauzeren"
+
+msgid "Fortsetzen"
+msgstr "Hervatten"
+
+msgid "Testseite drucken"
+msgstr "Testpagina afdrukken"
+
+msgid "Drucken"
+msgstr "Afdrukken"
+
+msgid "Aktive Druckjobs"
+msgstr "Actieve afdruktaken"
+
+msgid "Keine aktiven Jobs"
+msgstr "Geen actieve taken"
+
+msgid "Gefahrenzone"
+msgstr "Gevarenzone"
+
+msgid "Drucker entfernen"
+msgstr "Printer verwijderen"
+
+msgid "Entfernt den Drucker dauerhaft aus CUPS"
+msgstr "Verwijdert de printer permanent uit CUPS"
+
+msgid "Entfernen"
+msgstr "Verwijderen"
+
+msgid "Scanner"
+msgstr "Scanner"
+
+msgid "Auflösung"
+msgstr "Resolutie"
+
+msgid "Farbmodus"
+msgstr "Kleurmodus"
+
+msgid "Quelle"
+msgstr "Bron"
+
+msgid "Scannen"
+msgstr "Scannen"
+
+msgid "Scan starten"
+msgstr "Scan starten"
+
+msgid "Gespeichert unter"
+msgstr "Opgeslagen als"
+
+msgid "Flachbett"
+msgstr "Flatbed"
+
+msgid "Einzug (ADF)"
+msgstr "Documentinvoer (ADF)"
+
+msgid "Farbe"
+msgstr "Kleur"
+
+msgid "Graustufen"
+msgstr "Grijstinten"
+
+msgid "Schwarzweiß"
+msgstr "Zwart-wit"
+
+msgid "Manuell"
+msgstr "Handmatig"
+
+msgid "Netzwerk"
+msgstr "Netwerk"
+
+msgid "Abbrechen"
+msgstr "Annuleren"
+
+msgid "Hinzufügen"
+msgstr "Toevoegen"
+
+msgid "Übernehmen"
+msgstr "Gebruiken"
+
+msgid "Netzwerkdrucker suchen"
+msgstr "Zoek netwerkprinters"
+
+msgid "Erneut suchen"
+msgstr "Opnieuw zoeken"
+
+msgid "Keine Drucker gefunden"
+msgstr "Geen printers gevonden"
+
+msgid "Kein Drucker ausgewählt"
+msgstr "Geen printer geselecteerd"
+
+msgid "Wähle einen Drucker aus der Liste."
+msgstr "Selecteer een printer uit de lijst."
+
+msgid "Keine Netzwerkdrucker gefunden"
+msgstr "Geen netwerkprinters gevonden"
+
+msgid "Stelle sicher dass Avahi läuft und Drucker im Netzwerk sind."
+msgstr "Zorg dat Avahi actief is en printers in het netwerk zijn."
+
+msgid "Drucker hinzufügen oder CUPS-Verbindung prüfen."
+msgstr "Voeg een printer toe of controleer de CUPS-verbinding."
+
+msgid "ADF-Einzug ist leer — bitte Dokument einlegen"
+msgstr "ADF-invoer is leeg — plaats een document"
+
+msgid "Drucker entfernen?"
+msgstr "Printer verwijderen?"
+
+msgid "wird dauerhaft aus CUPS entfernt."
+msgstr "wordt permanent uit CUPS verwijderd."
+
+msgid "Standard setzen"
+msgstr "Als standaard instellen"
+
+msgid "Kein Papier im Einzug"
+msgstr "Geen papier in invoer"
+
+msgid "Drucker fortsetzen"
+msgstr "Printer hervatten"
+
+msgid "Scannt…"
+msgstr "Bezig met scannen…"
+
+
+msgid "Einzug — Duplex (Software)"
+msgstr "Invoer — Dubbelzijdig (software)"
+
+msgid "Stapel umdrehen und erneut einlegen"
+msgstr "Stapel omdraaien en opnieuw laden"
+
+msgid "Vorderseiten gescannt. Drehe den Stapel um, lege ihn erneut in den ADF ein und bestätige."
+msgstr "Voorzijden gescand. Draai de stapel om, laad hem opnieuw in de invoer en bevestig."
+
+msgid "Weiter"
+msgstr "Doorgaan"
+
+msgid "Vorderseiten werden gescannt…"
+msgstr "Voorzijden worden gescand…"
+
+msgid "Rückseiten werden gescannt…"
+msgstr "Achterzijden worden gescand…"
+
+msgid "PDF wird erstellt…"
+msgstr "PDF wordt aangemaakt…"
+
+msgid "Duplex-Scan abgebrochen"
+msgstr "Dubbelzijdig scannen geannuleerd"
+
+msgid "Jobs werden geladen…"
+msgstr "Taken worden geladen…"
+
+msgid "Fehler beim Laden der Jobs"
+msgstr "Fout bij laden van taken"
+
+msgid "Keine Seiten im ADF-Einzug gescannt"
+msgstr "Geen pagina's gescand uit de invoer"
+
+msgid "Pillow (python-pillow) nicht installiert — bitte installieren: sudo pacman -S python-pillow"
+msgstr "Pillow (python-pillow) niet geïnstalleerd — installeer: sudo pacman -S python-pillow"

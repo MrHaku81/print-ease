@@ -1,0 +1,225 @@
+# PrintEase — Svenska
+# Copyright (C) 2026 MrHaku81
+msgid ""
+msgstr ""
+"Project-Id-Version: PrintEase 0.1.0\n"
+"Report-Msgid-Bugs-To: haku81.kk@gmail.com\n"
+"PO-Revision-Date: 2026-05-01 00:00+0000\n"
+"Language: sv\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "Drucker aktualisieren"
+msgstr "Uppdatera skrivare"
+
+msgid "Drucker hinzufügen"
+msgstr "Lägg till skrivare"
+
+msgid "Drucker werden geladen…"
+msgstr "Laddar skrivare…"
+
+msgid "Bereit"
+msgstr "Redo"
+
+msgid "Druckt…"
+msgstr "Skriver ut…"
+
+msgid "Gestoppt"
+msgstr "Stoppad"
+
+msgid "Standard"
+msgstr "Standard"
+
+msgid "Druckerinformationen"
+msgstr "Skrivarinformation"
+
+msgid "Name"
+msgstr "Namn"
+
+msgid "Beschreibung"
+msgstr "Beskrivning"
+
+msgid "Standort"
+msgstr "Plats"
+
+msgid "Verbindung"
+msgstr "Anslutning"
+
+msgid "Status"
+msgstr "Status"
+
+msgid "Aktionen"
+msgstr "Åtgärder"
+
+msgid "Als Standard setzen"
+msgstr "Ange som standard"
+
+msgid "✓ Ist Standard"
+msgstr "✓ Är standard"
+
+msgid "Drucker pausieren"
+msgstr "Pausa skrivare"
+
+msgid "Pausieren"
+msgstr "Pausa"
+
+msgid "Fortsetzen"
+msgstr "Återuppta"
+
+msgid "Testseite drucken"
+msgstr "Skriv ut testsida"
+
+msgid "Drucken"
+msgstr "Skriv ut"
+
+msgid "Aktive Druckjobs"
+msgstr "Aktiva utskriftsjobb"
+
+msgid "Keine aktiven Jobs"
+msgstr "Inga aktiva jobb"
+
+msgid "Gefahrenzone"
+msgstr "Farozon"
+
+msgid "Drucker entfernen"
+msgstr "Ta bort skrivare"
+
+msgid "Entfernt den Drucker dauerhaft aus CUPS"
+msgstr "Tar permanent bort skrivaren från CUPS"
+
+msgid "Entfernen"
+msgstr "Ta bort"
+
+msgid "Scanner"
+msgstr "Skanner"
+
+msgid "Auflösung"
+msgstr "Upplösning"
+
+msgid "Farbmodus"
+msgstr "Färgläge"
+
+msgid "Quelle"
+msgstr "Källa"
+
+msgid "Scannen"
+msgstr "Skanna"
+
+msgid "Scan starten"
+msgstr "Starta skanning"
+
+msgid "Gespeichert unter"
+msgstr "Sparad som"
+
+msgid "Flachbett"
+msgstr "Flatbädd"
+
+msgid "Einzug (ADF)"
+msgstr "Dokumentmatare (ADF)"
+
+msgid "Farbe"
+msgstr "Färg"
+
+msgid "Graustufen"
+msgstr "Gråskala"
+
+msgid "Schwarzweiß"
+msgstr "Svartvitt"
+
+msgid "Manuell"
+msgstr "Manuell"
+
+msgid "Netzwerk"
+msgstr "Nätverk"
+
+msgid "Abbrechen"
+msgstr "Avbryt"
+
+msgid "Hinzufügen"
+msgstr "Lägg till"
+
+msgid "Übernehmen"
+msgstr "Använd"
+
+msgid "Netzwerkdrucker suchen"
+msgstr "Sök nätverksskrivare"
+
+msgid "Erneut suchen"
+msgstr "Sök igen"
+
+msgid "Keine Drucker gefunden"
+msgstr "Inga skrivare hittades"
+
+msgid "Kein Drucker ausgewählt"
+msgstr "Ingen skrivare vald"
+
+msgid "Wähle einen Drucker aus der Liste."
+msgstr "Välj en skrivare från listan."
+
+msgid "Keine Netzwerkdrucker gefunden"
+msgstr "Inga nätverksskrivare hittades"
+
+msgid "Stelle sicher dass Avahi läuft und Drucker im Netzwerk sind."
+msgstr "Se till att Avahi körs och skrivare finns i nätverket."
+
+msgid "Drucker hinzufügen oder CUPS-Verbindung prüfen."
+msgstr "Lägg till en skrivare eller kontrollera CUPS-anslutningen."
+
+msgid "ADF-Einzug ist leer — bitte Dokument einlegen"
+msgstr "ADF-mataren är tom — sätt i ett dokument"
+
+msgid "Drucker entfernen?"
+msgstr "Ta bort skrivare?"
+
+msgid "wird dauerhaft aus CUPS entfernt."
+msgstr "tas permanent bort från CUPS."
+
+msgid "Standard setzen"
+msgstr "Ange som standard"
+
+msgid "Kein Papier im Einzug"
+msgstr "Inget papper i mataren"
+
+msgid "Drucker fortsetzen"
+msgstr "Återuppta skrivare"
+
+msgid "Scannt…"
+msgstr "Skannar…"
+
+
+msgid "Einzug — Duplex (Software)"
+msgstr "Matare — Duplex (programvara)"
+
+msgid "Stapel umdrehen und erneut einlegen"
+msgstr "Vänd bunten och ladda om"
+
+msgid "Vorderseiten gescannt. Drehe den Stapel um, lege ihn erneut in den ADF ein und bestätige."
+msgstr "Framsidor skannade. Vänd bunten, lägg tillbaka den i mataren och bekräfta."
+
+msgid "Weiter"
+msgstr "Fortsätt"
+
+msgid "Vorderseiten werden gescannt…"
+msgstr "Skannar framsidor…"
+
+msgid "Rückseiten werden gescannt…"
+msgstr "Skannar baksidor…"
+
+msgid "PDF wird erstellt…"
+msgstr "Skapar PDF…"
+
+msgid "Duplex-Scan abgebrochen"
+msgstr "Dubbelsidig skanning avbruten"
+
+msgid "Jobs werden geladen…"
+msgstr "Laddar jobb…"
+
+msgid "Fehler beim Laden der Jobs"
+msgstr "Fel vid laddning av jobb"
+
+msgid "Keine Seiten im ADF-Einzug gescannt"
+msgstr "Inga sidor skannade från mataren"
+
+msgid "Pillow (python-pillow) nicht installiert — bitte installieren: sudo pacman -S python-pillow"
+msgstr "Pillow (python-pillow) är inte installerat — installera: sudo pacman -S python-pillow"

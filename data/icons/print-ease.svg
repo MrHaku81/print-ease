@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <!-- Paper tray -->
+  <rect x="10" y="36" width="44" height="8" rx="2" fill="#5b8dd9"/>
+  <!-- Printer body -->
+  <rect x="6" y="22" width="52" height="20" rx="4" fill="#3d6bb5"/>
+  <!-- Paper out -->
+  <rect x="18" y="10" width="28" height="16" rx="2" fill="#e8edf5"/>
+  <!-- Paper lines -->
+  <line x1="22" y1="15" x2="42" y2="15" stroke="#aab8d4" stroke-width="2" stroke-linecap="round"/>
+  <line x1="22" y1="20" x2="38" y2="20" stroke="#aab8d4" stroke-width="2" stroke-linecap="round"/>
+  <!-- Status light -->
+  <circle cx="48" cy="32" r="3" fill="#4caf50"/>
+</svg>

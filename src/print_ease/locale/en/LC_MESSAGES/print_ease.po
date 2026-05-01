@@ -1,0 +1,225 @@
+# PrintEase — English
+# Copyright (C) 2026 MrHaku81
+msgid ""
+msgstr ""
+"Project-Id-Version: PrintEase 0.1.0\n"
+"Report-Msgid-Bugs-To: haku81.kk@gmail.com\n"
+"PO-Revision-Date: 2026-05-01 00:00+0000\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "Drucker aktualisieren"
+msgstr "Refresh printers"
+
+msgid "Drucker hinzufügen"
+msgstr "Add printer"
+
+msgid "Drucker werden geladen…"
+msgstr "Loading printers…"
+
+msgid "Bereit"
+msgstr "Ready"
+
+msgid "Druckt…"
+msgstr "Printing…"
+
+msgid "Gestoppt"
+msgstr "Stopped"
+
+msgid "Standard"
+msgstr "Default"
+
+msgid "Druckerinformationen"
+msgstr "Printer information"
+
+msgid "Name"
+msgstr "Name"
+
+msgid "Beschreibung"
+msgstr "Description"
+
+msgid "Standort"
+msgstr "Location"
+
+msgid "Verbindung"
+msgstr "Connection"
+
+msgid "Status"
+msgstr "Status"
+
+msgid "Aktionen"
+msgstr "Actions"
+
+msgid "Als Standard setzen"
+msgstr "Set as default"
+
+msgid "✓ Ist Standard"
+msgstr "✓ Is default"
+
+msgid "Drucker pausieren"
+msgstr "Pause printer"
+
+msgid "Pausieren"
+msgstr "Pause"
+
+msgid "Fortsetzen"
+msgstr "Resume"
+
+msgid "Testseite drucken"
+msgstr "Print test page"
+
+msgid "Drucken"
+msgstr "Print"
+
+msgid "Aktive Druckjobs"
+msgstr "Active print jobs"
+
+msgid "Keine aktiven Jobs"
+msgstr "No active jobs"
+
+msgid "Gefahrenzone"
+msgstr "Danger zone"
+
+msgid "Drucker entfernen"
+msgstr "Remove printer"
+
+msgid "Entfernt den Drucker dauerhaft aus CUPS"
+msgstr "Permanently removes the printer from CUPS"
+
+msgid "Entfernen"
+msgstr "Remove"
+
+msgid "Scanner"
+msgstr "Scanner"
+
+msgid "Auflösung"
+msgstr "Resolution"
+
+msgid "Farbmodus"
+msgstr "Color mode"
+
+msgid "Quelle"
+msgstr "Source"
+
+msgid "Scannen"
+msgstr "Scan"
+
+msgid "Scan starten"
+msgstr "Start scan"
+
+msgid "Gespeichert unter"
+msgstr "Saved as"
+
+msgid "Flachbett"
+msgstr "Flatbed"
+
+msgid "Einzug (ADF)"
+msgstr "Sheet feeder (ADF)"
+
+msgid "Farbe"
+msgstr "Color"
+
+msgid "Graustufen"
+msgstr "Grayscale"
+
+msgid "Schwarzweiß"
+msgstr "Black & white"
+
+msgid "Manuell"
+msgstr "Manual"
+
+msgid "Netzwerk"
+msgstr "Network"
+
+msgid "Abbrechen"
+msgstr "Cancel"
+
+msgid "Hinzufügen"
+msgstr "Add"
+
+msgid "Übernehmen"
+msgstr "Use"
+
+msgid "Netzwerkdrucker suchen"
+msgstr "Search network printers"
+
+msgid "Erneut suchen"
+msgstr "Search again"
+
+msgid "Keine Drucker gefunden"
+msgstr "No printers found"
+
+msgid "Kein Drucker ausgewählt"
+msgstr "No printer selected"
+
+msgid "Wähle einen Drucker aus der Liste."
+msgstr "Select a printer from the list."
+
+msgid "Keine Netzwerkdrucker gefunden"
+msgstr "No network printers found"
+
+msgid "Stelle sicher dass Avahi läuft und Drucker im Netzwerk sind."
+msgstr "Make sure Avahi is running and printers are on the network."
+
+msgid "Drucker hinzufügen oder CUPS-Verbindung prüfen."
+msgstr "Add a printer or check the CUPS connection."
+
+msgid "ADF-Einzug ist leer — bitte Dokument einlegen"
+msgstr "ADF feeder is empty — please insert document"
+
+msgid "Drucker entfernen?"
+msgstr "Remove printer?"
+
+msgid "wird dauerhaft aus CUPS entfernt."
+msgstr "will be permanently removed from CUPS."
+
+msgid "Standard setzen"
+msgstr "Set as default"
+
+msgid "Kein Papier im Einzug"
+msgstr "No paper in feeder"
+
+msgid "Drucker fortsetzen"
+msgstr "Resume printer"
+
+msgid "Scannt…"
+msgstr "Scanning…"
+
+
+msgid "Einzug — Duplex (Software)"
+msgstr "Feeder — Duplex (Software)"
+
+msgid "Stapel umdrehen und erneut einlegen"
+msgstr "Flip stack and reload"
+
+msgid "Vorderseiten gescannt. Drehe den Stapel um, lege ihn erneut in den ADF ein und bestätige."
+msgstr "Front sides scanned. Flip the stack, reload it into the ADF, and confirm."
+
+msgid "Weiter"
+msgstr "Continue"
+
+msgid "Vorderseiten werden gescannt…"
+msgstr "Scanning front sides…"
+
+msgid "Rückseiten werden gescannt…"
+msgstr "Scanning back sides…"
+
+msgid "PDF wird erstellt…"
+msgstr "Creating PDF…"
+
+msgid "Duplex-Scan abgebrochen"
+msgstr "Duplex scan cancelled"
+
+msgid "Jobs werden geladen…"
+msgstr "Loading jobs…"
+
+msgid "Fehler beim Laden der Jobs"
+msgstr "Error loading jobs"
+
+msgid "Keine Seiten im ADF-Einzug gescannt"
+msgstr "No pages scanned from ADF feeder"
+
+msgid "Pillow (python-pillow) nicht installiert — bitte installieren: sudo pacman -S python-pillow"
+msgstr "Pillow (python-pillow) not installed — please install: sudo pacman -S python-pillow"

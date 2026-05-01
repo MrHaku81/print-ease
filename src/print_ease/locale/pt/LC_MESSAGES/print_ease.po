@@ -1,0 +1,225 @@
+# PrintEase — Português
+# Copyright (C) 2026 MrHaku81
+msgid ""
+msgstr ""
+"Project-Id-Version: PrintEase 0.1.0\n"
+"Report-Msgid-Bugs-To: haku81.kk@gmail.com\n"
+"PO-Revision-Date: 2026-05-01 00:00+0000\n"
+"Language: pt\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "Drucker aktualisieren"
+msgstr "Atualizar impressoras"
+
+msgid "Drucker hinzufügen"
+msgstr "Adicionar impressora"
+
+msgid "Drucker werden geladen…"
+msgstr "A carregar impressoras…"
+
+msgid "Bereit"
+msgstr "Pronta"
+
+msgid "Druckt…"
+msgstr "A imprimir…"
+
+msgid "Gestoppt"
+msgstr "Parada"
+
+msgid "Standard"
+msgstr "Predefinida"
+
+msgid "Druckerinformationen"
+msgstr "Informações da impressora"
+
+msgid "Name"
+msgstr "Nome"
+
+msgid "Beschreibung"
+msgstr "Descrição"
+
+msgid "Standort"
+msgstr "Localização"
+
+msgid "Verbindung"
+msgstr "Ligação"
+
+msgid "Status"
+msgstr "Estado"
+
+msgid "Aktionen"
+msgstr "Ações"
+
+msgid "Als Standard setzen"
+msgstr "Definir como predefinida"
+
+msgid "✓ Ist Standard"
+msgstr "✓ É predefinida"
+
+msgid "Drucker pausieren"
+msgstr "Pausar impressora"
+
+msgid "Pausieren"
+msgstr "Pausar"
+
+msgid "Fortsetzen"
+msgstr "Retomar"
+
+msgid "Testseite drucken"
+msgstr "Imprimir página de teste"
+
+msgid "Drucken"
+msgstr "Imprimir"
+
+msgid "Aktive Druckjobs"
+msgstr "Trabalhos de impressão ativos"
+
+msgid "Keine aktiven Jobs"
+msgstr "Sem trabalhos ativos"
+
+msgid "Gefahrenzone"
+msgstr "Zona de perigo"
+
+msgid "Drucker entfernen"
+msgstr "Remover impressora"
+
+msgid "Entfernt den Drucker dauerhaft aus CUPS"
+msgstr "Remove permanentemente a impressora do CUPS"
+
+msgid "Entfernen"
+msgstr "Remover"
+
+msgid "Scanner"
+msgstr "Scanner"
+
+msgid "Auflösung"
+msgstr "Resolução"
+
+msgid "Farbmodus"
+msgstr "Modo de cor"
+
+msgid "Quelle"
+msgstr "Fonte"
+
+msgid "Scannen"
+msgstr "Digitalizar"
+
+msgid "Scan starten"
+msgstr "Iniciar digitalização"
+
+msgid "Gespeichert unter"
+msgstr "Guardado como"
+
+msgid "Flachbett"
+msgstr "Cama plana"
+
+msgid "Einzug (ADF)"
+msgstr "Alimentador (ADF)"
+
+msgid "Farbe"
+msgstr "Cor"
+
+msgid "Graustufen"
+msgstr "Escala de cinzentos"
+
+msgid "Schwarzweiß"
+msgstr "Preto e branco"
+
+msgid "Manuell"
+msgstr "Manual"
+
+msgid "Netzwerk"
+msgstr "Rede"
+
+msgid "Abbrechen"
+msgstr "Cancelar"
+
+msgid "Hinzufügen"
+msgstr "Adicionar"
+
+msgid "Übernehmen"
+msgstr "Usar"
+
+msgid "Netzwerkdrucker suchen"
+msgstr "Procurar impressoras de rede"
+
+msgid "Erneut suchen"
+msgstr "Procurar novamente"
+
+msgid "Keine Drucker gefunden"
+msgstr "Nenhuma impressora encontrada"
+
+msgid "Kein Drucker ausgewählt"
+msgstr "Nenhuma impressora selecionada"
+
+msgid "Wähle einen Drucker aus der Liste."
+msgstr "Selecione uma impressora da lista."
+
+msgid "Keine Netzwerkdrucker gefunden"
+msgstr "Nenhuma impressora de rede encontrada"
+
+msgid "Stelle sicher dass Avahi läuft und Drucker im Netzwerk sind."
+msgstr "Certifique-se de que o Avahi está ativo e as impressoras estão na rede."
+
+msgid "Drucker hinzufügen oder CUPS-Verbindung prüfen."
+msgstr "Adicione uma impressora ou verifique a ligação CUPS."
+
+msgid "ADF-Einzug ist leer — bitte Dokument einlegen"
+msgstr "Alimentador ADF vazio — insira um documento"
+
+msgid "Drucker entfernen?"
+msgstr "Remover impressora?"
+
+msgid "wird dauerhaft aus CUPS entfernt."
+msgstr "será removida permanentemente do CUPS."
+
+msgid "Standard setzen"
+msgstr "Definir como predefinida"
+
+msgid "Kein Papier im Einzug"
+msgstr "Sem papel no alimentador"
+
+msgid "Drucker fortsetzen"
+msgstr "Retomar impressora"
+
+msgid "Scannt…"
+msgstr "A digitalizar…"
+
+
+msgid "Einzug — Duplex (Software)"
+msgstr "Alimentador — Duplex (software)"
+
+msgid "Stapel umdrehen und erneut einlegen"
+msgstr "Virar a pilha e recarregar"
+
+msgid "Vorderseiten gescannt. Drehe den Stapel um, lege ihn erneut in den ADF ein und bestätige."
+msgstr "Frentes digitalizadas. Vire a pilha, recoloque-a no alimentador e confirme."
+
+msgid "Weiter"
+msgstr "Continuar"
+
+msgid "Vorderseiten werden gescannt…"
+msgstr "Digitalizando frentes…"
+
+msgid "Rückseiten werden gescannt…"
+msgstr "Digitalizando versos…"
+
+msgid "PDF wird erstellt…"
+msgstr "Criando PDF…"
+
+msgid "Duplex-Scan abgebrochen"
+msgstr "Digitalização duplex cancelada"
+
+msgid "Jobs werden geladen…"
+msgstr "Carregando trabalhos…"
+
+msgid "Fehler beim Laden der Jobs"
+msgstr "Erro ao carregar trabalhos"
+
+msgid "Keine Seiten im ADF-Einzug gescannt"
+msgstr "Nenhuma página digitalizada do alimentador"
+
+msgid "Pillow (python-pillow) nicht installiert — bitte installieren: sudo pacman -S python-pillow"
+msgstr "Pillow (python-pillow) não instalado — instalar: sudo pacman -S python-pillow"

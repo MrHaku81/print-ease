@@ -1,0 +1,225 @@
+# PrintEase — Čeština
+# Copyright (C) 2026 MrHaku81
+msgid ""
+msgstr ""
+"Project-Id-Version: PrintEase 0.1.0\n"
+"Report-Msgid-Bugs-To: haku81.kk@gmail.com\n"
+"PO-Revision-Date: 2026-05-01 00:00+0000\n"
+"Language: cs\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "Drucker aktualisieren"
+msgstr "Obnovit tiskárny"
+
+msgid "Drucker hinzufügen"
+msgstr "Přidat tiskárnu"
+
+msgid "Drucker werden geladen…"
+msgstr "Načítání tiskáren…"
+
+msgid "Bereit"
+msgstr "Připravena"
+
+msgid "Druckt…"
+msgstr "Tisk…"
+
+msgid "Gestoppt"
+msgstr "Zastavena"
+
+msgid "Standard"
+msgstr "Výchozí"
+
+msgid "Druckerinformationen"
+msgstr "Informace o tiskárně"
+
+msgid "Name"
+msgstr "Název"
+
+msgid "Beschreibung"
+msgstr "Popis"
+
+msgid "Standort"
+msgstr "Umístění"
+
+msgid "Verbindung"
+msgstr "Připojení"
+
+msgid "Status"
+msgstr "Stav"
+
+msgid "Aktionen"
+msgstr "Akce"
+
+msgid "Als Standard setzen"
+msgstr "Nastavit jako výchozí"
+
+msgid "✓ Ist Standard"
+msgstr "✓ Je výchozí"
+
+msgid "Drucker pausieren"
+msgstr "Pozastavit tiskárnu"
+
+msgid "Pausieren"
+msgstr "Pozastavit"
+
+msgid "Fortsetzen"
+msgstr "Obnovit"
+
+msgid "Testseite drucken"
+msgstr "Tisknout zkušební stránku"
+
+msgid "Drucken"
+msgstr "Tisknout"
+
+msgid "Aktive Druckjobs"
+msgstr "Aktivní tiskové úlohy"
+
+msgid "Keine aktiven Jobs"
+msgstr "Žádné aktivní úlohy"
+
+msgid "Gefahrenzone"
+msgstr "Nebezpečná zóna"
+
+msgid "Drucker entfernen"
+msgstr "Odebrat tiskárnu"
+
+msgid "Entfernt den Drucker dauerhaft aus CUPS"
+msgstr "Trvale odebere tiskárnu z CUPS"
+
+msgid "Entfernen"
+msgstr "Odebrat"
+
+msgid "Scanner"
+msgstr "Skener"
+
+msgid "Auflösung"
+msgstr "Rozlišení"
+
+msgid "Farbmodus"
+msgstr "Barevný režim"
+
+msgid "Quelle"
+msgstr "Zdroj"
+
+msgid "Scannen"
+msgstr "Skenovat"
+
+msgid "Scan starten"
+msgstr "Spustit skenování"
+
+msgid "Gespeichert unter"
+msgstr "Uloženo jako"
+
+msgid "Flachbett"
+msgstr "Plochý skener"
+
+msgid "Einzug (ADF)"
+msgstr "Podavač (ADF)"
+
+msgid "Farbe"
+msgstr "Barva"
+
+msgid "Graustufen"
+msgstr "Odstíny šedi"
+
+msgid "Schwarzweiß"
+msgstr "Černobíle"
+
+msgid "Manuell"
+msgstr "Ručně"
+
+msgid "Netzwerk"
+msgstr "Síť"
+
+msgid "Abbrechen"
+msgstr "Zrušit"
+
+msgid "Hinzufügen"
+msgstr "Přidat"
+
+msgid "Übernehmen"
+msgstr "Použít"
+
+msgid "Netzwerkdrucker suchen"
+msgstr "Hledat síťové tiskárny"
+
+msgid "Erneut suchen"
+msgstr "Hledat znovu"
+
+msgid "Keine Drucker gefunden"
+msgstr "Žádné tiskárny nenalezeny"
+
+msgid "Kein Drucker ausgewählt"
+msgstr "Žádná tiskárna nevybrána"
+
+msgid "Wähle einen Drucker aus der Liste."
+msgstr "Vyberte tiskárnu ze seznamu."
+
+msgid "Keine Netzwerkdrucker gefunden"
+msgstr "Žádné síťové tiskárny nenalezeny"
+
+msgid "Stelle sicher dass Avahi läuft und Drucker im Netzwerk sind."
+msgstr "Ujistěte se, že Avahi běží a tiskárny jsou v síti."
+
+msgid "Drucker hinzufügen oder CUPS-Verbindung prüfen."
+msgstr "Přidejte tiskárnu nebo zkontrolujte připojení CUPS."
+
+msgid "ADF-Einzug ist leer — bitte Dokument einlegen"
+msgstr "Podavač ADF je prázdný — vložte dokument"
+
+msgid "Drucker entfernen?"
+msgstr "Odebrat tiskárnu?"
+
+msgid "wird dauerhaft aus CUPS entfernt."
+msgstr "bude trvale odebrána z CUPS."
+
+msgid "Standard setzen"
+msgstr "Nastavit jako výchozí"
+
+msgid "Kein Papier im Einzug"
+msgstr "Žádný papír v podavači"
+
+msgid "Drucker fortsetzen"
+msgstr "Obnovit tiskárnu"
+
+msgid "Scannt…"
+msgstr "Skenování…"
+
+
+msgid "Einzug — Duplex (Software)"
+msgstr "Podavač — Oboustranný tisk (software)"
+
+msgid "Stapel umdrehen und erneut einlegen"
+msgstr "Otočte stoh a znovu vložte"
+
+msgid "Vorderseiten gescannt. Drehe den Stapel um, lege ihn erneut in den ADF ein und bestätige."
+msgstr "Přední strany naskenovány. Otočte stoh, vložte ho znovu do podavače a potvrďte."
+
+msgid "Weiter"
+msgstr "Pokračovat"
+
+msgid "Vorderseiten werden gescannt…"
+msgstr "Skenování předních stran…"
+
+msgid "Rückseiten werden gescannt…"
+msgstr "Skenování zadních stran…"
+
+msgid "PDF wird erstellt…"
+msgstr "Vytváření PDF…"
+
+msgid "Duplex-Scan abgebrochen"
+msgstr "Oboustranné skenování zrušeno"
+
+msgid "Jobs werden geladen…"
+msgstr "Načítání úloh…"
+
+msgid "Fehler beim Laden der Jobs"
+msgstr "Chyba při načítání úloh"
+
+msgid "Keine Seiten im ADF-Einzug gescannt"
+msgstr "Z podavače nebyly naskenovány žádné stránky"
+
+msgid "Pillow (python-pillow) nicht installiert — bitte installieren: sudo pacman -S python-pillow"
+msgstr "Pillow (python-pillow) není nainstalován — nainstalujte: sudo pacman -S python-pillow"
