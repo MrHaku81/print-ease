@@ -1,11 +1,10 @@
 # PrintEase
 
+*Find and use printers and scanners instantly — zero config required*
+
 ![License: GPL-3.0](https://img.shields.io/badge/License-GPL--3.0-blue.svg)
 ![Python 3.11+](https://img.shields.io/badge/Python-3.11%2B-blue.svg)
 ![GTK 4](https://img.shields.io/badge/GTK-4-green.svg)
-
-**Universal Linux Printer Management** — a modern, desktop-environment-agnostic
-replacement for `system-config-printer`.
 
 > **Source:** https://github.com/MrHaku81/print-ease
 
