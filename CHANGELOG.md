@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.1.2] — 2026-05-02
+
+### Fixed
+- Align version across pyproject.toml, constants.py and Makefile with release tag (was 0.1.0, now 0.1.2)
+- Skipped 0.1.1 tag: v0.1.1 was a docs-only patch (README) without Python code changes
+
+## [0.1.1] — 2026-05-02
+
+### Changed
+- README: add "How It Works" section explaining plug & play device detection
+- README: add "What Gets Installed" section for desktop integration transparency
+- README: replace technical subtitle with user-focused tagline
+
 ## [0.1.0] — 2026-05-01
 
 ### Hinzugefügt

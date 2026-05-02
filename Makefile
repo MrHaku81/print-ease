@@ -8,7 +8,7 @@ LANGUAGES = de en fr es it pl pt nl cs ro ja sv da nb fi hu sk hr sr bg el tr zh
 pot:
 	xgettext --language=Python --keyword=_ \
 	  --output=$(LOCALEDIR)/$(DOMAIN).pot \
-	  --package-name=PrintEase --package-version=0.1.0 \
+	  --package-name=PrintEase --package-version=0.1.2 \
 	  --copyright-holder="MrHaku81" \
 	  --msgid-bugs-address="haku81.kk@gmail.com" \
 	  $(shell find $(SRCDIR) -name "*.py" | sort)
