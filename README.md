@@ -11,6 +11,28 @@ replacement for `system-config-printer`.
 
 ---
 
+## How It Works
+
+PrintEase auto-detects compatible devices on your network — no manual
+configuration needed for most modern printers and scanners.
+
+**Printers**
+- Network printers (AirPrint / IPP Everywhere) appear automatically via
+  mDNS discovery
+- USB printers detected via CUPS
+- Driverless printing for any IPP-compatible device — no vendor drivers
+  required
+
+**Scanners**
+- eSCL/AirScan-compatible scanners (most modern All-in-One devices)
+  appear automatically
+- Flatbed and ADF (Automatic Document Feeder) supported out of the box
+- No SANE driver configuration required for compatible devices
+
+Just turn on your device — PrintEase finds it within seconds.
+
+---
+
 ## Features
 
 - Add, remove, and configure printers via CUPS
@@ -71,6 +93,24 @@ make mo
 # Run
 print-ease
 ```
+
+---
+
+## What Gets Installed
+
+After installation (via AUR, Flatpak, or `make install`), PrintEase
+integrates fully with your desktop:
+
+- **Application menu entry** — appears in GNOME, KDE Plasma, XFCE, and
+  any FreeDesktop-compliant environment
+- **Desktop icon** in the hicolor theme (scalable SVG)
+- **`print-ease` command** in your PATH for terminal launch
+- **Translations** for 33 languages (auto-selected based on your locale)
+- **Reverse-DNS desktop entry** (`at.printease.PrintEase.desktop`) —
+  ready for Flatpak/Flathub
+
+No system service installation required — PrintEase runs entirely as a
+user application and uses existing CUPS and Avahi services.
 
 ---
 
