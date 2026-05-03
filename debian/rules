@@ -20,3 +20,7 @@ override_dh_auto_install:
 	# Install manpage
 	install -Dm644 debian/print-ease.1 \
 	    debian/print-ease/usr/share/man/man1/print-ease.1
+
+override_dh_auto_clean:
+	dh_auto_clean
+	rm -f debian/print-ease.1
