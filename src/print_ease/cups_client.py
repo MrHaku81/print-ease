@@ -164,6 +164,24 @@ def get_jobs(printer_name: str) -> list[PrintJob]:
         return jobs
 
 
+def _resolve_driver_kwargs(uri: str, ppd_file: str | None) -> dict:
+    """Liefert die Treiber-spezifischen kwargs für conn.addPrinter().
+
+    libcups2-Verhalten:
+      - ppd_file gesetzt   → {"filename": ppd_file}
+      - URI ipp/ipps       → {"ppdname": "everywhere"}
+      - sonst              → {} (raw queue)
+
+    Bei libcups3-Switch liefert diese Funktion {} für driverless,
+    weil CUPS 3 den Treiber direkt aus IPP-Attributen auflöst.
+    """
+    if ppd_file:
+        return {"filename": ppd_file}
+    if uri.startswith(("ipp://", "ipps://")):
+        return {"ppdname": "everywhere"}
+    return {}
+
+
 def add_printer(
     name: str,
     uri: str,
@@ -178,11 +196,7 @@ def add_printer(
         if location:
             kwargs["location"] = location
 
-        if ppd_file:
-            kwargs["filename"] = ppd_file
-        elif uri.startswith(("ipp://", "ipps://")):
-            kwargs["ppdname"] = "everywhere"
-        # else: raw queue (no PPD)
+        kwargs.update(_resolve_driver_kwargs(uri, ppd_file))
 
         try:
             conn.addPrinter(name, **kwargs)
