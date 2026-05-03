@@ -7,6 +7,7 @@ Fallback: Avahi-Suche nach _uscan._tcp / _uscans._tcp.
 from __future__ import annotations
 
 import io
+import ssl
 import time
 import urllib.error
 import urllib.parse
@@ -28,6 +29,14 @@ _NS_PWG  = "http://www.pwg.org/schemas/2010/12/sm"
 _NS = {"scan": _NS_SCAN, "pwg": _NS_PWG}
 
 _ESCL_PATH = "/eSCL"
+
+# eSCL/AirScan-Standard: lokales Netzwerk, selbstsignierte Certs.
+# Apple Print, Mopria und andere Clients deaktivieren ebenfalls
+# die Cert-Verifikation für eSCL — keine Sicherheitslücke,
+# sondern Industrie-Standardpraxis.
+_ESCL_SSL_CONTEXT = ssl.create_default_context()
+_ESCL_SSL_CONTEXT.check_hostname = False
+_ESCL_SSL_CONTEXT.verify_mode = ssl.CERT_NONE
 
 _SCAN_SETTINGS_XML = """\
 <?xml version="1.0" encoding="UTF-8"?>
@@ -70,7 +79,7 @@ def get_adf_state(escl_url: str) -> str | None:
     Gibt None zurück bei Fehler oder wenn kein AdfState vorhanden.
     """
     try:
-        with urllib.request.urlopen(f"{escl_url}/ScannerStatus", timeout=ESCL_TIMEOUT) as resp:
+        with urllib.request.urlopen(f"{escl_url}/ScannerStatus", timeout=ESCL_TIMEOUT, context=_ESCL_SSL_CONTEXT) as resp:
             root = ET.fromstring(resp.read())
         return root.findtext("scan:AdfState", None, _NS)
     except Exception as exc:
@@ -86,12 +95,12 @@ def get_scanner_capabilities(escl_url: str, linked_printer: str | None = None) -
     caps_url = f"{escl_url}/ScannerCapabilities"
     try:
         req = urllib.request.Request(caps_url, headers={"Accept": "application/xml"})
-        with urllib.request.urlopen(req, timeout=ESCL_TIMEOUT) as resp:
+        with urllib.request.urlopen(req, timeout=ESCL_TIMEOUT, context=_ESCL_SSL_CONTEXT) as resp:
             if resp.status != 200:
                 return None
             data = resp.read()
     except (urllib.error.URLError, OSError) as exc:
-        log.debug("Kein eSCL bei %s: %s", caps_url, exc)
+        log.warning("Kein eSCL bei %s: %s", caps_url, exc)
         return None
 
     try:
@@ -292,7 +301,7 @@ def _create_scan_job(escl_url: str, xml_body: bytes) -> str:
         method="POST",
         headers={"Content-Type": "application/xml"},
     )
-    with urllib.request.urlopen(req, timeout=CUPS_TIMEOUT) as resp:
+    with urllib.request.urlopen(req, timeout=CUPS_TIMEOUT, context=_ESCL_SSL_CONTEXT) as resp:
         if resp.status not in (200, 201):
             raise RuntimeError(f"ScanJob fehlgeschlagen: HTTP {resp.status}")
         location = resp.getheader("Location", "")
@@ -311,7 +320,7 @@ def _fetch_next_document(job_url: str, max_retries: int = 30, cancel_event=None)
         if cancel_event and cancel_event.is_set():
             raise InterruptedError("Scan abgebrochen")
         try:
-            with urllib.request.urlopen(doc_url, timeout=15) as resp:
+            with urllib.request.urlopen(doc_url, timeout=15, context=_ESCL_SSL_CONTEXT) as resp:
                 if resp.status == 200:
                     return resp.read()
         except urllib.error.HTTPError as exc:
@@ -326,7 +335,7 @@ def _fetch_next_document(job_url: str, max_retries: int = 30, cancel_event=None)
 def _delete_job(job_url: str) -> None:
     try:
         req = urllib.request.Request(job_url, method="DELETE")
-        urllib.request.urlopen(req, timeout=5)
+        urllib.request.urlopen(req, timeout=5, context=_ESCL_SSL_CONTEXT)
     except Exception as exc:
         log.debug("Scan-Job konnte nicht gelöscht werden: %s", exc)
 
