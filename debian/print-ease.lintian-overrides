@@ -1,0 +1,4 @@
+# PrintEase is a third-party package distributed via GitHub releases and
+# AUR, not intended for upload to the official Debian archive. Therefore
+# there is no ITP (Intent To Package) bug to close on initial packaging.
+print-ease: initial-upload-closes-no-bugs

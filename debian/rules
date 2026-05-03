@@ -1,0 +1,22 @@
+#!/usr/bin/make -f
+
+export PYBUILD_NAME = print-ease
+
+%:
+	dh $@ --with python3 --buildsystem=pybuild
+
+override_dh_auto_install:
+	dh_auto_install
+	# Compile gettext translations
+	$(MAKE) mo
+	# Generate manpage from Markdown source using pandoc
+	pandoc -s -t man debian/print-ease.1.md -o debian/print-ease.1
+	# Install desktop entry
+	install -Dm644 data/at.printease.PrintEase.desktop \
+	    debian/print-ease/usr/share/applications/at.printease.PrintEase.desktop
+	# Install scalable SVG icon
+	install -Dm644 data/icons/hicolor/scalable/apps/print-ease.svg \
+	    debian/print-ease/usr/share/icons/hicolor/scalable/apps/print-ease.svg
+	# Install manpage
+	install -Dm644 debian/print-ease.1 \
+	    debian/print-ease/usr/share/man/man1/print-ease.1
