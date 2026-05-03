@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import cups
 from contextlib import contextmanager
+from urllib.parse import urlparse
 
 from print_ease._log import get_logger
 from print_ease.printer_model import PrinterInfo, PrintJob
@@ -150,8 +151,10 @@ def get_jobs(printer_name: str) -> list[PrintJob]:
 
         jobs: list[PrintJob] = []
         for job_id, attrs in raw.items():
-            # job-printer-uri hat die Form ipp://localhost:631/printers/<name>
-            if attrs.get("job-printer-uri", "").endswith("/" + printer_name):
+            # Vergleich nur über den letzten Pfad-Bestandteil — robust gegen
+            # Hostname-Varianten und unterschiedliche URL-Schemata.
+            job_uri_path = urlparse(attrs.get("job-printer-uri", "")).path
+            if job_uri_path.rsplit("/", 1)[-1] == printer_name:
                 jobs.append(PrintJob(
                     job_id=job_id,
                     printer_name=printer_name,
