@@ -1,3 +1,11 @@
+print-ease (0.1.5-1) unstable; urgency=low
+
+  * Fix hardcoded APP_VERSION constant in constants.py that wasn't
+    bumped during the 0.1.4 release. The About dialog now correctly
+    displays the installed version.
+
+ -- MrHaku81 <haku81.kk@gmail.com>  Sun, 03 May 2026 18:30:00 +0200
+
 print-ease (0.1.4-1) unstable; urgency=medium
 
   * Fix scanner discovery for printers with self-signed eSCL certificates

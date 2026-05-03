@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.1.5] - 2026-05-03
+
+### Fixed
+- App About dialog now correctly shows the installed version. The
+  `APP_VERSION` constant in `src/print_ease/constants.py` was a
+  hardcoded "0.1.3" that wasn't bumped during the v0.1.4 release,
+  causing the About dialog to display "0.1.3" even on v0.1.4
+  installations. Now bumped to "0.1.5" and aligned with all other
+  version strings.
+
 ## [0.1.4] - 2026-05-03
 
 ### Fixed
