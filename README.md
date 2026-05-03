@@ -76,12 +76,62 @@ Chinese (Simplified), Chinese (Traditional)
 
 ## Installation
 
+### Arch Linux / CachyOS / Manjaro (AUR)
+
+PrintEase is available in the [Arch User Repository](https://aur.archlinux.org/packages/print-ease).
+
+Using an AUR helper:
+
 ```bash
-# Clone
+yay -S print-ease
+```
+
+Or manually with makepkg:
+
+```bash
+git clone https://aur.archlinux.org/print-ease.git
+cd print-ease
+makepkg -si
+```
+
+### Debian / Ubuntu / Mint (.deb package)
+
+**Option A — Download pre-built `.deb` (recommended):**
+
+```bash
+# Replace VERSION with the latest release tag, e.g. 0.1.4
+wget https://github.com/MrHaku81/print-ease/releases/download/vVERSION/print-ease_VERSION-1_all.deb
+sudo apt install ./print-ease_VERSION-1_all.deb
+```
+
+**Option B — Build the `.deb` from source:**
+
+Requires Debian packaging tools:
+
+```bash
+sudo apt install -y debhelper dh-python pybuild-plugin-pyproject \
+                    devscripts lintian fakeroot pandoc \
+                    python3-all python3-hatchling
+```
+
+Then build and install:
+
+```bash
+git clone https://github.com/MrHaku81/print-ease.git
+cd print-ease
+dpkg-buildpackage -us -uc -b
+sudo apt install ../print-ease_*_all.deb
+```
+
+### Development from source
+
+For contributing or testing the latest unreleased code:
+
+```bash
 git clone https://github.com/MrHaku81/print-ease.git
 cd print-ease
 
-# Install in a virtual environment
+# Set up a virtual environment
 python -m venv .venv
 source .venv/bin/activate
 pip install -e .
@@ -89,7 +139,7 @@ pip install -e .
 # Compile translations
 make mo
 
-# Run
+# Run from source
 print-ease
 ```
 
@@ -97,16 +147,14 @@ print-ease
 
 ## What Gets Installed
 
-After installation (via AUR, Flatpak, or `make install`), PrintEase
-integrates fully with your desktop:
+After installation, PrintEase integrates fully with your desktop:
 
 - **Application menu entry** — appears in GNOME, KDE Plasma, XFCE, and
   any FreeDesktop-compliant environment
 - **Desktop icon** in the hicolor theme (scalable SVG)
 - **`print-ease` command** in your PATH for terminal launch
 - **Translations** for 33 languages (auto-selected based on your locale)
-- **Reverse-DNS desktop entry** (`at.printease.PrintEase.desktop`) —
-  ready for Flatpak/Flathub
+- **Reverse-DNS desktop entry** (`at.printease.PrintEase.desktop`)
 
 No system service installation required — PrintEase runs entirely as a
 user application and uses existing CUPS and Avahi services.
