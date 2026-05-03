@@ -1,5 +1,33 @@
 # Changelog
 
+## [0.1.3] — 2026-05-03
+
+### Vorbereitung libcups3-Migration
+- cups_client: `_cups_session()` Context-Manager für CUPS-Verbindungen
+  eingeführt — ein zentraler Punkt für späteren libcups3-Cleanup
+- cups_client: Treiber-Auswahl in `_resolve_driver_kwargs()` extrahiert —
+  isoliert die `ppdname="everywhere"`-Logik für späteren libcups3-Switch
+- cups_client.get_jobs: Filter-Vergleich von endswith-Heuristik auf
+  urlparse-basierten Pfad-Vergleich umgestellt (robuster gegen
+  URL-Format-Varianten)
+- pyproject.toml: pycups-Dependency auf `>=2,<3` festgepinnt
+  (verhindert versehentliche Major-Updates auf inkompatibles pycups3)
+
+### Geändert
+- Versionssprung von 0.1.2 auf 0.1.3 in pyproject.toml, constants.py
+  und Makefile
+
+### Dokumentation
+- docs/cups3-audit.md: vollständiger libcups3-Kompatibilitäts-Audit
+- docs/ROADMAP.md: Roadmap v0.1.3 bis v0.5.0+
+- docs/v0.2.0-flatbed-multipage.md: Design-Dokument für
+  Flachbett-Multipage-Scan (nächstes Feature-Release)
+
+### Hinweis
+Die Code-Änderungen in v0.1.3 sind funktional unsichtbar — Verhalten
+ist identisch zu v0.1.2. Sie bereiten den späteren libcups3-Switch vor
+(siehe docs/cups3-audit.md, Abschnitt 5).
+
 ## [0.1.2] — 2026-05-02
 
 ### Fixed
