@@ -1,3 +1,13 @@
+print-ease (0.1.4-1) unstable; urgency=medium
+
+  * Fix scanner discovery for printers with self-signed eSCL certificates
+    (e.g. Ricoh, Canon, HP AirPrint devices on Ubuntu/Debian where CUPS
+    auto-registers them with ipps:// URIs).
+  * Upgrade scanner discovery failure log from DEBUG to WARNING for
+    better visibility.
+
+ -- MrHaku81 <haku81.kk@gmail.com>  Sun, 03 May 2026 15:30:00 +0200
+
 print-ease (0.1.3-1) unstable; urgency=medium
 
   * Initial Debian packaging for PrintEase v0.1.3.
