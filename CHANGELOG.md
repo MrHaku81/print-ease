@@ -1,5 +1,22 @@
 # Changelog
 
+## [0.1.4] - 2026-05-03
+
+### Fixed
+- Scanner discovery now works with self-signed eSCL certificates.
+  Discovery silently failed on systems where CUPS registers AirPrint
+  printers with `ipps://` URIs (default on Ubuntu/Debian). Python's
+  urllib was rejecting the printer's self-signed certificate. PrintEase
+  now creates a permissive SSL context for eSCL traffic, following
+  industry standard practice (Apple Print, Mopria).
+- Discovery failures are now visible in the log: the "Kein eSCL bei ..."
+  message is upgraded from DEBUG to WARNING level.
+
+### Added
+- Debian package support. New `debian/` directory enables building
+  `.deb` packages via `dpkg-buildpackage` for Debian, Ubuntu, Mint, and
+  derivatives. The package is lintian-clean and includes a manpage.
+
 ## [0.1.3] — 2026-05-03
 
 ### Vorbereitung libcups3-Migration

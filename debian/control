@@ -1,0 +1,47 @@
+Source: print-ease
+Section: utils
+Priority: optional
+Maintainer: MrHaku81 <haku81.kk@gmail.com>
+Build-Depends: debhelper-compat (= 13),
+               dh-python,
+               pybuild-plugin-pyproject,
+               python3-all,
+               python3-hatchling,
+               gettext,
+               pandoc
+Standards-Version: 4.7.0
+Homepage: https://github.com/MrHaku81/print-ease
+Vcs-Browser: https://github.com/MrHaku81/print-ease
+Vcs-Git: https://github.com/MrHaku81/print-ease.git
+Rules-Requires-Root: no
+
+Package: print-ease
+Architecture: all
+Depends: ${misc:Depends},
+         ${python3:Depends},
+         python3-gi (>= 3.42),
+         python3-cups,
+         python3-pil,
+         gir1.2-gtk-4.0,
+         gir1.2-adw-1 (>= 1.0),
+         libgtk-4-1 (>= 4.6),
+         libadwaita-1-0 (>= 1.0),
+         cups,
+         cups-client,
+         avahi-daemon,
+         avahi-utils
+Description: Universal Linux printer management with zero-config discovery
+ PrintEase is a modern GTK4 application for managing printers and scanners on
+ Linux desktops. It auto-detects compatible network devices via mDNS/Avahi
+ and works with any IPP Everywhere or AirPrint capable printer without
+ requiring vendor drivers.
+ .
+ Features:
+  * Add, remove, and configure printers via CUPS
+  * Network printer discovery via Avahi/mDNS
+  * Scanner support via eSCL/AirScan (single-page, ADF, software duplex)
+  * Multi-language support (33 languages via GNU gettext)
+  * Desktop-environment-agnostic (GNOME, KDE, XFCE, ...)
+ .
+ PrintEase serves as a modern replacement for system-config-printer, focused
+ on driverless printers and scanners.
