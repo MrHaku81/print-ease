@@ -1,3 +1,11 @@
+print-ease (0.1.6-1) unstable; urgency=low
+
+  * Add per-printer default settings UI: paper format, duplex, color
+    mode and print quality can now be configured directly from the
+    printer detail page without needing command-line tools.
+
+ -- MrHaku81 <haku81.kk@gmail.com>  Thu, 07 May 2026 18:30:00 +0200
+
 print-ease (0.1.5-1) unstable; urgency=low
 
   * Fix hardcoded APP_VERSION constant in constants.py that wasn't

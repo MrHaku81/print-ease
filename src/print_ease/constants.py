@@ -1,6 +1,6 @@
 APP_ID      = "at.printease.PrintEase"
 APP_NAME    = "PrintEase"
-APP_VERSION = "0.1.5"
+APP_VERSION = "0.1.6"
 CUPS_HOST   = "localhost"
 CUPS_PORT   = 631
 LOG_FILE    = "dev.log"   # relativ zum Projektverzeichnis während Entwicklung

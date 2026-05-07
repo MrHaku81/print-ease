@@ -1,5 +1,20 @@
 # Changelog
 
+## [0.1.6] - 2026-05-07
+
+### Added
+- New "Standardeinstellungen" (Default Settings) group on the printer
+  detail page. Users can now set per-printer CUPS defaults for paper
+  format, duplex mode, color mode and print quality directly from the
+  GUI — no command-line tools required.
+- PWG media names (e.g. `iso_a4_210x297mm`) are translated to readable
+  labels (e.g. `A4`) via a new `media_names` module.
+
+### Changed
+- Backend functions `get_printer_defaults()` and `set_printer_default()`
+  added to `cups_client` for reading and writing CUPS printer defaults
+  via pycups `addPrinterOptionDefault()`.
+
 ## [0.1.5] - 2026-05-03
 
 ### Fixed
