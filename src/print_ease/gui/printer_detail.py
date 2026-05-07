@@ -11,6 +11,7 @@ from gi.repository import Adw, Gtk, GLib
 import urllib.parse
 
 from print_ease import cups_client, scanner_client
+from print_ease.media_names import get_media_display_name
 from print_ease._i18n import _
 from print_ease._log import get_logger
 from print_ease.gui.scanner_panel import ScannerPanel
@@ -19,6 +20,24 @@ from print_ease.printer_model import PrinterInfo
 log = get_logger(__name__)
 
 OnAction = Callable[[], None]
+
+SIDES_LABELS: dict[str, str] = {
+    "one-sided": "Einseitig",
+    "two-sided-long-edge": "Duplex (lange Kante)",
+    "two-sided-short-edge": "Duplex (kurze Kante)",
+}
+
+COLOR_MODE_LABELS: dict[str, str] = {
+    "color": "Farbe",
+    "monochrome": "Schwarzweiß",
+    "auto": "Automatisch",
+}
+
+QUALITY_LABELS: dict[int, str] = {
+    3: "Entwurf",
+    4: "Normal",
+    5: "Hoch",
+}
 
 
 class PrinterDetail(Gtk.Box):
@@ -61,6 +80,7 @@ class PrinterDetail(Gtk.Box):
 
         page.add(self._build_info_group(printer))
         page.add(self._build_action_group(printer, on_action))
+        page.add(self._build_defaults_group(printer))
         page.add(self._build_jobs_group(printer, on_action))
 
         danger_group = self._build_danger_group(printer)
@@ -194,6 +214,167 @@ class PrinterDetail(Gtk.Box):
         group.add(test_row)
 
         return group
+
+    def _build_defaults_group(self, printer: PrinterInfo) -> Adw.PreferencesGroup:
+        group = Adw.PreferencesGroup(title=_("Standardeinstellungen"))
+
+        loading_row = Adw.ActionRow(title=_("Einstellungen werden geladen…"))
+        loading_row.set_activatable(False)
+        spinner = Gtk.Spinner()
+        spinner.start()
+        spinner.set_valign(Gtk.Align.CENTER)
+        loading_row.add_prefix(spinner)
+        group.add(loading_row)
+
+        self._load_defaults_async(printer.name, group, loading_row)
+        return group
+
+    def _load_defaults_async(
+        self,
+        printer_name: str,
+        group: Adw.PreferencesGroup,
+        loading_row: Adw.ActionRow,
+    ) -> None:
+        def _fetch() -> None:
+            try:
+                defaults = cups_client.get_printer_defaults(printer_name)
+                GLib.idle_add(_on_loaded, defaults, None)
+            except Exception as exc:
+                log.error("Defaults für '%s' konnten nicht geladen werden: %s", printer_name, exc)
+                GLib.idle_add(_on_loaded, {}, exc)
+
+        def _on_loaded(defaults: dict, error: Exception | None) -> bool:
+            group.remove(loading_row)
+            if error:
+                row = Adw.ActionRow(title=_("Fehler beim Laden der Einstellungen"))
+                row.set_activatable(False)
+                group.add(row)
+            else:
+                self._populate_defaults_ui(group, defaults, printer_name)
+            return GLib.SOURCE_REMOVE
+
+        threading.Thread(target=_fetch, daemon=True).start()
+
+    def _populate_defaults_ui(
+        self,
+        group: Adw.PreferencesGroup,
+        defaults: dict,
+        printer_name: str,
+    ) -> None:
+        specs = [
+            (
+                _("Papierformat"),
+                "media",
+                defaults.get("media-supported", []),
+                defaults.get("media-default", ""),
+                lambda v: get_media_display_name(v),
+            ),
+            (
+                _("Duplex"),
+                "sides",
+                defaults.get("sides-supported", []),
+                defaults.get("sides-default", ""),
+                lambda v: SIDES_LABELS.get(v, v),
+            ),
+            (
+                _("Farbmodus"),
+                "print-color-mode",
+                defaults.get("print-color-mode-supported", []),
+                defaults.get("print-color-mode-default", ""),
+                lambda v: COLOR_MODE_LABELS.get(v, v),
+            ),
+            (
+                _("Druckqualität"),
+                "print-quality",
+                defaults.get("print-quality-supported", []),
+                defaults.get("print-quality-default", None),
+                lambda v: QUALITY_LABELS.get(v, str(v)),
+            ),
+        ]
+
+        for title, attribute, raw_values, default_value, label_fn in specs:
+            if not raw_values and default_value:
+                raw_values = [default_value]
+                sensitive = False
+            elif len(raw_values) <= 1:
+                sensitive = False
+            else:
+                sensitive = True
+
+            display_labels = [label_fn(v) for v in raw_values] if raw_values else ["—"]
+            model = Gtk.StringList.new(display_labels)
+
+            row = Adw.ComboRow(title=title)
+            row.set_model(model)
+            row.set_sensitive(sensitive)
+
+            if raw_values and default_value is not None:
+                try:
+                    sel_idx = list(raw_values).index(default_value)
+                except ValueError:
+                    sel_idx = 0
+                row.set_selected(sel_idx)
+
+            group.add(row)
+
+            if sensitive:
+                prev_idx_holder = [row.get_selected()]
+                row.connect(
+                    "notify::selected",
+                    self._on_default_changed,
+                    attribute,
+                    printer_name,
+                    raw_values,
+                    prev_idx_holder,
+                )
+
+    def _on_default_changed(
+        self,
+        combo_row: Adw.ComboRow,
+        _pspec,
+        attribute: str,
+        printer_name: str,
+        raw_values: list,
+        prev_idx_holder: list,
+    ) -> None:
+        new_idx = combo_row.get_selected()
+        if new_idx == prev_idx_holder[0]:
+            return
+        new_value = raw_values[new_idx]
+        old_idx = prev_idx_holder[0]
+        prev_idx_holder[0] = new_idx
+
+        def _worker() -> None:
+            try:
+                cups_client.set_printer_default(printer_name, attribute, new_value)
+            except Exception as exc:
+                log.error("Default '%s' für '%s' konnte nicht gesetzt werden: %s", attribute, printer_name, exc)
+                GLib.idle_add(_on_error)
+
+        def _on_error() -> bool:
+            prev_idx_holder[0] = old_idx
+            combo_row.set_selected(old_idx)
+            self._show_permission_error_dialog()
+            return GLib.SOURCE_REMOVE
+
+        threading.Thread(target=_worker, daemon=True).start()
+
+    def _show_permission_error_dialog(self) -> None:
+        dialog = Adw.MessageDialog(
+            heading=_("Standardeinstellung konnte nicht gespeichert werden"),
+            body=_(
+                "Möglicherweise fehlen die nötigen CUPS-Admin-Rechte.\n\n"
+                "Fügen Sie Ihren Benutzer der Gruppe 'lp' hinzu:\n"
+                "    sudo gpasswd -a $USER lp\n\n"
+                "Anschließend einmal abmelden und wieder anmelden."
+            ),
+        )
+        dialog.add_response("ok", _("OK"))
+        dialog.set_default_response("ok")
+        parent = self.get_root()
+        if parent:
+            dialog.set_transient_for(parent)
+        dialog.present()
 
     def _build_jobs_group(self, printer: PrinterInfo, on_action: OnAction) -> Adw.PreferencesGroup:
         group = Adw.PreferencesGroup(title=_("Aktive Druckjobs"))

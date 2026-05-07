@@ -282,7 +282,7 @@ def get_printer_defaults(name: str) -> dict:
 def set_printer_default(name: str, attribute: str, value) -> None:
     """Setzt einen einzelnen Default-Wert für einen Drucker.
 
-    Verwendet pycups conn.setPrinterAttribute() — funktioniert nur,
+    Verwendet pycups conn.addPrinterOptionDefault() — funktioniert nur,
     wenn der ausführende User CUPS-Admin-Rechte hat (typisch:
     Mitglied der `lp`-Gruppe oder polkit-konfiguriert).
 
@@ -300,7 +300,8 @@ def set_printer_default(name: str, attribute: str, value) -> None:
     """
     with _cups_session() as conn:
         try:
-            conn.setPrinterAttribute(name, attribute, value)
+            value_str = str(value) if not isinstance(value, str) else value
+            conn.addPrinterOptionDefault(name, attribute, value_str)
             log.info("Default '%s' für '%s' gesetzt: %r", attribute, name, value)
         except cups.IPPError as exc:
             log.error("Fehler beim Setzen von '%s' auf '%s': %s", attribute, name, exc)
