@@ -240,3 +240,68 @@ def get_printer_attributes(printer_name: str) -> dict:
         except cups.IPPError as exc:
             log.error("Fehler beim Abrufen der Attribute für '%s': %s", printer_name, exc)
             raise
+
+
+def get_printer_defaults(name: str) -> dict:
+    """Liefert aktuelle Defaults und Supported-Listen für die vier
+    UI-relevanten Attribute (Media, Sides, Color-Mode, Quality).
+
+    Args:
+        name: CUPS-Druckername.
+
+    Returns:
+        Dict mit den 8 Schlüsseln:
+        - media-default, media-supported
+        - sides-default, sides-supported
+        - print-color-mode-default, print-color-mode-supported
+        - print-quality-default, print-quality-supported
+
+        Fehlende Attribute werden im Dict weggelassen (nicht jeder
+        Drucker meldet alle).
+
+    Raises:
+        ConnectionError: Bei CUPS-Verbindungsproblem.
+    """
+    keys = [
+        "media-default",
+        "media-supported",
+        "sides-default",
+        "sides-supported",
+        "print-color-mode-default",
+        "print-color-mode-supported",
+        "print-quality-default",
+        "print-quality-supported",
+    ]
+    with _cups_session() as conn:
+        attrs = conn.getPrinterAttributes(name)
+        result = {key: attrs[key] for key in keys if key in attrs}
+        log.debug("Defaults für '%s' abgerufen (%d Einträge)", name, len(result))
+        return result
+
+
+def set_printer_default(name: str, attribute: str, value) -> None:
+    """Setzt einen einzelnen Default-Wert für einen Drucker.
+
+    Verwendet pycups conn.setPrinterAttribute() — funktioniert nur,
+    wenn der ausführende User CUPS-Admin-Rechte hat (typisch:
+    Mitglied der `lp`-Gruppe oder polkit-konfiguriert).
+
+    Args:
+        name: CUPS-Druckername.
+        attribute: Eines von "media", "sides", "print-color-mode",
+                   "print-quality".
+        value: Neuer Default-Wert. Bei "print-quality" int (3/4/5),
+               sonst str.
+
+    Raises:
+        cups.IPPError: Wenn der User keine Rechte hat oder der Wert
+                       nicht akzeptiert wird.
+        ConnectionError: Bei CUPS-Verbindungsproblem.
+    """
+    with _cups_session() as conn:
+        try:
+            conn.setPrinterAttribute(name, attribute, value)
+            log.info("Default '%s' für '%s' gesetzt: %r", attribute, name, value)
+        except cups.IPPError as exc:
+            log.error("Fehler beim Setzen von '%s' auf '%s': %s", attribute, name, exc)
+            raise
