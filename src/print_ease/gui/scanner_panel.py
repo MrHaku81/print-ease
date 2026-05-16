@@ -39,6 +39,13 @@ def _duplex_labels() -> dict[str, str]:
     }
 
 
+def _mode_labels() -> dict[str, str]:
+    return {
+        "single":    _("Einzelseite"),
+        "multipage": _("Multi-Page Dokument"),
+    }
+
+
 class ScannerPanel:
     """Baut eine Adw.PreferencesGroup mit Scanner-Bedienelementen."""
 
@@ -51,6 +58,9 @@ class ScannerPanel:
         self._duplex_modes = self._build_duplex_list(scanner)
         self._duplex_drop: Gtk.DropDown | None = None
         self._duplex_row: Adw.ActionRow | None = None
+        self._mode_options: list[str] = self._build_mode_list()
+        self._mode_drop: Gtk.DropDown | None = None
+        self._mode_row: Adw.ActionRow | None = None
         self._group = self._build()
         self._restore_scan_settings()
 
@@ -70,6 +80,9 @@ class ScannerPanel:
             modes.append("AdfDuplex")
         modes.append("AdfDuplexSoftware")
         return modes
+
+    def _build_mode_list(self) -> list[str]:
+        return ["single", "multipage"]
 
     def _build(self) -> Adw.PreferencesGroup:
         s = self._scanner
@@ -100,6 +113,15 @@ class ScannerPanel:
         else:
             self._src_drop = None
 
+        if len(self._mode_options) > 1:
+            mode_strings = [_mode_labels().get(m, m) for m in self._mode_options]
+            self._mode_drop = _make_dropdown(mode_strings, 0)
+            self._mode_row = Adw.ActionRow(title=_("Modus"))
+            self._mode_row.set_activatable(False)
+            self._mode_row.add_suffix(self._mode_drop)
+            self._mode_row.set_visible(self._get_selected_source() == "Platen")
+            group.add(self._mode_row)
+
         if len(self._duplex_modes) > 1:
             dup_strings = [_duplex_labels().get(m, m) for m in self._duplex_modes]
             self._duplex_drop = _make_dropdown(dup_strings, 0)
@@ -108,8 +130,9 @@ class ScannerPanel:
             self._duplex_row.add_suffix(self._duplex_drop)
             self._duplex_row.set_visible(self._get_selected_source() == "AdfSimplex")
             group.add(self._duplex_row)
-            if self._src_drop is not None:
-                self._src_drop.connect("notify::selected", self._on_source_changed)
+
+        if self._src_drop is not None and (self._mode_row is not None or self._duplex_row is not None):
+            self._src_drop.connect("notify::selected", self._on_source_changed)
 
         scan_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=8)
         scan_box.set_valign(Gtk.Align.CENTER)
@@ -173,12 +196,19 @@ class ScannerPanel:
             return self._duplex_modes[idx] if idx < len(self._duplex_modes) else "None"
         return "None"
 
+    def _get_selected_mode(self) -> str:
+        if self._mode_drop is not None:
+            idx = self._mode_drop.get_selected()
+            return self._mode_options[idx] if idx < len(self._mode_options) else "single"
+        return "single"
+
     def _save_scan_settings(self) -> None:
         settings.set(self._settings_key, {
             "resolution": self._get_selected_resolution(),
             "color_mode": self._get_selected_color_mode(),
             "source":     self._get_selected_source(),
             "duplex":     self._get_selected_duplex(),
+            "mode":       self._get_selected_mode(),
         })
         log.debug("Scan-Einstellungen gespeichert für '%s'", self._scanner.name)
 
@@ -204,6 +234,10 @@ class ScannerPanel:
         if self._duplex_drop is not None and dup in self._duplex_modes:
             self._duplex_drop.set_selected(self._duplex_modes.index(dup))
 
+        mode = saved.get("mode", "single")
+        if self._mode_drop is not None and mode in self._mode_options:
+            self._mode_drop.set_selected(self._mode_options.index(mode))
+
         log.debug("Scan-Einstellungen wiederhergestellt für '%s'", self._scanner.name)
 
     # ------------------------------------------------------------------
@@ -213,9 +247,13 @@ class ScannerPanel:
         resolution = self._get_selected_resolution()
         source = self._get_selected_source()
         duplex = self._get_selected_duplex()
+        mode = self._get_selected_mode()
 
         self._save_scan_settings()
 
+        if source == "Platen" and mode == "multipage":
+            self._run_multipage_platen(btn, color_mode, resolution)
+            return
         if source == "AdfSimplex" and duplex == "AdfDuplex":
             self._run_hardware_duplex(btn, color_mode, resolution)
             return
@@ -248,8 +286,11 @@ class ScannerPanel:
         self._cancel_btn.set_sensitive(False)
 
     def _on_source_changed(self, _drop: Gtk.DropDown, _pspec) -> None:
+        source = self._get_selected_source()
+        if self._mode_row is not None:
+            self._mode_row.set_visible(source == "Platen")
         if self._duplex_row is not None:
-            self._duplex_row.set_visible(self._get_selected_source() == "AdfSimplex")
+            self._duplex_row.set_visible(source == "AdfSimplex")
 
     def _scan_thread(
         self,
@@ -350,6 +391,55 @@ class ScannerPanel:
         threading.Thread(target=_do_scan, daemon=True).start()
 
     # ------------------------------------------------------------------
+    # Multi-Page Flachbett
+    # ------------------------------------------------------------------
+
+    def _run_multipage_platen(
+        self, btn: Gtk.Button, color_mode: str, resolution: int
+    ) -> None:
+        msg_scanning  = _("Seite wird gescannt…")
+        msg_cancelled = _("Multi-Page-Scan abgebrochen")
+
+        btn.set_sensitive(False)
+        self._cancel_btn.set_visible(True)
+        self._spinner.start()
+        self._saved_row.set_subtitle(msg_scanning)
+        self._open_btn.set_visible(False)
+
+        self._cancel_event = threading.Event()
+        cancel_event = self._cancel_event
+
+        def _next_page_callback(page_num: int) -> str:
+            GLib.idle_add(
+                self._saved_row.set_subtitle,
+                _("Seite {n} gescannt — warte auf Antwort…").format(n=page_num),
+            )
+            result: list[str] = ["continue"]
+            done_event = threading.Event()
+            GLib.idle_add(self._show_multipage_dialog, page_num, result, done_event)
+            while not done_event.wait(timeout=1.0):
+                if cancel_event.is_set():
+                    raise InterruptedError("Scan abgebrochen")
+            return result[0]
+
+        def _do_scan() -> None:
+            try:
+                path = scanner_client.scan_platen_multipage(
+                    self._scanner, color_mode, resolution,
+                    next_page_callback=_next_page_callback,
+                    cancel_event=cancel_event,
+                )
+                GLib.idle_add(self._on_scan_done, True, path)
+            except InterruptedError:
+                log.info("Multi-Page-Scan abgebrochen")
+                GLib.idle_add(self._on_scan_done, False, msg_cancelled)
+            except Exception as exc:
+                log.error("Multi-Page-Scan fehlgeschlagen: %s", exc)
+                GLib.idle_add(self._on_scan_done, False, str(exc))
+
+        threading.Thread(target=_do_scan, daemon=True).start()
+
+    # ------------------------------------------------------------------
     # Software-Duplex
     # ------------------------------------------------------------------
 
@@ -430,6 +520,36 @@ class ScannerPanel:
             if response == "cancel" and self._cancel_event:
                 self._cancel_event.set()
             confirmed_event.set()
+
+        dialog.connect("response", _on_response)
+        dialog.present(root)
+        return GLib.SOURCE_REMOVE
+
+    def _show_multipage_dialog(
+        self, page_num: int, result: list[str], done_event: threading.Event
+    ) -> bool:
+        root = self._group.get_root()
+        if root is None:
+            log.warning("_show_multipage_dialog: get_root() ist None — Dialog übersprungen")
+            done_event.set()
+            return GLib.SOURCE_REMOVE
+
+        dialog = Adw.AlertDialog(
+            heading=_("Seite {n} gescannt").format(n=page_num),
+            body=_("Bisher {n} Seiten im Dokument.").format(n=page_num),
+        )
+        dialog.add_response("cancel",   _("Abbrechen"))
+        dialog.add_response("finish",   _("Fertig"))
+        dialog.add_response("continue", _("Nächste Seite"))
+        dialog.set_response_appearance("continue", Adw.ResponseAppearance.SUGGESTED)
+        dialog.set_default_response("continue")
+        dialog.set_close_response("cancel")
+
+        def _on_response(_dlg, response: str) -> None:
+            result[0] = response
+            if response == "cancel" and self._cancel_event:
+                self._cancel_event.set()
+            done_event.set()
 
         dialog.connect("response", _on_response)
         dialog.present(root)
