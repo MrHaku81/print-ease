@@ -290,6 +290,116 @@ def scan_duplex_software(
     return output_path
 
 
+def scan_adf_hardware_duplex(
+    scanner: ScannerInfo,
+    color_mode: str = "RGB24",
+    resolution: int = 300,
+    cancel_event=None,
+    progress_callback: Callable[[int], None] | None = None,
+) -> str:
+    """Hardware-Duplex-Scan via eSCL.
+
+    BETA — nach eSCL-Spec implementiert, aber mangels Hardware-Duplex-
+    fähigem Test-Gerät nicht getestet. Feedback erwünscht.
+
+    Sendet einen einzigen eSCL-Job mit InputSource=AdfDuplex. Sammelt
+    alle gelieferten Seiten, sortiert nach SheetNumber + Side wenn
+    vorhanden, sonst nach Stream-Reihenfolge (Annahme: Front/Back/...).
+    Gibt den Pfad zur erstellten PDF-Datei zurück.
+    """
+    xml = _SCAN_SETTINGS_XML.format(
+        width=scanner.max_width,
+        height=scanner.max_height,
+        source="AdfDuplex",
+        color_mode=color_mode,
+        resolution=resolution,
+    ).encode("utf-8")
+
+    log.info(
+        "Hardware-Duplex-Scan starten (BETA): %s, %s, %d dpi",
+        scanner.name, color_mode, resolution,
+    )
+    job_url = _create_scan_job(scanner.escl_url, xml)
+    log.debug("Hardware-Duplex-Job angelegt: %s", job_url)
+
+    pages: list[tuple[bytes, int | None, str | None]] = []
+    doc_url = f"{job_url}/NextDocument"
+    page_index = 0
+
+    try:
+        while True:
+            if cancel_event and cancel_event.is_set():
+                raise InterruptedError("Scan abgebrochen")
+
+            done = False
+            for attempt in range(30):
+                if cancel_event and cancel_event.is_set():
+                    raise InterruptedError("Scan abgebrochen")
+                try:
+                    with urllib.request.urlopen(
+                        urllib.request.Request(doc_url),
+                        timeout=15,
+                        context=_ESCL_SSL_CONTEXT,
+                    ) as resp:
+                        data = resp.read()
+                        sheet_str = (
+                            resp.headers.get("X-Sheet-Number")
+                            or resp.headers.get("X-Page-Number")
+                        )
+                        side = (
+                            resp.headers.get("X-Side")
+                            or resp.headers.get("X-Scan-Side")
+                        )
+                        sheet = int(sheet_str) if sheet_str and sheet_str.isdigit() else None
+                        pages.append((data, sheet, side))
+                        page_index += 1
+                        log.info(
+                            "Seite empfangen: page=%d, sheet=%s, side=%s, size=%d bytes",
+                            page_index, sheet_str, side, len(data),
+                        )
+                        if progress_callback:
+                            progress_callback(page_index)
+                        break
+                except urllib.error.HTTPError as exc:
+                    if exc.code == 404:
+                        done = True
+                        break
+                    if exc.code == 503:
+                        log.debug("Scanner verarbeitet noch (Versuch %d)...", attempt + 1)
+                        time.sleep(1)
+                        continue
+                    raise
+            else:
+                raise TimeoutError("Scanner hat nicht innerhalb der erwarteten Zeit geantwortet")
+
+            if done:
+                break
+    finally:
+        _delete_job(job_url)
+
+    if not pages:
+        raise RuntimeError(_("Keine Seiten vom Scanner empfangen"))
+
+    log.info("Hardware-Duplex-Scan abgeschlossen: %d Seiten", len(pages))
+
+    all_have_meta = all(sheet is not None and side is not None for _, sheet, side in pages)
+    if all_have_meta:
+        side_order = {"Front": 0, "front": 0, "Back": 1, "back": 1}
+        pages.sort(key=lambda p: (p[1] or 0, side_order.get(p[2] or "", 0)))
+        log.debug("Seiten nach Metadaten sortiert (SheetNumber + Side)")
+    else:
+        log.warning(
+            "Scanner liefert keine Duplex-Metadaten, vertraue auf "
+            "Stream-Reihenfolge (Annahme: Front/Back/Front/Back...)"
+        )
+
+    jpeg_pages = [data for data, _, _ in pages]
+    output_path = _default_duplex_output_path()
+    _create_pdf(jpeg_pages, output_path)
+    log.info("Hardware-Duplex-PDF erstellt: %s (%d Seiten)", output_path, len(pages))
+    return output_path
+
+
 # ---------------------------------------------------------------------------
 # eSCL HTTP-Ablauf
 # ---------------------------------------------------------------------------
@@ -406,6 +516,16 @@ def _parse_capabilities(data: bytes, escl_url: str, linked_printer: str | None) 
             if opt.text == "DetectPaperLoaded":
                 detect_paper_loaded = True
                 break
+
+        # Hardware-Duplex: AdfDuplexInputCaps ODER AdfOption=Duplex
+        has_duplex_caps = adf_el.find("scan:AdfDuplexInputCaps", _NS) is not None
+        has_duplex_option = any(
+            opt.text == "Duplex"
+            for opt in adf_el.findall(".//scan:AdfOption", _NS)
+        )
+        if has_duplex_caps or has_duplex_option:
+            sources.append("AdfDuplex")
+            log.info("Hardware-Duplex-Capability erkannt für Scanner '%s'", full_name)
 
     return ScannerInfo(
         name=full_name,
