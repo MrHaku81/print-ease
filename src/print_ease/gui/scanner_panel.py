@@ -26,9 +26,16 @@ def _color_labels() -> dict[str, str]:
 
 def _source_labels() -> dict[str, str]:
     return {
-        "Platen":             _("Flachbett"),
-        "AdfSimplex":         _("Einzug (ADF)"),
-        "AdfDuplexSoftware":  _("Einzug — Duplex (Software)"),
+        "Platen":     _("Flachbett"),
+        "AdfSimplex": _("Einzug"),
+    }
+
+
+def _duplex_labels() -> dict[str, str]:
+    return {
+        "None":              _("Aus"),
+        "AdfDuplex":         _("Hardware (Beta)"),
+        "AdfDuplexSoftware": _("Software"),
     }
 
 
@@ -41,6 +48,9 @@ class ScannerPanel:
         self._last_scan_path: str | None = None
         self._settings_key = f"scan_settings_{scanner.name}"
         self._sources = self._build_source_list(scanner)
+        self._duplex_modes = self._build_duplex_list(scanner)
+        self._duplex_drop: Gtk.DropDown | None = None
+        self._duplex_row: Adw.ActionRow | None = None
         self._group = self._build()
         self._restore_scan_settings()
 
@@ -50,10 +60,16 @@ class ScannerPanel:
     # ------------------------------------------------------------------
 
     def _build_source_list(self, s: ScannerInfo) -> list[str]:
-        sources = list(s.document_sources)
-        if scanner_client.supports_adf(s) and not scanner_client.supports_hardware_duplex(s):
-            sources.append("AdfDuplexSoftware")
-        return sources
+        return [src for src in s.document_sources if src in ("Platen", "AdfSimplex")]
+
+    def _build_duplex_list(self, s: ScannerInfo) -> list[str]:
+        if not scanner_client.supports_adf(s):
+            return []
+        modes = ["None"]
+        if scanner_client.supports_hardware_duplex(s):
+            modes.append("AdfDuplex")
+        modes.append("AdfDuplexSoftware")
+        return modes
 
     def _build(self) -> Adw.PreferencesGroup:
         s = self._scanner
@@ -83,6 +99,17 @@ class ScannerPanel:
             group.add(src_row)
         else:
             self._src_drop = None
+
+        if len(self._duplex_modes) > 1:
+            dup_strings = [_duplex_labels().get(m, m) for m in self._duplex_modes]
+            self._duplex_drop = _make_dropdown(dup_strings, 0)
+            self._duplex_row = Adw.ActionRow(title=_("Duplex"))
+            self._duplex_row.set_activatable(False)
+            self._duplex_row.add_suffix(self._duplex_drop)
+            self._duplex_row.set_visible(self._get_selected_source() == "AdfSimplex")
+            group.add(self._duplex_row)
+            if self._src_drop is not None:
+                self._src_drop.connect("notify::selected", self._on_source_changed)
 
         scan_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=8)
         scan_box.set_valign(Gtk.Align.CENTER)
@@ -140,11 +167,18 @@ class ScannerPanel:
             return self._sources[sidx] if sidx < len(self._sources) else "Platen"
         return self._sources[0] if self._sources else "Platen"
 
+    def _get_selected_duplex(self) -> str:
+        if self._duplex_drop is not None:
+            idx = self._duplex_drop.get_selected()
+            return self._duplex_modes[idx] if idx < len(self._duplex_modes) else "None"
+        return "None"
+
     def _save_scan_settings(self) -> None:
         settings.set(self._settings_key, {
             "resolution": self._get_selected_resolution(),
             "color_mode": self._get_selected_color_mode(),
             "source":     self._get_selected_source(),
+            "duplex":     self._get_selected_duplex(),
         })
         log.debug("Scan-Einstellungen gespeichert für '%s'", self._scanner.name)
 
@@ -166,6 +200,10 @@ class ScannerPanel:
         if self._src_drop is not None and src in self._sources:
             self._src_drop.set_selected(self._sources.index(src))
 
+        dup = saved.get("duplex", "None")
+        if self._duplex_drop is not None and dup in self._duplex_modes:
+            self._duplex_drop.set_selected(self._duplex_modes.index(dup))
+
         log.debug("Scan-Einstellungen wiederhergestellt für '%s'", self._scanner.name)
 
     # ------------------------------------------------------------------
@@ -174,10 +212,14 @@ class ScannerPanel:
         color_mode = self._get_selected_color_mode()
         resolution = self._get_selected_resolution()
         source = self._get_selected_source()
+        duplex = self._get_selected_duplex()
 
         self._save_scan_settings()
 
-        if source == "AdfDuplexSoftware":
+        if source == "AdfSimplex" and duplex == "AdfDuplex":
+            self._run_hardware_duplex(btn, color_mode, resolution)
+            return
+        if source == "AdfSimplex" and duplex == "AdfDuplexSoftware":
             self._run_software_duplex(btn, color_mode, resolution)
             return
 
@@ -204,6 +246,10 @@ class ScannerPanel:
             self._cancel_event.set()
             log.info("Scan-Abbruch angefordert")
         self._cancel_btn.set_sensitive(False)
+
+    def _on_source_changed(self, _drop: Gtk.DropDown, _pspec) -> None:
+        if self._duplex_row is not None:
+            self._duplex_row.set_visible(self._get_selected_source() == "AdfSimplex")
 
     def _scan_thread(
         self,
@@ -260,6 +306,48 @@ class ScannerPanel:
             log.info("Datei geöffnet: %s", self._last_scan_path)
         except Exception as exc:
             log.error("Datei konnte nicht geöffnet werden: %s", exc)
+
+    # ------------------------------------------------------------------
+    # Hardware-Duplex (BETA)
+    # ------------------------------------------------------------------
+
+    def _run_hardware_duplex(
+        self, btn: Gtk.Button, color_mode: str, resolution: int
+    ) -> None:
+        msg_no_paper  = _("Kein Papier im Einzug")
+        msg_cancelled = _("Hardware-Duplex-Scan abgebrochen")
+
+        btn.set_sensitive(False)
+        self._cancel_btn.set_visible(True)
+        self._spinner.start()
+        self._saved_row.set_subtitle(_("Hardware-Duplex-Scan läuft… (Beta)"))
+        self._open_btn.set_visible(False)
+
+        self._cancel_event = threading.Event()
+        cancel_event = self._cancel_event
+
+        def _do_scan() -> None:
+            if self._scanner.detect_paper_loaded and not cancel_event.is_set():
+                adf_state = scanner_client.get_adf_state(self._scanner.escl_url)
+                if adf_state == "ScannerAdfEmpty":
+                    log.warning("ADF leer für Hardware-Duplex-Scan")
+                    GLib.idle_add(self._on_scan_done, False, msg_no_paper)
+                    return
+
+            try:
+                path = scanner_client.scan_adf_hardware_duplex(
+                    self._scanner, color_mode, resolution,
+                    cancel_event=cancel_event,
+                )
+                GLib.idle_add(self._on_scan_done, True, path)
+            except InterruptedError:
+                log.info("Hardware-Duplex-Scan abgebrochen")
+                GLib.idle_add(self._on_scan_done, False, msg_cancelled)
+            except Exception as exc:
+                log.error("Hardware-Duplex-Scan fehlgeschlagen: %s", exc)
+                GLib.idle_add(self._on_scan_done, False, str(exc))
+
+        threading.Thread(target=_do_scan, daemon=True).start()
 
     # ------------------------------------------------------------------
     # Software-Duplex
