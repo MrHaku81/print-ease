@@ -158,26 +158,7 @@ def scan_document(
     Scannt ein Dokument via eSCL und speichert es als JPEG.
     Gibt den Pfad zur gespeicherten Datei zurück.
     """
-    xml = _SCAN_SETTINGS_XML.format(
-        width=scanner.max_width,
-        height=scanner.max_height,
-        source=source,
-        color_mode=color_mode,
-        resolution=resolution,
-    ).encode("utf-8")
-
-    log.info("Scan starten: %s, %s, %d dpi, Quelle=%s", scanner.name, color_mode, resolution, source)
-
-    job_url = _create_scan_job(scanner.escl_url, xml)
-    log.debug("Scan-Job angelegt: %s", job_url)
-
-    try:
-        if cancel_event and cancel_event.is_set():
-            raise InterruptedError("Scan abgebrochen")
-        image_data = _fetch_next_document(job_url, cancel_event=cancel_event)
-        log.debug("Scan-Daten erhalten: %d Bytes", len(image_data))
-    finally:
-        _delete_job(job_url)
+    image_data = _scan_single_page(scanner, color_mode, resolution, source, cancel_event)
 
     if output_path is None:
         output_path = _default_output_path()
@@ -400,6 +381,76 @@ def scan_adf_hardware_duplex(
     return output_path
 
 
+def scan_platen_multipage(
+    scanner: ScannerInfo,
+    color_mode: str = "RGB24",
+    resolution: int = 300,
+    next_page_callback: Callable[[int], str] | None = None,
+    progress_callback: Callable[[int], None] | None = None,
+    cancel_event=None,
+) -> str:
+    """Multi-Page-Scan vom Flachbett. Beliebige Anzahl Seiten.
+
+    Scannt einzelne Seiten vom Flachbett, fragt den User nach jeder
+    Seite via next_page_callback. Baut am Ende ein PDF.
+
+    next_page_callback(page_num) muss einen der folgenden Strings
+    zurückgeben:
+        "continue" — weitere Seite scannen
+        "finish"   — PDF jetzt erstellen und beenden
+        "cancel"   — Abbrechen (raises InterruptedError)
+
+    progress_callback(page_num) wird vor jedem Scan aufgerufen.
+
+    Raises:
+        RuntimeError: Wenn next_page_callback fehlt oder 0 Seiten.
+        InterruptedError: Bei Abbruch durch User oder cancel_event.
+        ValueError: Bei ungültigem next_page_callback-Return.
+    """
+    if next_page_callback is None:
+        raise RuntimeError("next_page_callback ist erforderlich")
+
+    log.info(
+        "Multi-Page-Flachbett-Scan starten: %s, %s, %d dpi",
+        scanner.name, color_mode, resolution,
+    )
+
+    page_num = 1
+    jpeg_pages: list[bytes] = []
+
+    while True:
+        if cancel_event and cancel_event.is_set():
+            raise InterruptedError("Vom Benutzer abgebrochen")
+
+        if progress_callback:
+            progress_callback(page_num)
+
+        log.info("Seite %d wird gescannt...", page_num)
+        jpeg = _scan_single_page(scanner, color_mode, resolution, "Platen", cancel_event)
+        jpeg_pages.append(jpeg)
+        log.info("Seite %d gescannt: %d bytes", page_num, len(jpeg))
+
+        answer = next_page_callback(page_num)
+
+        if answer == "continue":
+            page_num += 1
+            continue
+        elif answer == "finish":
+            break
+        elif answer == "cancel":
+            raise InterruptedError("Vom Benutzer abgebrochen")
+        else:
+            raise ValueError(f"Unerwarteter next_page_callback-Return: {answer!r}")
+
+    if not jpeg_pages:
+        raise RuntimeError(_("Keine Seiten gescannt"))
+
+    output_path = _default_platen_multipage_output_path()
+    _create_pdf(jpeg_pages, output_path)
+    log.info("Multi-Page-PDF erstellt: %s (%d Seiten)", output_path, len(jpeg_pages))
+    return output_path
+
+
 # ---------------------------------------------------------------------------
 # eSCL HTTP-Ablauf
 # ---------------------------------------------------------------------------
@@ -448,6 +499,41 @@ def _delete_job(job_url: str) -> None:
         urllib.request.urlopen(req, timeout=5, context=_ESCL_SSL_CONTEXT)
     except Exception as exc:
         log.debug("Scan-Job konnte nicht gelöscht werden: %s", exc)
+
+
+def _scan_single_page(
+    scanner: ScannerInfo,
+    color_mode: str,
+    resolution: int,
+    source: str,
+    cancel_event=None,
+) -> bytes:
+    """Führt einen eSCL-Scan-Job aus und liefert JPEG-Bytes.
+
+    Reine Helper-Funktion: keine Datei-Ausgabe, keine PDF-Erstellung.
+    Geeignet als Baustein für Multi-Page-Flows.
+    """
+    xml = _SCAN_SETTINGS_XML.format(
+        width=scanner.max_width,
+        height=scanner.max_height,
+        source=source,
+        color_mode=color_mode,
+        resolution=resolution,
+    ).encode("utf-8")
+
+    log.info("Scan starten: %s, %s, %d dpi, Quelle=%s", scanner.name, color_mode, resolution, source)
+    job_url = _create_scan_job(scanner.escl_url, xml)
+    log.debug("Scan-Job angelegt: %s", job_url)
+
+    try:
+        if cancel_event and cancel_event.is_set():
+            raise InterruptedError("Scan abgebrochen")
+        image_data = _fetch_next_document(job_url, cancel_event=cancel_event)
+        log.debug("Scan-Daten erhalten: %d Bytes", len(image_data))
+    finally:
+        _delete_job(job_url)
+
+    return image_data
 
 
 # ---------------------------------------------------------------------------
@@ -613,6 +699,19 @@ def _default_duplex_output_path() -> str:
     scan_dir = base / "Scans"
     scan_dir.mkdir(parents=True, exist_ok=True)
     return str(scan_dir / f"scan_duplex_{ts}.pdf")
+
+
+def _default_platen_multipage_output_path() -> str:
+    ts = datetime.now().strftime("%Y%m%d_%H%M%S")
+    try:
+        from gi.repository import GLib
+        pictures = GLib.get_user_special_dir(GLib.UserDirectory.DIRECTORY_PICTURES)
+        base = Path(pictures) if pictures else Path.home()
+    except Exception:
+        base = Path.home()
+    scan_dir = base / "Scans"
+    scan_dir.mkdir(parents=True, exist_ok=True)
+    return str(scan_dir / f"scan_multipage_{ts}.pdf")
 
 
 def _create_pdf(jpeg_pages: list[bytes], output_path: str) -> None:
