@@ -451,6 +451,76 @@ def scan_platen_multipage(
     return output_path
 
 
+def scan_platen_archive(
+    scanner: ScannerInfo,
+    color_mode: str = "RGB24",
+    resolution: int = 300,
+    next_page_callback: Callable[[int], str] | None = None,
+    progress_callback: Callable[[int], None] | None = None,
+    cancel_event=None,
+) -> str:
+    """Archiv-Scan vom Flachbett als Multi-Page-TIFF. Beliebige Anzahl Seiten.
+
+    Scannt einzelne Seiten vom Flachbett, fragt den User nach jeder
+    Seite via next_page_callback. Baut am Ende ein TIFF (LZW-komprimiert).
+
+    next_page_callback(page_num) muss einen der folgenden Strings
+    zurückgeben:
+        "continue" — weitere Seite scannen
+        "finish"   — TIFF jetzt erstellen und beenden
+        "cancel"   — Abbrechen (raises InterruptedError)
+
+    progress_callback(page_num) wird vor jedem Scan aufgerufen.
+
+    Raises:
+        RuntimeError: Wenn next_page_callback fehlt oder 0 Seiten.
+        InterruptedError: Bei Abbruch durch User oder cancel_event.
+        ValueError: Bei ungültigem next_page_callback-Return.
+    """
+    if next_page_callback is None:
+        raise RuntimeError("next_page_callback ist erforderlich")
+
+    log.info(
+        "Archiv-Flachbett-Scan starten: %s, %s, %d dpi",
+        scanner.name, color_mode, resolution,
+    )
+
+    page_num = 1
+    jpeg_pages: list[bytes] = []
+
+    while True:
+        if cancel_event and cancel_event.is_set():
+            raise InterruptedError("Vom Benutzer abgebrochen")
+
+        if progress_callback:
+            progress_callback(page_num)
+
+        log.info("Seite %d wird gescannt...", page_num)
+        jpeg = _scan_single_page(scanner, color_mode, resolution, "Platen", cancel_event)
+        jpeg_pages.append(jpeg)
+        log.info("Seite %d gescannt: %d bytes", page_num, len(jpeg))
+
+        answer = next_page_callback(page_num)
+
+        if answer == "continue":
+            page_num += 1
+            continue
+        elif answer == "finish":
+            break
+        elif answer == "cancel":
+            raise InterruptedError("Vom Benutzer abgebrochen")
+        else:
+            raise ValueError(f"Unerwarteter next_page_callback-Return: {answer!r}")
+
+    if not jpeg_pages:
+        raise RuntimeError(_("Keine Seiten gescannt"))
+
+    output_path = _default_platen_archive_output_path()
+    _create_tiff(jpeg_pages, output_path)
+    log.info("Archiv-TIFF erstellt: %s (%d Seiten)", output_path, len(jpeg_pages))
+    return output_path
+
+
 # ---------------------------------------------------------------------------
 # eSCL HTTP-Ablauf
 # ---------------------------------------------------------------------------
@@ -714,6 +784,19 @@ def _default_platen_multipage_output_path() -> str:
     return str(scan_dir / f"scan_multipage_{ts}.pdf")
 
 
+def _default_platen_archive_output_path() -> str:
+    ts = datetime.now().strftime("%Y%m%d_%H%M%S")
+    try:
+        from gi.repository import GLib
+        pictures = GLib.get_user_special_dir(GLib.UserDirectory.DIRECTORY_PICTURES)
+        base = Path(pictures) if pictures else Path.home()
+    except Exception:
+        base = Path.home()
+    scan_dir = base / "Scans"
+    scan_dir.mkdir(parents=True, exist_ok=True)
+    return str(scan_dir / f"scan_archive_{ts}.tif")
+
+
 def _create_pdf(jpeg_pages: list[bytes], output_path: str) -> None:
     """Erzeugt eine mehrseitige PDF aus JPEG-Bytes (benötigt Pillow)."""
     try:
@@ -734,4 +817,30 @@ def _create_pdf(jpeg_pages: list[bytes], output_path: str) -> None:
         save_all=True,
         append_images=images[1:],
         resolution=200.0,
+    )
+
+
+def _create_tiff(jpeg_pages: list[bytes], output_path: str) -> None:
+    """Erstellt eine TIFF-Multi-Page-Datei aus JPEG-Bytes.
+
+    Verwendet Pillow's nativen TIFF-Support mit LZW-Kompression.
+    """
+    try:
+        from PIL import Image
+    except ImportError as exc:
+        raise RuntimeError(
+            _("Pillow (python-pillow) nicht installiert — bitte installieren: sudo pacman -S python-pillow")
+        ) from exc
+
+    if not jpeg_pages:
+        raise RuntimeError("Keine Seiten für TIFF-Erstellung")
+
+    Path(output_path).parent.mkdir(parents=True, exist_ok=True)
+    images = [Image.open(io.BytesIO(jpeg)) for jpeg in jpeg_pages]
+    images[0].save(
+        output_path,
+        format="TIFF",
+        save_all=True,
+        append_images=images[1:],
+        compression="tiff_lzw",
     )

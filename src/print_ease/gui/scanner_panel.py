@@ -43,6 +43,7 @@ def _mode_labels() -> dict[str, str]:
     return {
         "single":    _("Einzelseite"),
         "multipage": _("Multi-Page Dokument"),
+        "archive":   _("Archiv (TIFF)"),
     }
 
 
@@ -82,7 +83,7 @@ class ScannerPanel:
         return modes
 
     def _build_mode_list(self) -> list[str]:
-        return ["single", "multipage"]
+        return ["single", "multipage", "archive"]
 
     def _build(self) -> Adw.PreferencesGroup:
         s = self._scanner
@@ -254,6 +255,9 @@ class ScannerPanel:
         if source == "Platen" and mode == "multipage":
             self._run_multipage_platen(btn, color_mode, resolution)
             return
+        if source == "Platen" and mode == "archive":
+            self._run_archive_platen(btn, color_mode, resolution)
+            return
         if source == "AdfSimplex" and duplex == "AdfDuplex":
             self._run_hardware_duplex(btn, color_mode, resolution)
             return
@@ -416,7 +420,7 @@ class ScannerPanel:
             )
             result: list[str] = ["continue"]
             done_event = threading.Event()
-            GLib.idle_add(self._show_multipage_dialog, page_num, result, done_event)
+            GLib.idle_add(self._show_multipage_dialog, page_num, _("Dokument"), result, done_event)
             while not done_event.wait(timeout=1.0):
                 if cancel_event.is_set():
                     raise InterruptedError("Scan abgebrochen")
@@ -435,6 +439,51 @@ class ScannerPanel:
                 GLib.idle_add(self._on_scan_done, False, msg_cancelled)
             except Exception as exc:
                 log.error("Multi-Page-Scan fehlgeschlagen: %s", exc)
+                GLib.idle_add(self._on_scan_done, False, str(exc))
+
+        threading.Thread(target=_do_scan, daemon=True).start()
+
+    def _run_archive_platen(
+        self, btn: Gtk.Button, color_mode: str, resolution: int
+    ) -> None:
+        msg_scanning  = _("Seite wird gescannt…")
+        msg_cancelled = _("Archiv-Scan abgebrochen")
+
+        btn.set_sensitive(False)
+        self._cancel_btn.set_visible(True)
+        self._spinner.start()
+        self._saved_row.set_subtitle(msg_scanning)
+        self._open_btn.set_visible(False)
+
+        self._cancel_event = threading.Event()
+        cancel_event = self._cancel_event
+
+        def _next_page_callback(page_num: int) -> str:
+            GLib.idle_add(
+                self._saved_row.set_subtitle,
+                _("Seite {n} gescannt — warte auf Antwort…").format(n=page_num),
+            )
+            result: list[str] = ["continue"]
+            done_event = threading.Event()
+            GLib.idle_add(self._show_multipage_dialog, page_num, _("Archiv"), result, done_event)
+            while not done_event.wait(timeout=1.0):
+                if cancel_event.is_set():
+                    raise InterruptedError("Scan abgebrochen")
+            return result[0]
+
+        def _do_scan() -> None:
+            try:
+                path = scanner_client.scan_platen_archive(
+                    self._scanner, color_mode, resolution,
+                    next_page_callback=_next_page_callback,
+                    cancel_event=cancel_event,
+                )
+                GLib.idle_add(self._on_scan_done, True, path)
+            except InterruptedError:
+                log.info("Archiv-Scan abgebrochen")
+                GLib.idle_add(self._on_scan_done, False, msg_cancelled)
+            except Exception as exc:
+                log.error("Archiv-Scan fehlgeschlagen: %s", exc)
                 GLib.idle_add(self._on_scan_done, False, str(exc))
 
         threading.Thread(target=_do_scan, daemon=True).start()
@@ -526,7 +575,7 @@ class ScannerPanel:
         return GLib.SOURCE_REMOVE
 
     def _show_multipage_dialog(
-        self, page_num: int, result: list[str], done_event: threading.Event
+        self, page_num: int, container_name: str, result: list[str], done_event: threading.Event
     ) -> bool:
         root = self._group.get_root()
         if root is None:
@@ -536,7 +585,7 @@ class ScannerPanel:
 
         dialog = Adw.AlertDialog(
             heading=_("Seite {n} gescannt").format(n=page_num),
-            body=_("Bisher {n} Seiten im Dokument.").format(n=page_num),
+            body=_("Bisher {n} Seiten im {container}.").format(n=page_num, container=container_name),
         )
         dialog.add_response("cancel",   _("Abbrechen"))
         dialog.add_response("finish",   _("Fertig"))
