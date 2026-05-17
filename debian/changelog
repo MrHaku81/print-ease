@@ -1,3 +1,20 @@
+print-ease (0.2.0-1) unstable; urgency=low
+
+  * The Scan Release. Adds three new scanning workflows: ADF
+    hardware duplex (BETA, requires scanner support), multi-page
+    flatbed documents (PDF output), and multi-page flatbed archives
+    (TIFF output). UI restructured with separate Source and Duplex
+    dropdowns plus a new Mode selector.
+  * Complete translations across 33 languages: every string in the
+    scanner panel, printer-default group, app menu and paper-size
+    names is now localised. Previously hardcoded German labels in
+    printer defaults and media names are now fully translatable.
+  * Fix grammar bugs in agglutinative languages (fi, hu, he) where
+    suffixes were appended to placeholder values, producing
+    ungrammatical wordforms.
+
+ -- MrHaku81 <haku81.kk@gmail.com>  Sun, 17 May 2026 14:16:00 +0200
+
 print-ease (0.1.6-1) unstable; urgency=low
 
   * Add per-printer default settings UI: paper format, duplex, color

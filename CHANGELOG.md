@@ -1,5 +1,66 @@
 # Changelog
 
+## [0.2.0] - 2026-05-17
+
+### Added
+- **The Scan Release.** Three new scanning workflows for the
+  flatbed and ADF:
+  - **ADF hardware duplex** (BETA) — single eSCL job with
+    `InputSource=AdfDuplex` when the scanner reports the
+    capability, with metadata-based front/back ordering and
+    fallback to stream order. Untested locally; marked BETA.
+  - **Multi-page flatbed document** — scans single pages from
+    the flatbed and assembles them into one PDF, with a per-page
+    dialog (Next Page / Done / Cancel) that lets the user decide
+    after each page whether to continue.
+  - **Multi-page flatbed archive** — same workflow as Multi-page
+    Document, but produces a multi-page TIFF with LZW compression
+    instead of PDF.
+- New `Modus` (Mode) dropdown in the scanner panel for selecting
+  Single page / Multi-page document / Archive (TIFF) when the
+  flatbed is the source.
+- Capability parser extended to detect `AdfDuplexInputCaps` /
+  `<scan:AdfOption>Duplex</scan:AdfOption>` and expose hardware
+  duplex when available.
+
+### Changed
+- Scanner panel restructured: Source and Duplex are now two
+  separate dropdowns instead of one combined list. Visibility
+  is capability-driven — Mode row shown for Platen, Duplex row
+  shown for ADF.
+- Output file names made distinct so each scan kind is
+  immediately recognisable:
+  - `scan_<ts>.jpg` — single-page Platen scan
+  - `scan_duplex_<ts>.pdf` — ADF software duplex
+  - `scan_multipage_<ts>.pdf` — multi-page Platen document
+  - `scan_archive_<ts>.tif` — multi-page Platen archive
+- Internal refactor: `scan_document()` split into a thin wrapper
+  plus `_scan_single_page()` that returns raw JPEG bytes, so the
+  multi-page paths can collect pages in memory without touching
+  disk between pages.
+
+### Fixed
+- Hardcoded German labels in printer-default dropdowns
+  (`SIDES_LABELS`, `COLOR_MODE_LABELS`, `QUALITY_LABELS`) and in
+  the PWG media-name table now go through gettext, so values
+  like `Einseitig`, `Farbe`, `Normal`, `DL Umschlag`,
+  `Foto 4×6 Zoll` and `Hagaki Postkarte` are translated
+  correctly in every locale rather than staying German.
+- Three v0.2.0 strings rewritten to avoid suffix-on-placeholder
+  bugs in agglutinative languages (Finnish, Hungarian, Hebrew),
+  which would otherwise have produced ungrammatical wordforms
+  when the `{container}` placeholder was interpolated.
+
+### Internationalisation
+- Complete translations for all 33 supported languages
+  (ar, bg, cs, da, de, el, en, es, fa, fi, fr, he, hi, hr, hu,
+  id, it, ja, nb, nl, pl, pt, ro, ru, sk, sr, sv, th, tr, uk,
+  vi, zh_CN, zh_TW) — ~1750 translations across the new v0.2.0
+  scanner strings, the previously untranslated v0.1.6 printer-
+  default group, the app-menu entries and the paper-size tokens.
+  `zh_CN` and `zh_TW` are differentiated by region-specific
+  vocabulary, not just by character set.
+
 ## [0.1.6] - 2026-05-07
 
 ### Added
