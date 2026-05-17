@@ -4,222 +4,566 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PrintEase 0.1.0\n"
 "Report-Msgid-Bugs-To: haku81.kk@gmail.com\n"
+"POT-Creation-Date: 2026-05-17 12:42+0200\n"
 "PO-Revision-Date: 2026-05-01 00:00+0000\n"
 "Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-msgid "Drucker aktualisieren"
-msgstr "刷新打印机"
-
+#: src/print_ease/gui/add_printer_dialog.py:40
+#: src/print_ease/gui/add_printer_dialog.py:83 src/print_ease/gui/window.py:34
+#: src/print_ease/__main__.py:94
 msgid "Drucker hinzufügen"
 msgstr "添加打印机"
 
-msgid "Drucker werden geladen…"
-msgstr "正在加载打印机…"
-
-msgid "Bereit"
-msgstr "就绪"
-
-msgid "Druckt…"
-msgstr "打印中…"
-
-msgid "Gestoppt"
-msgstr "已停止"
-
-msgid "Standard"
-msgstr "默认"
-
-msgid "Druckerinformationen"
-msgstr "打印机信息"
-
-msgid "Name"
-msgstr "名称"
-
-msgid "Beschreibung"
-msgstr "描述"
-
-msgid "Standort"
-msgstr "位置"
-
-msgid "Verbindung"
-msgstr "连接"
-
-msgid "Status"
-msgstr "状态"
-
-msgid "Aktionen"
-msgstr "操作"
-
-msgid "Als Standard setzen"
-msgstr "设为默认"
-
-msgid "✓ Ist Standard"
-msgstr "✓ 是默认"
-
-msgid "Drucker pausieren"
-msgstr "暂停打印机"
-
-msgid "Pausieren"
-msgstr "暂停"
-
-msgid "Fortsetzen"
-msgstr "恢复"
-
-msgid "Testseite drucken"
-msgstr "打印测试页"
-
-msgid "Drucken"
-msgstr "打印"
-
-msgid "Aktive Druckjobs"
-msgstr "活动打印任务"
-
-msgid "Keine aktiven Jobs"
-msgstr "无活动任务"
-
-msgid "Gefahrenzone"
-msgstr "危险区域"
-
-msgid "Drucker entfernen"
-msgstr "删除打印机"
-
-msgid "Entfernt den Drucker dauerhaft aus CUPS"
-msgstr "从CUPS中永久删除打印机"
-
-msgid "Entfernen"
-msgstr "删除"
-
-msgid "Scanner"
-msgstr "扫描仪"
-
-msgid "Auflösung"
-msgstr "分辨率"
-
-msgid "Farbmodus"
-msgstr "颜色模式"
-
-msgid "Quelle"
-msgstr "来源"
-
-msgid "Scannen"
-msgstr "扫描"
-
-msgid "Scan starten"
-msgstr "开始扫描"
-
-msgid "Gespeichert unter"
-msgstr "另存为"
-
-msgid "Flachbett"
-msgstr "平板"
-
-msgid "Einzug (ADF)"
-msgstr "文档送纸器 (ADF)"
-
-msgid "Farbe"
-msgstr "彩色"
-
-msgid "Graustufen"
-msgstr "灰度"
-
-msgid "Schwarzweiß"
-msgstr "黑白"
-
-msgid "Manuell"
-msgstr "手动"
-
-msgid "Netzwerk"
-msgstr "网络"
-
+#: src/print_ease/gui/add_printer_dialog.py:48
+#: src/print_ease/gui/printer_detail.py:422
+#: src/print_ease/gui/printer_detail.py:520
+#: src/print_ease/gui/scanner_panel.py:145
+#: src/print_ease/gui/scanner_panel.py:564
+#: src/print_ease/gui/scanner_panel.py:590
 msgid "Abbrechen"
 msgstr "取消"
 
+#: src/print_ease/gui/add_printer_dialog.py:64
+msgid "Manuell"
+msgstr "手动"
+
+#: src/print_ease/gui/add_printer_dialog.py:65
+msgid "Netzwerk"
+msgstr "网络"
+
+#: src/print_ease/gui/add_printer_dialog.py:85
+#: src/print_ease/gui/printer_detail.py:142
+msgid "Name"
+msgstr "名称"
+
+#: src/print_ease/gui/add_printer_dialog.py:97
+#: src/print_ease/gui/printer_detail.py:143
+msgid "Beschreibung"
+msgstr "描述"
+
+#: src/print_ease/gui/add_printer_dialog.py:100
+#: src/print_ease/gui/printer_detail.py:144
+msgid "Standort"
+msgstr "位置"
+
+#: src/print_ease/gui/add_printer_dialog.py:106
 msgid "Hinzufügen"
 msgstr "添加"
 
-msgid "Übernehmen"
-msgstr "使用"
+#: src/print_ease/gui/add_printer_dialog.py:166
+#: src/print_ease/gui/scanner_panel.py:341
+#, python-brace-format
+msgid "Fehler: {err}"
+msgstr "错误: {err}"
 
+#: src/print_ease/gui/add_printer_dialog.py:183
 msgid "Netzwerkdrucker suchen"
 msgstr "搜索网络打印机"
 
+#: src/print_ease/gui/add_printer_dialog.py:188
 msgid "Erneut suchen"
 msgstr "重新搜索"
 
-msgid "Keine Drucker gefunden"
-msgstr "未找到打印机"
-
-msgid "Kein Drucker ausgewählt"
-msgstr "未选择打印机"
-
-msgid "Wähle einen Drucker aus der Liste."
-msgstr "从列表中选择打印机。"
-
+#: src/print_ease/gui/add_printer_dialog.py:212
 msgid "Keine Netzwerkdrucker gefunden"
 msgstr "未找到网络打印机"
 
+#: src/print_ease/gui/add_printer_dialog.py:214
 msgid "Stelle sicher dass Avahi läuft und Drucker im Netzwerk sind."
 msgstr "请确保Avahi正在运行且打印机在网络上。"
 
-msgid "Drucker hinzufügen oder CUPS-Verbindung prüfen."
-msgstr "添加打印机或检查CUPS连接。"
+#: src/print_ease/gui/add_printer_dialog.py:235 src/print_ease/gui/window.py:81
+msgid "Drucker werden geladen…"
+msgstr "正在加载打印机…"
 
-msgid "ADF-Einzug ist leer — bitte Dokument einlegen"
-msgstr "ADF送纸器为空 — 请放入文档"
+#: src/print_ease/gui/add_printer_dialog.py:270
+msgid "Übernehmen"
+msgstr "使用"
 
-msgid "Drucker entfernen?"
-msgstr "删除打印机？"
+#: src/print_ease/gui/printer_detail.py:26
+msgid "Einseitig"
+msgstr "单面"
 
-msgid "wird dauerhaft aus CUPS entfernt."
-msgstr "将从CUPS中永久删除。"
+#: src/print_ease/gui/printer_detail.py:27
+msgid "Duplex (lange Kante)"
+msgstr "双面 (长边装订)"
 
+#: src/print_ease/gui/printer_detail.py:28
+msgid "Duplex (kurze Kante)"
+msgstr "双面 (短边装订)"
+
+#: src/print_ease/gui/printer_detail.py:34
+#: src/print_ease/gui/scanner_panel.py:21
+msgid "Farbe"
+msgstr "彩色"
+
+#: src/print_ease/gui/printer_detail.py:35
+#: src/print_ease/gui/scanner_panel.py:23
+msgid "Schwarzweiß"
+msgstr "黑白"
+
+#: src/print_ease/gui/printer_detail.py:36
+msgid "Automatisch"
+msgstr "自动"
+
+#: src/print_ease/gui/printer_detail.py:42
+msgid "Entwurf"
+msgstr "草稿"
+
+#: src/print_ease/gui/printer_detail.py:43
+msgid "Normal"
+msgstr "普通"
+
+#: src/print_ease/gui/printer_detail.py:44
+msgid "Hoch"
+msgstr "高"
+
+#: src/print_ease/gui/printer_detail.py:61
+msgid "Kein Drucker ausgewählt"
+msgstr "未选择打印机"
+
+#: src/print_ease/gui/printer_detail.py:62
+msgid "Wähle einen Drucker aus der Liste."
+msgstr "从列表中选择打印机。"
+
+#: src/print_ease/gui/printer_detail.py:104
+#: src/print_ease/gui/scanner_panel.py:90
+msgid "Scanner"
+msgstr "扫描仪"
+
+#: src/print_ease/gui/printer_detail.py:108
+msgid "Scanner wird erkannt…"
+msgstr "正在检测扫描仪…"
+
+#: src/print_ease/gui/printer_detail.py:139
+msgid "Druckerinformationen"
+msgstr "打印机信息"
+
+#: src/print_ease/gui/printer_detail.py:145
+msgid "Verbindung"
+msgstr "连接"
+
+#: src/print_ease/gui/printer_detail.py:156
+msgid "Status"
+msgstr "状态"
+
+#: src/print_ease/gui/printer_detail.py:164
+msgid "Aktionen"
+msgstr "操作"
+
+#: src/print_ease/gui/printer_detail.py:166
+msgid "Als Standard setzen"
+msgstr "设为默认"
+
+#: src/print_ease/gui/printer_detail.py:169
+msgid "✓ Ist Standard"
+msgstr "✓ 是默认"
+
+#: src/print_ease/gui/printer_detail.py:174
+#: src/print_ease/gui/printer_detail.py:181
 msgid "Standard setzen"
 msgstr "设为默认"
 
-msgid "Kein Papier im Einzug"
-msgstr "送纸器中没有纸张"
-
+#: src/print_ease/gui/printer_detail.py:188
 msgid "Drucker fortsetzen"
 msgstr "恢复打印机"
 
-msgid "Scannt…"
-msgstr "扫描中…"
+#: src/print_ease/gui/printer_detail.py:189
+msgid "Fortsetzen"
+msgstr "恢复"
 
+#: src/print_ease/gui/printer_detail.py:192
+msgid "Drucker pausieren"
+msgstr "暂停打印机"
 
-msgid "Einzug — Duplex (Software)"
-msgstr "进纸器 — 双面（软件）"
+#: src/print_ease/gui/printer_detail.py:193
+msgid "Pausieren"
+msgstr "暂停"
 
-msgid "Stapel umdrehen und erneut einlegen"
-msgstr "翻转纸叠并重新放入"
+#: src/print_ease/gui/printer_detail.py:207
+msgid "Testseite drucken"
+msgstr "打印测试页"
 
-msgid "Vorderseiten gescannt. Drehe den Stapel um, lege ihn erneut in den ADF ein und bestätige."
-msgstr "正面已扫描。请翻转纸叠，重新放入进纸器并确认。"
+#: src/print_ease/gui/printer_detail.py:209
+#: src/print_ease/gui/printer_detail.py:215
+msgid "Drucken"
+msgstr "打印"
 
-msgid "Weiter"
-msgstr "继续"
+#: src/print_ease/gui/printer_detail.py:224
+msgid "Standardeinstellungen"
+msgstr "默认设置"
 
-msgid "Vorderseiten werden gescannt…"
-msgstr "正在扫描正面…"
+#: src/print_ease/gui/printer_detail.py:226
+msgid "Einstellungen werden geladen…"
+msgstr "正在加载设置…"
 
-msgid "Rückseiten werden gescannt…"
-msgstr "正在扫描背面…"
+#: src/print_ease/gui/printer_detail.py:254
+msgid "Fehler beim Laden der Einstellungen"
+msgstr "加载设置时出错"
 
-msgid "PDF wird erstellt…"
-msgstr "正在创建PDF…"
+#: src/print_ease/gui/printer_detail.py:271
+msgid "Papierformat"
+msgstr "纸张大小"
 
-msgid "Duplex-Scan abgebrochen"
-msgstr "双面扫描已取消"
+#: src/print_ease/gui/printer_detail.py:278
+#: src/print_ease/gui/scanner_panel.py:129
+msgid "Duplex"
+msgstr "双面"
 
+#: src/print_ease/gui/printer_detail.py:285
+#: src/print_ease/gui/scanner_panel.py:102
+msgid "Farbmodus"
+msgstr "颜色模式"
+
+#: src/print_ease/gui/printer_detail.py:292
+msgid "Druckqualität"
+msgstr "打印质量"
+
+#: src/print_ease/gui/printer_detail.py:369
+msgid "Standardeinstellung konnte nicht gespeichert werden"
+msgstr "无法保存默认设置"
+
+#: src/print_ease/gui/printer_detail.py:371
+msgid ""
+"Möglicherweise fehlen die nötigen CUPS-Admin-Rechte.\n"
+"\n"
+"Fügen Sie Ihren Benutzer der Gruppe 'lp' hinzu:\n"
+"    sudo gpasswd -a $USER lp\n"
+"\n"
+"Anschließend einmal abmelden und wieder anmelden."
+msgstr ""
+
+#: src/print_ease/gui/printer_detail.py:377
+msgid "OK"
+msgstr "确定"
+
+#: src/print_ease/gui/printer_detail.py:385
+msgid "Aktive Druckjobs"
+msgstr "活动打印任务"
+
+#: src/print_ease/gui/printer_detail.py:387
 msgid "Jobs werden geladen…"
 msgstr "正在加载任务…"
 
+#: src/print_ease/gui/printer_detail.py:408
 msgid "Fehler beim Laden der Jobs"
 msgstr "加载任务时出错"
 
+#: src/print_ease/gui/printer_detail.py:412
+msgid "Keine aktiven Jobs"
+msgstr "无活动任务"
+
+#: src/print_ease/gui/printer_detail.py:419
+msgid "Job"
+msgstr "打印任务"
+
+#: src/print_ease/gui/printer_detail.py:452
+msgid "Gefahrenzone"
+msgstr "危险区域"
+
+#: src/print_ease/gui/printer_detail.py:455
+msgid "Drucker entfernen"
+msgstr "删除打印机"
+
+#: src/print_ease/gui/printer_detail.py:456
+msgid "Entfernt den Drucker dauerhaft aus CUPS"
+msgstr "从CUPS中永久删除打印机"
+
+#: src/print_ease/gui/printer_detail.py:460
+#: src/print_ease/gui/printer_detail.py:521
+#: src/print_ease/gui/printer_detail.py:536
+msgid "Entfernen"
+msgstr "删除"
+
+#: src/print_ease/gui/printer_detail.py:501
+#, python-brace-format
+msgid "Aktion fehlgeschlagen: {err}"
+msgstr "操作失败: {err}"
+
+#: src/print_ease/gui/printer_detail.py:517
+msgid "Drucker entfernen?"
+msgstr "删除打印机？"
+
+#: src/print_ease/gui/printer_detail.py:518
+msgid "wird dauerhaft aus CUPS entfernt."
+msgstr "将从CUPS中永久删除。"
+
+#: src/print_ease/gui/printer_detail.py:559
+#: src/print_ease/gui/printer_row.py:63
+msgid "Bereit"
+msgstr "就绪"
+
+#: src/print_ease/gui/printer_detail.py:561
+#: src/print_ease/gui/printer_row.py:65
+msgid "Druckt…"
+msgstr "打印中…"
+
+#: src/print_ease/gui/printer_detail.py:563
+#: src/print_ease/gui/printer_row.py:67
+msgid "Gestoppt"
+msgstr "已停止"
+
+#: src/print_ease/gui/printer_row.py:50
+msgid "Standard"
+msgstr "默认"
+
+#: src/print_ease/gui/scanner_panel.py:22
+msgid "Graustufen"
+msgstr "灰度"
+
+#: src/print_ease/gui/scanner_panel.py:29
+msgid "Flachbett"
+msgstr "平板"
+
+#: src/print_ease/gui/scanner_panel.py:30
+msgid "Einzug"
+msgstr "进纸器"
+
+#: src/print_ease/gui/scanner_panel.py:36
+msgid "Aus"
+msgstr "关闭"
+
+#: src/print_ease/gui/scanner_panel.py:37
+msgid "Hardware (Beta)"
+msgstr "硬件 (Beta)"
+
+#: src/print_ease/gui/scanner_panel.py:38
+msgid "Software"
+msgstr "软件"
+
+#: src/print_ease/gui/scanner_panel.py:44
+msgid "Einzelseite"
+msgstr "单页"
+
+#: src/print_ease/gui/scanner_panel.py:45
+msgid "Multi-Page Dokument"
+msgstr "多页文档"
+
+#: src/print_ease/gui/scanner_panel.py:46
+msgid "Archiv (TIFF)"
+msgstr "存档 (TIFF)"
+
+#: src/print_ease/gui/scanner_panel.py:95
+msgid "Auflösung"
+msgstr "分辨率"
+
+#: src/print_ease/gui/scanner_panel.py:110
+msgid "Quelle"
+msgstr "来源"
+
+#: src/print_ease/gui/scanner_panel.py:120
+msgid "Modus"
+msgstr "模式"
+
+#: src/print_ease/gui/scanner_panel.py:141
+msgid "Scan starten"
+msgstr "开始扫描"
+
+#: src/print_ease/gui/scanner_panel.py:153
+msgid "Scannen"
+msgstr "扫描"
+
+#: src/print_ease/gui/scanner_panel.py:158
+msgid "Gespeichert unter"
+msgstr "另存为"
+
+#: src/print_ease/gui/scanner_panel.py:163
+msgid "Öffnen"
+msgstr "打开"
+
+#: src/print_ease/gui/scanner_panel.py:269
+#: src/print_ease/gui/scanner_panel.py:362
+#: src/print_ease/gui/scanner_panel.py:502
+msgid "Kein Papier im Einzug"
+msgstr "送纸器中没有纸张"
+
+#: src/print_ease/gui/scanner_panel.py:270
+msgid "Scan abgebrochen"
+msgstr "扫描已取消"
+
+#: src/print_ease/gui/scanner_panel.py:275
+msgid "Scannt…"
+msgstr "扫描中…"
+
+#: src/print_ease/gui/scanner_panel.py:363
+msgid "Hardware-Duplex-Scan abgebrochen"
+msgstr "硬件双面扫描已取消"
+
+#: src/print_ease/gui/scanner_panel.py:368
+msgid "Hardware-Duplex-Scan läuft… (Beta)"
+msgstr "硬件双面扫描进行中… (Beta)"
+
+#: src/print_ease/gui/scanner_panel.py:404
+#: src/print_ease/gui/scanner_panel.py:449
+msgid "Seite wird gescannt…"
+msgstr "正在扫描页面…"
+
+#: src/print_ease/gui/scanner_panel.py:405
+msgid "Multi-Page-Scan abgebrochen"
+msgstr "多页扫描已取消"
+
+#: src/print_ease/gui/scanner_panel.py:419
+#: src/print_ease/gui/scanner_panel.py:464
+#, python-brace-format
+msgid "Seite {n} gescannt — warte auf Antwort…"
+msgstr "第 {n} 页已扫描 — 等待响应…"
+
+#: src/print_ease/gui/scanner_panel.py:423
+msgid "Dokument"
+msgstr "文档"
+
+#: src/print_ease/gui/scanner_panel.py:450
+msgid "Archiv-Scan abgebrochen"
+msgstr "存档扫描已取消"
+
+#: src/print_ease/gui/scanner_panel.py:468
+msgid "Archiv"
+msgstr "存档"
+
+#: src/print_ease/gui/scanner_panel.py:499
+msgid "Vorderseiten werden gescannt…"
+msgstr "正在扫描正面…"
+
+#: src/print_ease/gui/scanner_panel.py:500
+msgid "Rückseiten werden gescannt…"
+msgstr "正在扫描背面…"
+
+#: src/print_ease/gui/scanner_panel.py:501
+msgid "PDF wird erstellt…"
+msgstr "正在创建PDF…"
+
+#: src/print_ease/gui/scanner_panel.py:503
+msgid "Duplex-Scan abgebrochen"
+msgstr "双面扫描已取消"
+
+#: src/print_ease/gui/scanner_panel.py:558
+msgid "Stapel umdrehen und erneut einlegen"
+msgstr "翻转纸叠并重新放入"
+
+#: src/print_ease/gui/scanner_panel.py:560
+msgid ""
+"Vorderseiten gescannt. Drehe den Stapel um, lege ihn erneut in den ADF ein "
+"und bestätige."
+msgstr "正面已扫描。请翻转纸叠，重新放入进纸器并确认。"
+
+#: src/print_ease/gui/scanner_panel.py:565
+msgid "Weiter"
+msgstr "继续"
+
+#: src/print_ease/gui/scanner_panel.py:587
+#, python-brace-format
+msgid "Seite {n} gescannt"
+msgstr "第 {n} 页已扫描"
+
+#: src/print_ease/gui/scanner_panel.py:588
+#, python-brace-format
+msgid "Bisher {n} Seiten im {container}."
+msgstr "{container} 中已扫描 {n} 页。"
+
+#: src/print_ease/gui/scanner_panel.py:591
+msgid "Fertig"
+msgstr "完成"
+
+#: src/print_ease/gui/scanner_panel.py:592
+msgid "Nächste Seite"
+msgstr "下一页"
+
+#: src/print_ease/gui/window.py:39 src/print_ease/__main__.py:88
+msgid "Drucker aktualisieren"
+msgstr "刷新打印机"
+
+#: src/print_ease/gui/window.py:86
+msgid "Keine Drucker gefunden"
+msgstr "未找到打印机"
+
+#: src/print_ease/gui/window.py:87
+msgid "Drucker hinzufügen oder CUPS-Verbindung prüfen."
+msgstr "添加打印机或检查CUPS连接。"
+
+#: src/print_ease/gui/window.py:107
+msgid "Über PrintEase"
+msgstr "关于 PrintEase"
+
+#: src/print_ease/gui/window.py:108
+msgid "Tastaturkürzel"
+msgstr "键盘快捷键"
+
+#: src/print_ease/gui/window.py:109 src/print_ease/__main__.py:100
+msgid "Beenden"
+msgstr "退出"
+
+#: src/print_ease/gui/window.py:114
+msgid "Menü"
+msgstr "菜单"
+
+#: src/print_ease/gui/window.py:227
+msgid ""
+"Verbindung zu CUPS fehlgeschlagen. Bitte prüfe ob der CUPS-Dienst läuft."
+msgstr ""
+
+#: src/print_ease/__main__.py:56
+msgid ""
+"Universelle Linux-Druckerverwaltung —\n"
+"ein moderner Ersatz für system-config-printer."
+msgstr ""
+
+#: src/print_ease/__main__.py:65
+msgid "translator-credits"
+msgstr ""
+
+#: src/print_ease/media_names.py:30 src/print_ease/media_names.py:31
+#: src/print_ease/media_names.py:32 src/print_ease/media_names.py:33
+#: src/print_ease/media_names.py:34
+msgid "Umschlag"
+msgstr "信封"
+
+#: src/print_ease/media_names.py:36 src/print_ease/media_names.py:37
+#: src/print_ease/media_names.py:38 src/print_ease/media_names.py:39
+#: src/print_ease/media_names.py:40
+msgid "Foto"
+msgstr "照片"
+
+#: src/print_ease/media_names.py:36 src/print_ease/media_names.py:37
+#: src/print_ease/media_names.py:38
+msgid "Zoll"
+msgstr "英寸"
+
+#: src/print_ease/media_names.py:39 src/print_ease/media_names.py:40
+msgid "Quadrat"
+msgstr "方形"
+
+#: src/print_ease/media_names.py:42
+msgid "Postkarte"
+msgstr "明信片"
+
+#: src/print_ease/media_names.py:44 src/print_ease/media_names.py:45
+#: src/print_ease/media_names.py:66
+msgid "Benutzerdefiniert"
+msgstr "自定义"
+
+#: src/print_ease/scanner_client.py:236
 msgid "Keine Seiten im ADF-Einzug gescannt"
 msgstr "未从进纸器扫描到任何页面"
 
-msgid "Pillow (python-pillow) nicht installiert — bitte installieren: sudo pacman -S python-pillow"
+#: src/print_ease/scanner_client.py:362
+msgid "Keine Seiten vom Scanner empfangen"
+msgstr "扫描仪未发送页面"
+
+#: src/print_ease/scanner_client.py:446 src/print_ease/scanner_client.py:516
+msgid "Keine Seiten gescannt"
+msgstr "没有扫描任何页面"
+
+#: src/print_ease/scanner_client.py:806 src/print_ease/scanner_client.py:832
+msgid ""
+"Pillow (python-pillow) nicht installiert — bitte installieren: sudo pacman "
+"-S python-pillow"
 msgstr "Pillow (python-pillow) 未安装 — 请安装: sudo pacman -S python-pillow"
+
+#~ msgid "ADF-Einzug ist leer — bitte Dokument einlegen"
+#~ msgstr "ADF送纸器为空 — 请放入文档"
+
+#~ msgid "Einzug — Duplex (Software)"
+#~ msgstr "进纸器 — 双面（软件）"

@@ -4,222 +4,569 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PrintEase 0.1.0\n"
 "Report-Msgid-Bugs-To: haku81.kk@gmail.com\n"
+"POT-Creation-Date: 2026-05-17 12:42+0200\n"
 "PO-Revision-Date: 2026-05-01 00:00+0000\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-msgid "Drucker aktualisieren"
-msgstr "Actualizar impresoras"
-
+#: src/print_ease/gui/add_printer_dialog.py:40
+#: src/print_ease/gui/add_printer_dialog.py:83 src/print_ease/gui/window.py:34
+#: src/print_ease/__main__.py:94
 msgid "Drucker hinzufügen"
 msgstr "Añadir impresora"
 
-msgid "Drucker werden geladen…"
-msgstr "Cargando impresoras…"
-
-msgid "Bereit"
-msgstr "Lista"
-
-msgid "Druckt…"
-msgstr "Imprimiendo…"
-
-msgid "Gestoppt"
-msgstr "Detenida"
-
-msgid "Standard"
-msgstr "Predeterminada"
-
-msgid "Druckerinformationen"
-msgstr "Información de la impresora"
-
-msgid "Name"
-msgstr "Nombre"
-
-msgid "Beschreibung"
-msgstr "Descripción"
-
-msgid "Standort"
-msgstr "Ubicación"
-
-msgid "Verbindung"
-msgstr "Conexión"
-
-msgid "Status"
-msgstr "Estado"
-
-msgid "Aktionen"
-msgstr "Acciones"
-
-msgid "Als Standard setzen"
-msgstr "Establecer como predeterminada"
-
-msgid "✓ Ist Standard"
-msgstr "✓ Es predeterminada"
-
-msgid "Drucker pausieren"
-msgstr "Pausar impresora"
-
-msgid "Pausieren"
-msgstr "Pausar"
-
-msgid "Fortsetzen"
-msgstr "Reanudar"
-
-msgid "Testseite drucken"
-msgstr "Imprimir página de prueba"
-
-msgid "Drucken"
-msgstr "Imprimir"
-
-msgid "Aktive Druckjobs"
-msgstr "Trabajos de impresión activos"
-
-msgid "Keine aktiven Jobs"
-msgstr "Sin trabajos activos"
-
-msgid "Gefahrenzone"
-msgstr "Zona de peligro"
-
-msgid "Drucker entfernen"
-msgstr "Eliminar impresora"
-
-msgid "Entfernt den Drucker dauerhaft aus CUPS"
-msgstr "Elimina la impresora permanentemente de CUPS"
-
-msgid "Entfernen"
-msgstr "Eliminar"
-
-msgid "Scanner"
-msgstr "Escáner"
-
-msgid "Auflösung"
-msgstr "Resolución"
-
-msgid "Farbmodus"
-msgstr "Modo de color"
-
-msgid "Quelle"
-msgstr "Fuente"
-
-msgid "Scannen"
-msgstr "Escanear"
-
-msgid "Scan starten"
-msgstr "Iniciar escaneo"
-
-msgid "Gespeichert unter"
-msgstr "Guardado como"
-
-msgid "Flachbett"
-msgstr "Cama plana"
-
-msgid "Einzug (ADF)"
-msgstr "Alimentador (ADF)"
-
-msgid "Farbe"
-msgstr "Color"
-
-msgid "Graustufen"
-msgstr "Escala de grises"
-
-msgid "Schwarzweiß"
-msgstr "Blanco y negro"
-
-msgid "Manuell"
-msgstr "Manual"
-
-msgid "Netzwerk"
-msgstr "Red"
-
+#: src/print_ease/gui/add_printer_dialog.py:48
+#: src/print_ease/gui/printer_detail.py:422
+#: src/print_ease/gui/printer_detail.py:520
+#: src/print_ease/gui/scanner_panel.py:145
+#: src/print_ease/gui/scanner_panel.py:564
+#: src/print_ease/gui/scanner_panel.py:590
 msgid "Abbrechen"
 msgstr "Cancelar"
 
+#: src/print_ease/gui/add_printer_dialog.py:64
+msgid "Manuell"
+msgstr "Manual"
+
+#: src/print_ease/gui/add_printer_dialog.py:65
+msgid "Netzwerk"
+msgstr "Red"
+
+#: src/print_ease/gui/add_printer_dialog.py:85
+#: src/print_ease/gui/printer_detail.py:142
+msgid "Name"
+msgstr "Nombre"
+
+#: src/print_ease/gui/add_printer_dialog.py:97
+#: src/print_ease/gui/printer_detail.py:143
+msgid "Beschreibung"
+msgstr "Descripción"
+
+#: src/print_ease/gui/add_printer_dialog.py:100
+#: src/print_ease/gui/printer_detail.py:144
+msgid "Standort"
+msgstr "Ubicación"
+
+#: src/print_ease/gui/add_printer_dialog.py:106
 msgid "Hinzufügen"
 msgstr "Añadir"
 
-msgid "Übernehmen"
-msgstr "Usar"
+#: src/print_ease/gui/add_printer_dialog.py:166
+#: src/print_ease/gui/scanner_panel.py:341
+#, python-brace-format
+msgid "Fehler: {err}"
+msgstr "Error: {err}"
 
+#: src/print_ease/gui/add_printer_dialog.py:183
 msgid "Netzwerkdrucker suchen"
 msgstr "Buscar impresoras en red"
 
+#: src/print_ease/gui/add_printer_dialog.py:188
 msgid "Erneut suchen"
 msgstr "Buscar de nuevo"
 
-msgid "Keine Drucker gefunden"
-msgstr "No se encontraron impresoras"
-
-msgid "Kein Drucker ausgewählt"
-msgstr "Ninguna impresora seleccionada"
-
-msgid "Wähle einen Drucker aus der Liste."
-msgstr "Seleccione una impresora de la lista."
-
+#: src/print_ease/gui/add_printer_dialog.py:212
 msgid "Keine Netzwerkdrucker gefunden"
 msgstr "No se encontraron impresoras en red"
 
+#: src/print_ease/gui/add_printer_dialog.py:214
 msgid "Stelle sicher dass Avahi läuft und Drucker im Netzwerk sind."
 msgstr "Asegúrese de que Avahi está activo y las impresoras están en la red."
 
-msgid "Drucker hinzufügen oder CUPS-Verbindung prüfen."
-msgstr "Añada una impresora o compruebe la conexión CUPS."
+#: src/print_ease/gui/add_printer_dialog.py:235 src/print_ease/gui/window.py:81
+msgid "Drucker werden geladen…"
+msgstr "Cargando impresoras…"
 
-msgid "ADF-Einzug ist leer — bitte Dokument einlegen"
-msgstr "El alimentador ADF está vacío — por favor inserte un documento"
+#: src/print_ease/gui/add_printer_dialog.py:270
+msgid "Übernehmen"
+msgstr "Usar"
 
-msgid "Drucker entfernen?"
-msgstr "¿Eliminar impresora?"
+#: src/print_ease/gui/printer_detail.py:26
+msgid "Einseitig"
+msgstr "Una cara"
 
-msgid "wird dauerhaft aus CUPS entfernt."
-msgstr "se eliminará permanentemente de CUPS."
+#: src/print_ease/gui/printer_detail.py:27
+msgid "Duplex (lange Kante)"
+msgstr "Dúplex (borde largo)"
 
+#: src/print_ease/gui/printer_detail.py:28
+msgid "Duplex (kurze Kante)"
+msgstr "Dúplex (borde corto)"
+
+#: src/print_ease/gui/printer_detail.py:34
+#: src/print_ease/gui/scanner_panel.py:21
+msgid "Farbe"
+msgstr "Color"
+
+#: src/print_ease/gui/printer_detail.py:35
+#: src/print_ease/gui/scanner_panel.py:23
+msgid "Schwarzweiß"
+msgstr "Blanco y negro"
+
+#: src/print_ease/gui/printer_detail.py:36
+msgid "Automatisch"
+msgstr "Automático"
+
+#: src/print_ease/gui/printer_detail.py:42
+msgid "Entwurf"
+msgstr "Borrador"
+
+#: src/print_ease/gui/printer_detail.py:43
+msgid "Normal"
+msgstr "Normal"
+
+#: src/print_ease/gui/printer_detail.py:44
+msgid "Hoch"
+msgstr "Alta"
+
+#: src/print_ease/gui/printer_detail.py:61
+msgid "Kein Drucker ausgewählt"
+msgstr "Ninguna impresora seleccionada"
+
+#: src/print_ease/gui/printer_detail.py:62
+msgid "Wähle einen Drucker aus der Liste."
+msgstr "Seleccione una impresora de la lista."
+
+#: src/print_ease/gui/printer_detail.py:104
+#: src/print_ease/gui/scanner_panel.py:90
+msgid "Scanner"
+msgstr "Escáner"
+
+#: src/print_ease/gui/printer_detail.py:108
+msgid "Scanner wird erkannt…"
+msgstr "Detectando escáner…"
+
+#: src/print_ease/gui/printer_detail.py:139
+msgid "Druckerinformationen"
+msgstr "Información de la impresora"
+
+#: src/print_ease/gui/printer_detail.py:145
+msgid "Verbindung"
+msgstr "Conexión"
+
+#: src/print_ease/gui/printer_detail.py:156
+msgid "Status"
+msgstr "Estado"
+
+#: src/print_ease/gui/printer_detail.py:164
+msgid "Aktionen"
+msgstr "Acciones"
+
+#: src/print_ease/gui/printer_detail.py:166
+msgid "Als Standard setzen"
+msgstr "Establecer como predeterminada"
+
+#: src/print_ease/gui/printer_detail.py:169
+msgid "✓ Ist Standard"
+msgstr "✓ Es predeterminada"
+
+#: src/print_ease/gui/printer_detail.py:174
+#: src/print_ease/gui/printer_detail.py:181
 msgid "Standard setzen"
 msgstr "Establecer como predeterminada"
 
-msgid "Kein Papier im Einzug"
-msgstr "Sin papel en el alimentador"
-
+#: src/print_ease/gui/printer_detail.py:188
 msgid "Drucker fortsetzen"
 msgstr "Reanudar impresora"
 
-msgid "Scannt…"
-msgstr "Escaneando…"
+#: src/print_ease/gui/printer_detail.py:189
+msgid "Fortsetzen"
+msgstr "Reanudar"
 
+#: src/print_ease/gui/printer_detail.py:192
+msgid "Drucker pausieren"
+msgstr "Pausar impresora"
 
-msgid "Einzug — Duplex (Software)"
-msgstr "Alimentador — Dúplex (software)"
+#: src/print_ease/gui/printer_detail.py:193
+msgid "Pausieren"
+msgstr "Pausar"
 
-msgid "Stapel umdrehen und erneut einlegen"
-msgstr "Voltear la pila y recargar"
+#: src/print_ease/gui/printer_detail.py:207
+msgid "Testseite drucken"
+msgstr "Imprimir página de prueba"
 
-msgid "Vorderseiten gescannt. Drehe den Stapel um, lege ihn erneut in den ADF ein und bestätige."
-msgstr "Anversos escaneados. Voltee la pila, vuélvala a colocar en el alimentador y confirme."
+#: src/print_ease/gui/printer_detail.py:209
+#: src/print_ease/gui/printer_detail.py:215
+msgid "Drucken"
+msgstr "Imprimir"
 
-msgid "Weiter"
-msgstr "Continuar"
+#: src/print_ease/gui/printer_detail.py:224
+msgid "Standardeinstellungen"
+msgstr "Configuración predeterminada"
 
-msgid "Vorderseiten werden gescannt…"
-msgstr "Escaneando anversos…"
+#: src/print_ease/gui/printer_detail.py:226
+msgid "Einstellungen werden geladen…"
+msgstr "Cargando configuración…"
 
-msgid "Rückseiten werden gescannt…"
-msgstr "Escaneando reversos…"
+#: src/print_ease/gui/printer_detail.py:254
+msgid "Fehler beim Laden der Einstellungen"
+msgstr "Error al cargar la configuración"
 
-msgid "PDF wird erstellt…"
-msgstr "Creando PDF…"
+#: src/print_ease/gui/printer_detail.py:271
+msgid "Papierformat"
+msgstr "Formato de papel"
 
-msgid "Duplex-Scan abgebrochen"
-msgstr "Escaneo dúplex cancelado"
+#: src/print_ease/gui/printer_detail.py:278
+#: src/print_ease/gui/scanner_panel.py:129
+msgid "Duplex"
+msgstr "Dúplex"
 
+#: src/print_ease/gui/printer_detail.py:285
+#: src/print_ease/gui/scanner_panel.py:102
+msgid "Farbmodus"
+msgstr "Modo de color"
+
+#: src/print_ease/gui/printer_detail.py:292
+msgid "Druckqualität"
+msgstr "Calidad de impresión"
+
+#: src/print_ease/gui/printer_detail.py:369
+msgid "Standardeinstellung konnte nicht gespeichert werden"
+msgstr "No se pudo guardar la configuración predeterminada"
+
+#: src/print_ease/gui/printer_detail.py:371
+msgid ""
+"Möglicherweise fehlen die nötigen CUPS-Admin-Rechte.\n"
+"\n"
+"Fügen Sie Ihren Benutzer der Gruppe 'lp' hinzu:\n"
+"    sudo gpasswd -a $USER lp\n"
+"\n"
+"Anschließend einmal abmelden und wieder anmelden."
+msgstr ""
+
+#: src/print_ease/gui/printer_detail.py:377
+msgid "OK"
+msgstr "Aceptar"
+
+#: src/print_ease/gui/printer_detail.py:385
+msgid "Aktive Druckjobs"
+msgstr "Trabajos de impresión activos"
+
+#: src/print_ease/gui/printer_detail.py:387
 msgid "Jobs werden geladen…"
 msgstr "Cargando trabajos…"
 
+#: src/print_ease/gui/printer_detail.py:408
 msgid "Fehler beim Laden der Jobs"
 msgstr "Error al cargar los trabajos"
 
+#: src/print_ease/gui/printer_detail.py:412
+msgid "Keine aktiven Jobs"
+msgstr "Sin trabajos activos"
+
+#: src/print_ease/gui/printer_detail.py:419
+msgid "Job"
+msgstr "Trabajo de impresión"
+
+#: src/print_ease/gui/printer_detail.py:452
+msgid "Gefahrenzone"
+msgstr "Zona de peligro"
+
+#: src/print_ease/gui/printer_detail.py:455
+msgid "Drucker entfernen"
+msgstr "Eliminar impresora"
+
+#: src/print_ease/gui/printer_detail.py:456
+msgid "Entfernt den Drucker dauerhaft aus CUPS"
+msgstr "Elimina la impresora permanentemente de CUPS"
+
+#: src/print_ease/gui/printer_detail.py:460
+#: src/print_ease/gui/printer_detail.py:521
+#: src/print_ease/gui/printer_detail.py:536
+msgid "Entfernen"
+msgstr "Eliminar"
+
+#: src/print_ease/gui/printer_detail.py:501
+#, python-brace-format
+msgid "Aktion fehlgeschlagen: {err}"
+msgstr "Acción fallida: {err}"
+
+#: src/print_ease/gui/printer_detail.py:517
+msgid "Drucker entfernen?"
+msgstr "¿Eliminar impresora?"
+
+#: src/print_ease/gui/printer_detail.py:518
+msgid "wird dauerhaft aus CUPS entfernt."
+msgstr "se eliminará permanentemente de CUPS."
+
+#: src/print_ease/gui/printer_detail.py:559
+#: src/print_ease/gui/printer_row.py:63
+msgid "Bereit"
+msgstr "Lista"
+
+#: src/print_ease/gui/printer_detail.py:561
+#: src/print_ease/gui/printer_row.py:65
+msgid "Druckt…"
+msgstr "Imprimiendo…"
+
+#: src/print_ease/gui/printer_detail.py:563
+#: src/print_ease/gui/printer_row.py:67
+msgid "Gestoppt"
+msgstr "Detenida"
+
+#: src/print_ease/gui/printer_row.py:50
+msgid "Standard"
+msgstr "Predeterminada"
+
+#: src/print_ease/gui/scanner_panel.py:22
+msgid "Graustufen"
+msgstr "Escala de grises"
+
+#: src/print_ease/gui/scanner_panel.py:29
+msgid "Flachbett"
+msgstr "Cama plana"
+
+#: src/print_ease/gui/scanner_panel.py:30
+msgid "Einzug"
+msgstr "Alimentador"
+
+#: src/print_ease/gui/scanner_panel.py:36
+msgid "Aus"
+msgstr "Desactivado"
+
+#: src/print_ease/gui/scanner_panel.py:37
+msgid "Hardware (Beta)"
+msgstr "Hardware (Beta)"
+
+#: src/print_ease/gui/scanner_panel.py:38
+msgid "Software"
+msgstr "Software"
+
+#: src/print_ease/gui/scanner_panel.py:44
+msgid "Einzelseite"
+msgstr "Página única"
+
+#: src/print_ease/gui/scanner_panel.py:45
+msgid "Multi-Page Dokument"
+msgstr "Documento de varias páginas"
+
+#: src/print_ease/gui/scanner_panel.py:46
+msgid "Archiv (TIFF)"
+msgstr "Archivo (TIFF)"
+
+#: src/print_ease/gui/scanner_panel.py:95
+msgid "Auflösung"
+msgstr "Resolución"
+
+#: src/print_ease/gui/scanner_panel.py:110
+msgid "Quelle"
+msgstr "Fuente"
+
+#: src/print_ease/gui/scanner_panel.py:120
+msgid "Modus"
+msgstr "Modo"
+
+#: src/print_ease/gui/scanner_panel.py:141
+msgid "Scan starten"
+msgstr "Iniciar escaneo"
+
+#: src/print_ease/gui/scanner_panel.py:153
+msgid "Scannen"
+msgstr "Escanear"
+
+#: src/print_ease/gui/scanner_panel.py:158
+msgid "Gespeichert unter"
+msgstr "Guardado como"
+
+#: src/print_ease/gui/scanner_panel.py:163
+msgid "Öffnen"
+msgstr "Abrir"
+
+#: src/print_ease/gui/scanner_panel.py:269
+#: src/print_ease/gui/scanner_panel.py:362
+#: src/print_ease/gui/scanner_panel.py:502
+msgid "Kein Papier im Einzug"
+msgstr "Sin papel en el alimentador"
+
+#: src/print_ease/gui/scanner_panel.py:270
+msgid "Scan abgebrochen"
+msgstr "Escaneo cancelado"
+
+#: src/print_ease/gui/scanner_panel.py:275
+msgid "Scannt…"
+msgstr "Escaneando…"
+
+#: src/print_ease/gui/scanner_panel.py:363
+msgid "Hardware-Duplex-Scan abgebrochen"
+msgstr "Escaneo dúplex por hardware cancelado"
+
+#: src/print_ease/gui/scanner_panel.py:368
+msgid "Hardware-Duplex-Scan läuft… (Beta)"
+msgstr "Escaneo dúplex por hardware en curso… (Beta)"
+
+#: src/print_ease/gui/scanner_panel.py:404
+#: src/print_ease/gui/scanner_panel.py:449
+msgid "Seite wird gescannt…"
+msgstr "Escaneando página…"
+
+#: src/print_ease/gui/scanner_panel.py:405
+msgid "Multi-Page-Scan abgebrochen"
+msgstr "Escaneo de varias páginas cancelado"
+
+#: src/print_ease/gui/scanner_panel.py:419
+#: src/print_ease/gui/scanner_panel.py:464
+#, python-brace-format
+msgid "Seite {n} gescannt — warte auf Antwort…"
+msgstr "Página {n} escaneada — esperando respuesta…"
+
+#: src/print_ease/gui/scanner_panel.py:423
+msgid "Dokument"
+msgstr "Documento"
+
+#: src/print_ease/gui/scanner_panel.py:450
+msgid "Archiv-Scan abgebrochen"
+msgstr "Escaneo de archivo cancelado"
+
+#: src/print_ease/gui/scanner_panel.py:468
+msgid "Archiv"
+msgstr "Archivo"
+
+#: src/print_ease/gui/scanner_panel.py:499
+msgid "Vorderseiten werden gescannt…"
+msgstr "Escaneando anversos…"
+
+#: src/print_ease/gui/scanner_panel.py:500
+msgid "Rückseiten werden gescannt…"
+msgstr "Escaneando reversos…"
+
+#: src/print_ease/gui/scanner_panel.py:501
+msgid "PDF wird erstellt…"
+msgstr "Creando PDF…"
+
+#: src/print_ease/gui/scanner_panel.py:503
+msgid "Duplex-Scan abgebrochen"
+msgstr "Escaneo dúplex cancelado"
+
+#: src/print_ease/gui/scanner_panel.py:558
+msgid "Stapel umdrehen und erneut einlegen"
+msgstr "Voltear la pila y recargar"
+
+#: src/print_ease/gui/scanner_panel.py:560
+msgid ""
+"Vorderseiten gescannt. Drehe den Stapel um, lege ihn erneut in den ADF ein "
+"und bestätige."
+msgstr ""
+"Anversos escaneados. Voltee la pila, vuélvala a colocar en el alimentador y "
+"confirme."
+
+#: src/print_ease/gui/scanner_panel.py:565
+msgid "Weiter"
+msgstr "Continuar"
+
+#: src/print_ease/gui/scanner_panel.py:587
+#, python-brace-format
+msgid "Seite {n} gescannt"
+msgstr "Página {n} escaneada"
+
+#: src/print_ease/gui/scanner_panel.py:588
+#, python-brace-format
+msgid "Bisher {n} Seiten im {container}."
+msgstr "{n} páginas en el {container} hasta ahora."
+
+#: src/print_ease/gui/scanner_panel.py:591
+msgid "Fertig"
+msgstr "Listo"
+
+#: src/print_ease/gui/scanner_panel.py:592
+msgid "Nächste Seite"
+msgstr "Página siguiente"
+
+#: src/print_ease/gui/window.py:39 src/print_ease/__main__.py:88
+msgid "Drucker aktualisieren"
+msgstr "Actualizar impresoras"
+
+#: src/print_ease/gui/window.py:86
+msgid "Keine Drucker gefunden"
+msgstr "No se encontraron impresoras"
+
+#: src/print_ease/gui/window.py:87
+msgid "Drucker hinzufügen oder CUPS-Verbindung prüfen."
+msgstr "Añada una impresora o compruebe la conexión CUPS."
+
+#: src/print_ease/gui/window.py:107
+msgid "Über PrintEase"
+msgstr "Acerca de PrintEase"
+
+#: src/print_ease/gui/window.py:108
+msgid "Tastaturkürzel"
+msgstr "Atajos de teclado"
+
+#: src/print_ease/gui/window.py:109 src/print_ease/__main__.py:100
+msgid "Beenden"
+msgstr "Salir"
+
+#: src/print_ease/gui/window.py:114
+msgid "Menü"
+msgstr "Menú"
+
+#: src/print_ease/gui/window.py:227
+msgid ""
+"Verbindung zu CUPS fehlgeschlagen. Bitte prüfe ob der CUPS-Dienst läuft."
+msgstr ""
+
+#: src/print_ease/__main__.py:56
+msgid ""
+"Universelle Linux-Druckerverwaltung —\n"
+"ein moderner Ersatz für system-config-printer."
+msgstr ""
+
+#: src/print_ease/__main__.py:65
+msgid "translator-credits"
+msgstr ""
+
+#: src/print_ease/media_names.py:30 src/print_ease/media_names.py:31
+#: src/print_ease/media_names.py:32 src/print_ease/media_names.py:33
+#: src/print_ease/media_names.py:34
+msgid "Umschlag"
+msgstr "Sobre"
+
+#: src/print_ease/media_names.py:36 src/print_ease/media_names.py:37
+#: src/print_ease/media_names.py:38 src/print_ease/media_names.py:39
+#: src/print_ease/media_names.py:40
+msgid "Foto"
+msgstr "Foto"
+
+#: src/print_ease/media_names.py:36 src/print_ease/media_names.py:37
+#: src/print_ease/media_names.py:38
+msgid "Zoll"
+msgstr "pulgada"
+
+#: src/print_ease/media_names.py:39 src/print_ease/media_names.py:40
+msgid "Quadrat"
+msgstr "Cuadrado"
+
+#: src/print_ease/media_names.py:42
+msgid "Postkarte"
+msgstr "Tarjeta postal"
+
+#: src/print_ease/media_names.py:44 src/print_ease/media_names.py:45
+#: src/print_ease/media_names.py:66
+msgid "Benutzerdefiniert"
+msgstr "Personalizado"
+
+#: src/print_ease/scanner_client.py:236
 msgid "Keine Seiten im ADF-Einzug gescannt"
 msgstr "No se escanearon páginas desde el alimentador"
 
-msgid "Pillow (python-pillow) nicht installiert — bitte installieren: sudo pacman -S python-pillow"
-msgstr "Pillow (python-pillow) no instalado — instalar: sudo pacman -S python-pillow"
+#: src/print_ease/scanner_client.py:362
+msgid "Keine Seiten vom Scanner empfangen"
+msgstr "No se recibieron páginas del escáner"
+
+#: src/print_ease/scanner_client.py:446 src/print_ease/scanner_client.py:516
+msgid "Keine Seiten gescannt"
+msgstr "No se escanearon páginas"
+
+#: src/print_ease/scanner_client.py:806 src/print_ease/scanner_client.py:832
+msgid ""
+"Pillow (python-pillow) nicht installiert — bitte installieren: sudo pacman "
+"-S python-pillow"
+msgstr ""
+"Pillow (python-pillow) no instalado — instalar: sudo pacman -S python-pillow"
+
+#~ msgid "ADF-Einzug ist leer — bitte Dokument einlegen"
+#~ msgstr "El alimentador ADF está vacío — por favor inserte un documento"
+
+#~ msgid "Einzug — Duplex (Software)"
+#~ msgstr "Alimentador — Dúplex (software)"
