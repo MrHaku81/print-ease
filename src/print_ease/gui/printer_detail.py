@@ -21,23 +21,28 @@ log = get_logger(__name__)
 
 OnAction = Callable[[], None]
 
-SIDES_LABELS: dict[str, str] = {
-    "one-sided": "Einseitig",
-    "two-sided-long-edge": "Duplex (lange Kante)",
-    "two-sided-short-edge": "Duplex (kurze Kante)",
-}
+def _sides_labels() -> dict[str, str]:
+    return {
+        "one-sided": _("Einseitig"),
+        "two-sided-long-edge": _("Duplex (lange Kante)"),
+        "two-sided-short-edge": _("Duplex (kurze Kante)"),
+    }
 
-COLOR_MODE_LABELS: dict[str, str] = {
-    "color": "Farbe",
-    "monochrome": "Schwarzweiß",
-    "auto": "Automatisch",
-}
 
-QUALITY_LABELS: dict[int, str] = {
-    3: "Entwurf",
-    4: "Normal",
-    5: "Hoch",
-}
+def _color_mode_labels() -> dict[str, str]:
+    return {
+        "color": _("Farbe"),
+        "monochrome": _("Schwarzweiß"),
+        "auto": _("Automatisch"),
+    }
+
+
+def _quality_labels() -> dict[int, str]:
+    return {
+        3: _("Entwurf"),
+        4: _("Normal"),
+        5: _("Hoch"),
+    }
 
 
 class PrinterDetail(Gtk.Box):
@@ -274,21 +279,21 @@ class PrinterDetail(Gtk.Box):
                 "sides",
                 defaults.get("sides-supported", []),
                 defaults.get("sides-default", ""),
-                lambda v: SIDES_LABELS.get(v, v),
+                lambda v: _sides_labels().get(v, v),
             ),
             (
                 _("Farbmodus"),
                 "print-color-mode",
                 defaults.get("print-color-mode-supported", []),
                 defaults.get("print-color-mode-default", ""),
-                lambda v: COLOR_MODE_LABELS.get(v, v),
+                lambda v: _color_mode_labels().get(v, v),
             ),
             (
                 _("Druckqualität"),
                 "print-quality",
                 defaults.get("print-quality-supported", []),
                 defaults.get("print-quality-default", None),
-                lambda v: QUALITY_LABELS.get(v, str(v)),
+                lambda v: _quality_labels().get(v, str(v)),
             ),
         ]
 
