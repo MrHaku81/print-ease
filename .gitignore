@@ -39,3 +39,7 @@ htmlcov/
 
 # Project-specific
 dev.log
+
+# Persönliche Arbeitsnotizen — gehören nicht ins Repo
+PPA_LOG.md
+.claude-session-memory.md
