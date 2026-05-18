@@ -39,7 +39,10 @@ Description: Universal Linux printer management with zero-config discovery
  Features:
   * Add, remove, and configure printers via CUPS
   * Network printer discovery via Avahi/mDNS
-  * Scanner support via eSCL/AirScan (single-page, ADF, software duplex)
+  * Scanner support via eSCL/AirScan: single-page, ADF simplex,
+    software duplex, ADF hardware duplex (BETA), and multi-page
+    flatbed mode with PDF or TIFF output. Source and duplex are
+    selected independently.
   * Multi-language support (33 languages via GNU gettext)
   * Desktop-environment-agnostic (GNOME, KDE, XFCE, ...)
  .

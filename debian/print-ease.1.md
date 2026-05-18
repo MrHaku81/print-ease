@@ -1,4 +1,4 @@
-% PRINT-EASE(1) print-ease 0.1.3 | User Commands
+% PRINT-EASE(1) print-ease 0.2.0 | User Commands
 % MrHaku81
 % May 2026
 
@@ -20,6 +20,12 @@ printer without requiring vendor-specific drivers.
 The application provides a graphical interface to add, remove, and
 configure printers via CUPS, and to scan documents from networked
 scanners using the eSCL/AirScan protocol.
+
+Scanning supports multiple workflows: single-page capture, ADF simplex
+and software duplex, ADF hardware duplex (BETA, requires scanner
+support), and multi-page flatbed mode for assembling several platen
+scans into a single PDF or a multi-page TIFF archive. Source (platen
+vs. ADF) and duplex are selected independently.
 
 # OPTIONS
 
