@@ -5,10 +5,17 @@ export PYBUILD_NAME = print-ease
 %:
 	dh $@ --with python3 --buildsystem=pybuild
 
+override_dh_auto_clean:
+	dh_auto_clean
+	rm -f debian/print-ease.1
+	rm -f src/print_ease/locale/*/LC_MESSAGES/*.mo
+
+override_dh_auto_build:
+	$(MAKE) mo
+	dh_auto_build
+
 override_dh_auto_install:
 	dh_auto_install
-	# Compile gettext translations
-	$(MAKE) mo
 	# Generate manpage from Markdown source using pandoc
 	pandoc -s -t man debian/print-ease.1.md -o debian/print-ease.1
 	# Install desktop entry
@@ -20,7 +27,3 @@ override_dh_auto_install:
 	# Install manpage
 	install -Dm644 debian/print-ease.1 \
 	    debian/print-ease/usr/share/man/man1/print-ease.1
-
-override_dh_auto_clean:
-	dh_auto_clean
-	rm -f debian/print-ease.1
