@@ -1,3 +1,10 @@
+print-ease (0.2.0~noble1) noble; urgency=low
+
+  * Re-target for Ubuntu 24.04 LTS (noble). Source identical to 0.2.0 (resolute);
+    only the changelog distribution differs.
+
+ -- MrHaku81 <haku81.kk@gmail.com>  Tue, 19 May 2026 20:28:32 +0200
+
 print-ease (0.2.0) resolute; urgency=low
 
   * The Scan Release. Adds three new scanning workflows: ADF
