@@ -38,9 +38,10 @@ Just turn on your device — PrintEase finds it within seconds.
 - Network printer discovery via Avahi/mDNS
 - Scanner / All-in-One support via eSCL (AirScan / IPP Everywhere)
   - Single-page flatbed and ADF scan
-  - Multi-page ADF scan
-  - Software duplex (two-pass ADF with PDF assembly)
-  - ADF paper detection before scan
+  - Multi-page ADF scan (with ADF paper detection before scan)
+  - Multi-page flatbed: PDF documents and TIFF archives
+  - Duplex: hardware (BETA, scanner-dependent) and software (two-pass)
+  - Separate Source and Duplex selectors + Mode dropdown
 - Scan settings per device are remembered across sessions
 - Manage active print jobs (view, cancel)
 - Works on any desktop environment (GNOME, KDE, XFCE, …)
@@ -76,6 +77,18 @@ Chinese (Simplified), Chinese (Traditional)
 
 ## Installation
 
+### Ubuntu / Mint / Pop!_OS / Zorin / Elementary (PPA)
+
+PrintEase is available via [Launchpad PPA](https://launchpad.net/~haku81/+archive/ubuntu/printease).
+Supported: Ubuntu 24.04 LTS (noble) and 26.04 LTS (resolute), plus their derivates —
+Mint 22.x, Pop!_OS 24.04, Zorin 18.x, Elementary 8.
+
+```bash
+sudo add-apt-repository ppa:haku81/printease
+sudo apt update
+sudo apt install print-ease
+```
+
 ### Arch Linux / CachyOS / Manjaro (AUR)
 
 PrintEase is available in the [Arch User Repository](https://aur.archlinux.org/packages/print-ease).
@@ -84,6 +97,8 @@ Using an AUR helper:
 
 ```bash
 yay -S print-ease
+# or
+paru -S print-ease
 ```
 
 Or manually with makepkg:
@@ -94,38 +109,9 @@ cd print-ease
 makepkg -si
 ```
 
-### Debian / Ubuntu / Mint (.deb package)
+### From source (other distros, development)
 
-**Option A — Download pre-built `.deb` (recommended):**
-
-```bash
-# Replace VERSION with the latest release tag, e.g. 0.1.4
-wget https://github.com/MrHaku81/print-ease/releases/download/vVERSION/print-ease_VERSION-1_all.deb
-sudo apt install ./print-ease_VERSION-1_all.deb
-```
-
-**Option B — Build the `.deb` from source:**
-
-Requires Debian packaging tools:
-
-```bash
-sudo apt install -y debhelper dh-python pybuild-plugin-pyproject \
-                    devscripts lintian fakeroot pandoc \
-                    python3-all python3-hatchling
-```
-
-Then build and install:
-
-```bash
-git clone https://github.com/MrHaku81/print-ease.git
-cd print-ease
-dpkg-buildpackage -us -uc -b
-sudo apt install ../print-ease_*_all.deb
-```
-
-### Development from source
-
-For contributing or testing the latest unreleased code:
+For contributing, testing unreleased code, or running on distros without a packaged build:
 
 ```bash
 git clone https://github.com/MrHaku81/print-ease.git
