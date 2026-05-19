@@ -1,4 +1,4 @@
-print-ease (0.2.0-1) unstable; urgency=low
+print-ease (0.2.0) resolute; urgency=low
 
   * The Scan Release. Adds three new scanning workflows: ADF
     hardware duplex (BETA, requires scanner support), multi-page
