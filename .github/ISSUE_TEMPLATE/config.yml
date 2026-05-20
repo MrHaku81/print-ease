@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 💬 Questions & Discussions
+    url: https://github.com/MrHaku81/print-ease/discussions
+    about: For usage questions, general feedback, or "how do I...?" — please use Discussions instead of Issues.
+  - name: 🔒 Security Vulnerability
+    url: https://github.com/MrHaku81/print-ease/security/advisories/new
+    about: For security-related issues, please use GitHub Security Advisories (private disclosure).

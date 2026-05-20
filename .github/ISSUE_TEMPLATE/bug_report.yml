@@ -1,0 +1,120 @@
+name: 🐞 Bug Report
+description: Report a bug in PrintEase
+title: "[Bug]: "
+labels: ["bug", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting a bug! Please fill out the form below as completely as possible.
+        Reports without reproduction steps may be closed.
+
+  - type: input
+    id: printease-version
+    attributes:
+      label: PrintEase Version
+      description: "Output of `print-ease --version` or check the About dialog"
+      placeholder: "0.2.0"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: install-method
+    attributes:
+      label: Installation Method
+      options:
+        - AUR (yay -S print-ease)
+        - .deb package (Ubuntu/Debian/Mint)
+        - Built from source
+        - Other (specify in description)
+    validations:
+      required: true
+
+  - type: input
+    id: distro
+    attributes:
+      label: Linux Distribution & Version
+      placeholder: "CachyOS / Ubuntu 24.04 / Fedora 41 ..."
+    validations:
+      required: true
+
+  - type: input
+    id: cups-version
+    attributes:
+      label: CUPS Version
+      description: "Output of `cups-config --version`"
+      placeholder: "2.4.11"
+    validations:
+      required: true
+
+  - type: input
+    id: desktop-env
+    attributes:
+      label: Desktop Environment
+      placeholder: "GNOME 47 / KDE Plasma 6 / XFCE ..."
+    validations:
+      required: true
+
+  - type: input
+    id: printer-model
+    attributes:
+      label: Printer / Scanner Model
+      description: "Manufacturer + exact model, including connection type"
+      placeholder: "Canon PIXMA TS705a (Network / AirPrint)"
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Steps to Reproduce
+      description: "What did you do? Be specific."
+      placeholder: |
+        1. Open PrintEase
+        2. Click "Scan"
+        3. ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected Behavior
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual Behavior
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs / Terminal Output
+      description: "Run PrintEase from terminal and paste relevant output. Use code blocks."
+      render: shell
+
+  - type: dropdown
+    id: ai-assisted
+    attributes:
+      label: Was this report assisted by AI tools?
+      description: "If yes, please confirm you've manually verified the reproduction steps work."
+      options:
+        - "No, I found this bug myself"
+        - "Yes, AI helped — but I verified the reproducer manually"
+        - "Yes, AI helped — reproducer not manually verified"
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Pre-submission checks
+      options:
+        - label: I searched existing issues and didn't find a duplicate
+          required: true
+        - label: I'm running the latest PrintEase version (or stated otherwise above)
+          required: true
