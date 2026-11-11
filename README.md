@@ -77,6 +77,16 @@ Chinese (Simplified), Chinese (Traditional)
 
 ## Installation
 
+### Flatpak (any distro)
+
+A pre-built bundle that runs on any distribution, with CUPS printing and eSCL scanning included. Download `print-ease.flatpak` from the [latest release](https://github.com/MrHaku81/print-ease/releases/latest), then:
+
+```bash
+flatpak install flathub org.gnome.Platform//47
+flatpak install --user ./print-ease.flatpak
+flatpak run at.printease.PrintEase
+```
+
 ### Ubuntu / Mint / Pop!_OS / Zorin / Elementary (PPA)
 
 PrintEase is available via [Launchpad PPA](https://launchpad.net/~haku81/+archive/ubuntu/printease).
