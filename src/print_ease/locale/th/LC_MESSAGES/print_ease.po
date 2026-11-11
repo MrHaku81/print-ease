@@ -448,10 +448,16 @@ msgid "Stapel umdrehen und erneut einlegen"
 msgstr "พลิกกระดาษและใส่ใหม่"
 
 #: src/print_ease/gui/scanner_panel.py:560
-msgid ""
-"Vorderseiten gescannt. Drehe den Stapel um, lege ihn erneut in den ADF ein "
-"und bestätige."
-msgstr "สแกนด้านหน้าแล้ว พลิกกระดาษ ใส่กลับเข้าไปในตัวป้อนกระดาษ และยืนยัน"
+msgid "Vorderseiten gescannt. Nimm den Stapel aus der Ablage, dreh ihn als Ganzes um, sodass er wieder in Einzugsrichtung liegt, lege ihn erneut ein und bestätige."
+msgstr "สแกนด้านหน้าแล้ว นำปึกกระดาษออกจากถาดรับกระดาษ พลิกทั้งปึกให้กลับมาอยู่ในทิศทางการป้อนกระดาษ ใส่กลับเข้าไปในตัวป้อนกระดาษ และยืนยัน"
+
+#: src/print_ease/gui/scanner_panel.py
+msgid "Rückseiten um 180° drehen"
+msgstr "หมุนด้านหลัง 180°"
+
+#: src/print_ease/gui/scanner_panel.py
+msgid "Nur einschalten, wenn die Rückseiten kopfüber im Ergebnis landen"
+msgstr "เปิดเฉพาะเมื่อด้านหลังกลับหัวในผลลัพธ์"
 
 #: src/print_ease/gui/scanner_panel.py:565
 msgid "Weiter"

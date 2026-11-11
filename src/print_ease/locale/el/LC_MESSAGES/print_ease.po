@@ -448,12 +448,16 @@ msgid "Stapel umdrehen und erneut einlegen"
 msgstr "Αναστρέψτε τη στοίβα και επανατοποθετήστε"
 
 #: src/print_ease/gui/scanner_panel.py:560
-msgid ""
-"Vorderseiten gescannt. Drehe den Stapel um, lege ihn erneut in den ADF ein "
-"und bestätige."
-msgstr ""
-"Οι μπροστινές πλευρές σαρώθηκαν. Αναστρέψτε τη στοίβα, τοποθετήστε την ξανά "
-"στον τροφοδότη και επιβεβαιώστε."
+msgid "Vorderseiten gescannt. Nimm den Stapel aus der Ablage, dreh ihn als Ganzes um, sodass er wieder in Einzugsrichtung liegt, lege ihn erneut ein und bestätige."
+msgstr "Οι μπροστινές πλευρές σαρώθηκαν. Πάρτε τη στοίβα από τον δίσκο εξόδου, αναστρέψτε την ολόκληρη ώστε να είναι ξανά προς την κατεύθυνση τροφοδοσίας, τοποθετήστε την ξανά και επιβεβαιώστε."
+
+#: src/print_ease/gui/scanner_panel.py
+msgid "Rückseiten um 180° drehen"
+msgstr "Περιστροφή πίσω όψεων κατά 180°"
+
+#: src/print_ease/gui/scanner_panel.py
+msgid "Nur einschalten, wenn die Rückseiten kopfüber im Ergebnis landen"
+msgstr "Ενεργοποιήστε μόνο αν οι πίσω όψεις εμφανίζονται ανάποδα στο αποτέλεσμα"
 
 #: src/print_ease/gui/scanner_panel.py:565
 msgid "Weiter"

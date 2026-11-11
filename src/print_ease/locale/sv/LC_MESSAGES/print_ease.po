@@ -448,11 +448,16 @@ msgid "Stapel umdrehen und erneut einlegen"
 msgstr "Vänd bunten och ladda om"
 
 #: src/print_ease/gui/scanner_panel.py:560
-msgid ""
-"Vorderseiten gescannt. Drehe den Stapel um, lege ihn erneut in den ADF ein "
-"und bestätige."
-msgstr ""
-"Framsidor skannade. Vänd bunten, lägg tillbaka den i mataren och bekräfta."
+msgid "Vorderseiten gescannt. Nimm den Stapel aus der Ablage, dreh ihn als Ganzes um, sodass er wieder in Einzugsrichtung liegt, lege ihn erneut ein und bestätige."
+msgstr "Framsidor skannade. Ta bunten från utmatningsfacket, vänd hela bunten så att den åter ligger i matningsriktningen, lägg tillbaka den och bekräfta."
+
+#: src/print_ease/gui/scanner_panel.py
+msgid "Rückseiten um 180° drehen"
+msgstr "Rotera baksidor 180°"
+
+#: src/print_ease/gui/scanner_panel.py
+msgid "Nur einschalten, wenn die Rückseiten kopfüber im Ergebnis landen"
+msgstr "Slå bara på om baksidorna hamnar upp och ner i resultatet"
 
 #: src/print_ease/gui/scanner_panel.py:565
 msgid "Weiter"

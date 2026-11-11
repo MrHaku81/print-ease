@@ -23,20 +23,24 @@ import xml.etree.ElementTree as ET
 from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime
 from pathlib import Path
-from typing import Callable
+from typing import Callable, Iterator, TypeVar
 
 from print_ease import avahi_client, cups_client
 from print_ease._i18n import _
 from print_ease._log import get_logger
 from print_ease.constants import (
+    AVAHI_TIMEOUT,
     CUPS_TIMEOUT,
     ESCL_TIMEOUT,
+    NEXT_DOCUMENT_TIMEOUT,
     SCANNER_MDNS_WINDOW,
     SCANNER_SEARCH_TIMEOUT,
 )
 from print_ease.printer_model import NetworkPrinter, PrinterInfo, ScannerInfo
 
 log = get_logger(__name__)
+
+T = TypeVar("T")
 
 _NS_SCAN = "http://schemas.hp.com/imaging/escl/2011/05/03"
 _NS_PWG  = "http://www.pwg.org/schemas/2010/12/sm"
@@ -47,6 +51,12 @@ _ESCL_PATH = "/eSCL"
 # URI-Schemata, deren Host-Teil tatsächlich das Gerät im Netz benennt.
 # usb://Canon/TS700 hat zwar auch einen "Host", der ist aber der Hersteller.
 _HOST_URI_SCHEMES = ("ipp", "ipps", "http", "https", "socket", "lpd")
+
+# NextDocument liefert zwischen zwei ADF-Seiten kurzzeitig 404, während das
+# nächste Blatt eingezogen wird. 404 allein beendet den Job deshalb nicht.
+_ADF_RETRY_DELAY = 1     # Sekunden zwischen zwei Versuchen
+_ADF_EMPTY_RETRIES = 3   # Versuche ohne Papier: letzte Seite kann noch unterwegs sein
+_ADF_MAX_MISSES = 30     # 404 in Folge ohne neue Seite, unabhängig von der Stapelgröße
 
 # eSCL/AirScan-Standard: lokales Netzwerk, selbstsignierte Certs.
 # Apple Print, Mopria und andere Clients deaktivieren ebenfalls
@@ -249,22 +259,35 @@ def scan_adf_all_pages(
 
     pages: list[bytes] = []
     try:
-        while True:
-            if cancel_event and cancel_event.is_set():
-                raise InterruptedError("Scan abgebrochen")
-            try:
-                data = _fetch_next_document(job_url, cancel_event=cancel_event)
-                pages.append(data)
-                log.debug("ADF-Seite %d gescannt (%d Bytes)", len(pages), len(data))
-            except urllib.error.HTTPError as exc:
-                if exc.code == 404:
-                    break
-                raise
+        for data in _adf_documents(
+            scanner.escl_url,
+            lambda: _fetch_next_document(job_url, cancel_event=cancel_event),
+            cancel_event,
+        ):
+            pages.append(data)
+            log.debug("ADF-Seite %d gescannt (%d Bytes)", len(pages), len(data))
     finally:
         _delete_job(job_url)
 
     log.info("ADF-Scan abgeschlossen: %d Seiten", len(pages))
     return pages
+
+
+def scan_adf_document(
+    scanner: ScannerInfo,
+    color_mode: str = "RGB24",
+    resolution: int = 300,
+    mode: str = "single",
+    cancel_event=None,
+) -> str:
+    """
+    Scannt den ganzen Einzug und speichert ihn im Format von `mode`
+    (siehe _save_pages). Gibt den Pfad zum Ergebnis zurück.
+    """
+    pages = scan_adf_all_pages(scanner, color_mode, resolution, cancel_event)
+    if not pages:
+        raise RuntimeError(_("Keine Seiten im ADF-Einzug gescannt"))
+    return _save_pages(pages, mode, resolution=resolution)
 
 
 def scan_duplex_software(
@@ -274,6 +297,8 @@ def scan_duplex_software(
     cancel_event=None,
     flip_callback: Callable[[], None] | None = None,
     progress_callback: Callable[[str], None] | None = None,
+    mode: str = "multipage",
+    rotate_back: bool = False,
 ) -> str:
     """
     Software-Duplex in zwei ADF-Durchgängen.
@@ -281,7 +306,10 @@ def scan_duplex_software(
     flip_callback() wird zwischen den Durchgängen aufgerufen und blockiert,
     bis der Benutzer den Stapel umgedreht und bestätigt hat (oder abbricht).
     progress_callback(stage) meldet Fortschritt: "front", "back", "pdf".
-    Gibt den Pfad zur erstellten PDF-Datei zurück.
+    rotate_back dreht die Rückseiten um 180°. Nötig nur, wenn der Stapel so
+    gewendet wird, dass er Kopf über Fuß im Einzug liegt; beim Wenden laut
+    Dialog (als Ganzes umdrehen, wieder in Einzugsrichtung) kommen sie aufrecht.
+    Gibt den Pfad zum Ergebnis im Format von `mode` zurück (siehe _save_pages).
     """
     if progress_callback:
         progress_callback("front")
@@ -295,6 +323,13 @@ def scan_duplex_software(
 
     if flip_callback:
         flip_callback()  # blockiert; kann InterruptedError werfen
+        # Ohne Papier scannt der Ricoh still das Vorlagenglas, statt zu melden.
+        while (
+            not (cancel_event and cancel_event.is_set())
+            and get_adf_state(scanner.escl_url) == "ScannerAdfEmpty"
+        ):
+            log.warning("Einzug nach dem Umdrehen leer, frage erneut")
+            flip_callback()
 
     if cancel_event and cancel_event.is_set():
         raise InterruptedError("Scan abgebrochen")
@@ -303,8 +338,10 @@ def scan_duplex_software(
         progress_callback("back")
 
     back_pages = scan_adf_all_pages(scanner, color_mode, resolution, cancel_event)
-    # Rückseiten kommen umgekehrt aus dem Einzug → zurückdrehen
+    # Rückseiten kommen umgekehrt aus dem Einzug → Reihenfolge umkehren.
     back_pages = list(reversed(back_pages))
+    if rotate_back:
+        back_pages = [_rotate_jpeg_180(page) for page in back_pages]
 
     if cancel_event and cancel_event.is_set():
         raise InterruptedError("Scan abgebrochen")
@@ -319,10 +356,10 @@ def scan_duplex_software(
         if i < len(back_pages):
             all_pages.append(back_pages[i])
 
-    output_path = _default_duplex_output_path()
-    _create_pdf(all_pages, output_path)
-
-    log.info("Duplex-PDF erstellt: %s (%d Seiten)", output_path, len(all_pages))
+    output_path = _save_pages(
+        all_pages, mode, pdf_path=_default_duplex_output_path, resolution=resolution
+    )
+    log.info("Duplex-Scan gespeichert: %s (%d Seiten)", output_path, len(all_pages))
     return output_path
 
 
@@ -332,6 +369,7 @@ def scan_adf_hardware_duplex(
     resolution: int = 300,
     cancel_event=None,
     progress_callback: Callable[[int], None] | None = None,
+    mode: str = "multipage",
 ) -> str:
     """Hardware-Duplex-Scan via eSCL.
 
@@ -341,7 +379,7 @@ def scan_adf_hardware_duplex(
     Sendet einen einzigen eSCL-Job mit InputSource=AdfDuplex. Sammelt
     alle gelieferten Seiten, sortiert nach SheetNumber + Side wenn
     vorhanden, sonst nach Stream-Reihenfolge (Annahme: Front/Back/...).
-    Gibt den Pfad zur erstellten PDF-Datei zurück.
+    Gibt den Pfad zum Ergebnis im Format von `mode` zurück (siehe _save_pages).
     """
     xml = _SCAN_SETTINGS_XML.format(
         width=scanner.max_width,
@@ -359,57 +397,19 @@ def scan_adf_hardware_duplex(
     log.debug("Hardware-Duplex-Job angelegt: %s", job_url)
 
     pages: list[tuple[bytes, int | None, str | None]] = []
-    doc_url = f"{job_url}/NextDocument"
-    page_index = 0
-
     try:
-        while True:
-            if cancel_event and cancel_event.is_set():
-                raise InterruptedError("Scan abgebrochen")
-
-            done = False
-            for attempt in range(30):
-                if cancel_event and cancel_event.is_set():
-                    raise InterruptedError("Scan abgebrochen")
-                try:
-                    with urllib.request.urlopen(
-                        urllib.request.Request(doc_url),
-                        timeout=15,
-                        context=_ESCL_SSL_CONTEXT,
-                    ) as resp:
-                        data = resp.read()
-                        sheet_str = (
-                            resp.headers.get("X-Sheet-Number")
-                            or resp.headers.get("X-Page-Number")
-                        )
-                        side = (
-                            resp.headers.get("X-Side")
-                            or resp.headers.get("X-Scan-Side")
-                        )
-                        sheet = int(sheet_str) if sheet_str and sheet_str.isdigit() else None
-                        pages.append((data, sheet, side))
-                        page_index += 1
-                        log.info(
-                            "Seite empfangen: page=%d, sheet=%s, side=%s, size=%d bytes",
-                            page_index, sheet_str, side, len(data),
-                        )
-                        if progress_callback:
-                            progress_callback(page_index)
-                        break
-                except urllib.error.HTTPError as exc:
-                    if exc.code == 404:
-                        done = True
-                        break
-                    if exc.code == 503:
-                        log.debug("Scanner verarbeitet noch (Versuch %d)...", attempt + 1)
-                        time.sleep(1)
-                        continue
-                    raise
-            else:
-                raise TimeoutError("Scanner hat nicht innerhalb der erwarteten Zeit geantwortet")
-
-            if done:
-                break
+        for page in _adf_documents(
+            scanner.escl_url,
+            lambda: _fetch_next_duplex_page(job_url, cancel_event),
+            cancel_event,
+        ):
+            pages.append(page)
+            log.info(
+                "Seite empfangen: page=%d, sheet=%s, side=%s, size=%d bytes",
+                len(pages), page[1], page[2], len(page[0]),
+            )
+            if progress_callback:
+                progress_callback(len(pages))
     finally:
         _delete_job(job_url)
 
@@ -430,9 +430,10 @@ def scan_adf_hardware_duplex(
         )
 
     jpeg_pages = [data for data, _, _ in pages]
-    output_path = _default_duplex_output_path()
-    _create_pdf(jpeg_pages, output_path)
-    log.info("Hardware-Duplex-PDF erstellt: %s (%d Seiten)", output_path, len(pages))
+    output_path = _save_pages(
+        jpeg_pages, mode, pdf_path=_default_duplex_output_path, resolution=resolution
+    )
+    log.info("Hardware-Duplex-Scan gespeichert: %s (%d Seiten)", output_path, len(pages))
     return output_path
 
 
@@ -501,7 +502,7 @@ def scan_platen_multipage(
         raise RuntimeError(_("Keine Seiten gescannt"))
 
     output_path = _default_platen_multipage_output_path()
-    _create_pdf(jpeg_pages, output_path)
+    _create_pdf(jpeg_pages, output_path, resolution=resolution)
     log.info("Multi-Page-PDF erstellt: %s (%d Seiten)", output_path, len(jpeg_pages))
     return output_path
 
@@ -606,7 +607,9 @@ def _fetch_next_document(job_url: str, max_retries: int = 30, cancel_event=None)
         if cancel_event and cancel_event.is_set():
             raise InterruptedError("Scan abgebrochen")
         try:
-            with urllib.request.urlopen(doc_url, timeout=15, context=_ESCL_SSL_CONTEXT) as resp:
+            with urllib.request.urlopen(
+                doc_url, timeout=NEXT_DOCUMENT_TIMEOUT, context=_ESCL_SSL_CONTEXT
+            ) as resp:
                 if resp.status == 200:
                     return resp.read()
         except urllib.error.HTTPError as exc:
@@ -616,6 +619,84 @@ def _fetch_next_document(job_url: str, max_retries: int = 30, cancel_event=None)
                 continue
             raise
     raise TimeoutError("Scanner hat nicht innerhalb der erwarteten Zeit geantwortet")
+
+
+def _fetch_next_duplex_page(
+    job_url: str, cancel_event=None
+) -> tuple[bytes, int | None, str | None]:
+    """Wie _fetch_next_document, liefert zusätzlich Blattnummer und Seite."""
+    doc_url = f"{job_url}/NextDocument"
+    for attempt in range(30):
+        if cancel_event and cancel_event.is_set():
+            raise InterruptedError("Scan abgebrochen")
+        try:
+            with urllib.request.urlopen(
+                urllib.request.Request(doc_url),
+                timeout=NEXT_DOCUMENT_TIMEOUT,
+                context=_ESCL_SSL_CONTEXT,
+            ) as resp:
+                data = resp.read()
+                sheet_str = (
+                    resp.headers.get("X-Sheet-Number")
+                    or resp.headers.get("X-Page-Number")
+                )
+                side = (
+                    resp.headers.get("X-Side")
+                    or resp.headers.get("X-Scan-Side")
+                )
+                sheet = int(sheet_str) if sheet_str and sheet_str.isdigit() else None
+                return data, sheet, side
+        except urllib.error.HTTPError as exc:
+            if exc.code == 503:
+                log.debug("Scanner verarbeitet noch (Versuch %d)...", attempt + 1)
+                time.sleep(1)
+                continue
+            raise
+    raise TimeoutError("Scanner hat nicht innerhalb der erwarteten Zeit geantwortet")
+
+
+def _adf_documents(escl_url: str, fetch: Callable[[], T], cancel_event=None) -> Iterator[T]:
+    """
+    Liefert die Ergebnisse von fetch(), bis der ADF-Job wirklich zu Ende ist.
+
+    404 heißt nur "gerade keine Seite": Bei Papier im Einzug wird weiter
+    gewartet, sonst noch _ADF_EMPTY_RETRIES-mal, weil AdfState schon leer
+    meldet, während die letzte Seite noch übertragen wird. 410 beendet sofort.
+    """
+    misses = 0
+    empty_misses = 0
+    while True:
+        if cancel_event and cancel_event.is_set():
+            raise InterruptedError("Scan abgebrochen")
+        try:
+            document = fetch()
+        except urllib.error.HTTPError as exc:
+            if exc.code == 410:
+                return
+            if exc.code != 404:
+                raise
+
+            misses += 1
+            if misses > _ADF_MAX_MISSES:
+                # Kein stilles Ende: Die Seitenzahl wäre falsch, und beim
+                # Software-Duplex gerieten Vorder- und Rückseiten durcheinander.
+                raise TimeoutError(
+                    "Scanner liefert trotz Papier im Einzug keine weiteren Seiten"
+                ) from exc
+
+            adf_state = get_adf_state(escl_url)
+            log.debug("NextDocument 404 (Versuch %d), AdfState=%s", misses, adf_state)
+            if adf_state != "ScannerAdfLoaded":
+                empty_misses += 1
+                if empty_misses > _ADF_EMPTY_RETRIES:
+                    if adf_state not in ("ScannerAdfEmpty", None):
+                        log.warning("ADF-Scan beendet mit AdfState=%s", adf_state)
+                    return
+            time.sleep(_ADF_RETRY_DELAY)
+            continue
+
+        misses = empty_misses = 0
+        yield document
 
 
 def _delete_job(job_url: str) -> None:
@@ -979,8 +1060,56 @@ def _default_platen_archive_output_path() -> str:
     return str(scan_dir / f"scan_archive_{ts}.tif")
 
 
-def _create_pdf(jpeg_pages: list[bytes], output_path: str) -> None:
-    """Erzeugt eine mehrseitige PDF aus JPEG-Bytes (benötigt Pillow)."""
+def _save_pages(
+    jpeg_pages: list[bytes],
+    mode: str,
+    pdf_path: Callable[[], str] | None = None,
+    resolution: int | None = None,
+) -> str:
+    """
+    Speichert Seiten im Format des Modus und gibt den Pfad zurück
+    (resolution = Scan-Auflösung in dpi, bestimmt die PDF-Seitengröße):
+      "single"    — JPEG je Seite
+      "multipage" — ein PDF
+      "archive"   — ein Multi-Page-TIFF
+    """
+    if mode == "single":
+        return _save_jpegs(jpeg_pages)
+    if mode == "multipage":
+        output_path = (pdf_path or _default_platen_multipage_output_path)()
+        _create_pdf(jpeg_pages, output_path, resolution=resolution)
+        return output_path
+    if mode == "archive":
+        output_path = _default_platen_archive_output_path()
+        _create_tiff(jpeg_pages, output_path)
+        return output_path
+    raise ValueError(f"Unbekannter Scan-Modus: {mode!r}")
+
+
+def _save_jpegs(jpeg_pages: list[bytes]) -> str:
+    """Eine Seite wird eine Datei, mehrere landen gemeinsam in einem Ordner."""
+    output_path = Path(_default_output_path())
+    if len(jpeg_pages) == 1:
+        output_path.write_bytes(jpeg_pages[0])
+        return str(output_path)
+
+    folder = output_path.with_suffix("")
+    folder.mkdir()
+    for number, page in enumerate(jpeg_pages, 1):
+        (folder / f"{number:03d}.jpg").write_bytes(page)
+    return str(folder)
+
+
+def _create_pdf(
+    jpeg_pages: list[bytes], output_path: str, resolution: float | None = None
+) -> None:
+    """
+    Erzeugt eine mehrseitige PDF aus JPEG-Bytes (benötigt Pillow).
+
+    resolution: Scan-Auflösung in dpi. Sie legt die Seitengröße fest
+    (2550 px bei 300 dpi = 8,5 Zoll). Ohne Angabe gilt die dpi-Angabe des
+    ersten JPEGs, sonst 200.
+    """
     try:
         from PIL import Image
     except ImportError as exc:
@@ -991,15 +1120,51 @@ def _create_pdf(jpeg_pages: list[bytes], output_path: str) -> None:
     if not jpeg_pages:
         raise ValueError("Keine Seiten für PDF-Erstellung")
 
-    images = [Image.open(io.BytesIO(data)).convert("RGB") for data in jpeg_pages]
+    opened = [Image.open(io.BytesIO(data)) for data in jpeg_pages]
+    if not resolution:
+        resolution = _jpeg_dpi(opened[0]) or 200.0
+    images = [im.convert("RGB") for im in opened]
     Path(output_path).parent.mkdir(parents=True, exist_ok=True)
     images[0].save(
         output_path,
         format="PDF",
         save_all=True,
         append_images=images[1:],
-        resolution=200.0,
+        resolution=float(resolution),
     )
+
+
+def _jpeg_dpi(image) -> float | None:
+    """dpi aus dem JFIF/EXIF-Kopf, None wenn nicht (sinnvoll) angegeben."""
+    dpi = image.info.get("dpi")
+    try:
+        value = float(dpi[0]) if dpi else 0.0
+    except (TypeError, ValueError, IndexError):
+        return None
+    return value if value > 1 else None
+
+
+def _rotate_jpeg_180(data: bytes) -> bytes:
+    """
+    Dreht eine JPEG-Seite um 180° (neu kodiert, Qualität 95, dpi und
+    Farbprofil bleiben). Ohne Pillow oder bei nicht lesbaren Daten bleibt
+    die Seite unverändert, statt den ganzen Duplex-Scan abzubrechen.
+    """
+    try:
+        from PIL import Image
+    except ImportError:
+        log.warning("Pillow fehlt — Rückseite wird nicht gedreht")
+        return data
+    try:
+        with Image.open(io.BytesIO(data)) as im:
+            rotated = im.transpose(Image.Transpose.ROTATE_180)
+            extra = {k: im.info[k] for k in ("dpi", "icc_profile") if im.info.get(k)}
+            out = io.BytesIO()
+            rotated.save(out, format="JPEG", quality=95, **extra)
+    except OSError as exc:  # inkl. UnidentifiedImageError
+        log.warning("Rückseite nicht drehbar, bleibt unverändert: %s", exc)
+        return data
+    return out.getvalue()
 
 
 def _create_tiff(jpeg_pages: list[bytes], output_path: str) -> None:

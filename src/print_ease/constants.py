@@ -15,3 +15,7 @@ SCANNER_SEARCH_TIMEOUT = 5   # gesamte Scanner-Suche für einen Drucker
 # mit QM-Fragen alle Namen nach <= 1,9 s. avahi-browse endet meist früher.
 SCANNER_MDNS_WINDOW = 3
 CUPS_TIMEOUT  = 10   # CUPS-Verbindungsaufbau / ScanJob-Erstellung
+# eSCL NextDocument: Das Gerät antwortet erst, wenn die Seite fertig gescannt ist.
+# Gemessen am Ricoh: leerer Flachbett-Scan mit 600 dpi in Farbe dauert 12,6 s.
+# Mit Inhalt dauert es länger, ein 600-dpi-Farblauf brach an den früheren 15 s ab.
+NEXT_DOCUMENT_TIMEOUT = 60

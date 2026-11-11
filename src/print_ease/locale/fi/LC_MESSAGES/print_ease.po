@@ -448,11 +448,16 @@ msgid "Stapel umdrehen und erneut einlegen"
 msgstr "Käännä nippu ja lataa uudelleen"
 
 #: src/print_ease/gui/scanner_panel.py:560
-msgid ""
-"Vorderseiten gescannt. Drehe den Stapel um, lege ihn erneut in den ADF ein "
-"und bestätige."
-msgstr ""
-"Etupuolet skannattu. Käännä nippu, lataa se uudelleen syöttäjään ja vahvista."
+msgid "Vorderseiten gescannt. Nimm den Stapel aus der Ablage, dreh ihn als Ganzes um, sodass er wieder in Einzugsrichtung liegt, lege ihn erneut ein und bestätige."
+msgstr "Etupuolet skannattu. Ota nippu luovutusalustalta, käännä se kokonaisena niin, että se on taas syöttösuunnassa, lataa se uudelleen ja vahvista."
+
+#: src/print_ease/gui/scanner_panel.py
+msgid "Rückseiten um 180° drehen"
+msgstr "Käännä takapuolia 180°"
+
+#: src/print_ease/gui/scanner_panel.py
+msgid "Nur einschalten, wenn die Rückseiten kopfüber im Ergebnis landen"
+msgstr "Ota käyttöön vain, jos takapuolet ovat tuloksessa ylösalaisin"
 
 #: src/print_ease/gui/scanner_panel.py:565
 msgid "Weiter"

@@ -448,12 +448,16 @@ msgid "Stapel umdrehen und erneut einlegen"
 msgstr "Переверніть стос і знову завантажте"
 
 #: src/print_ease/gui/scanner_panel.py:560
-msgid ""
-"Vorderseiten gescannt. Drehe den Stapel um, lege ihn erneut in den ADF ein "
-"und bestätige."
-msgstr ""
-"Передні сторони відскановано. Переверніть стос, знову завантажте в подавач і "
-"підтвердіть."
+msgid "Vorderseiten gescannt. Nimm den Stapel aus der Ablage, dreh ihn als Ganzes um, sodass er wieder in Einzugsrichtung liegt, lege ihn erneut ein und bestätige."
+msgstr "Передні сторони відскановано. Вийміть стос із вихідного лотка, переверніть його цілком так, щоб він знову лежав у напрямку подачі, знову завантажте й підтвердіть."
+
+#: src/print_ease/gui/scanner_panel.py
+msgid "Rückseiten um 180° drehen"
+msgstr "Повернути зворотні сторони на 180°"
+
+#: src/print_ease/gui/scanner_panel.py
+msgid "Nur einschalten, wenn die Rückseiten kopfüber im Ergebnis landen"
+msgstr "Вмикайте лише тоді, коли зворотні сторони в результаті перевернуті"
 
 #: src/print_ease/gui/scanner_panel.py:565
 msgid "Weiter"

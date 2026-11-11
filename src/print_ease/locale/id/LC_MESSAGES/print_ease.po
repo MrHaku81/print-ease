@@ -448,11 +448,16 @@ msgid "Stapel umdrehen und erneut einlegen"
 msgstr "Balik tumpukan dan muat ulang"
 
 #: src/print_ease/gui/scanner_panel.py:560
-msgid ""
-"Vorderseiten gescannt. Drehe den Stapel um, lege ihn erneut in den ADF ein "
-"und bestätige."
-msgstr ""
-"Sisi depan dipindai. Balik tumpukan, muat ulang ke pengumpan dan konfirmasi."
+msgid "Vorderseiten gescannt. Nimm den Stapel aus der Ablage, dreh ihn als Ganzes um, sodass er wieder in Einzugsrichtung liegt, lege ihn erneut ein und bestätige."
+msgstr "Sisi depan dipindai. Ambil tumpukan dari baki keluaran, balik seluruh tumpukan sehingga kembali searah pengumpanan, muat ulang dan konfirmasi."
+
+#: src/print_ease/gui/scanner_panel.py
+msgid "Rückseiten um 180° drehen"
+msgstr "Putar sisi belakang 180°"
+
+#: src/print_ease/gui/scanner_panel.py
+msgid "Nur einschalten, wenn die Rückseiten kopfüber im Ergebnis landen"
+msgstr "Aktifkan hanya jika sisi belakang terbalik pada hasil"
 
 #: src/print_ease/gui/scanner_panel.py:565
 msgid "Weiter"
