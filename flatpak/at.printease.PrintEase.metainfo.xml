@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>at.printease.PrintEase</id>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>GPL-3.0-or-later</project_license>
+
+  <name>PrintEase</name>
+  <summary>Find and use printers and scanners instantly — driverless, zero config</summary>
+
+  <description>
+    <p>
+      PrintEase is a modern, desktop-agnostic printer and scanner management
+      app for Linux — a contemporary replacement for system-config-printer.
+      It discovers network printers and scanners automatically via mDNS/DNS-SD
+      and speaks the open, driverless standards: IPP Everywhere for printing
+      and eSCL (AirScan) for scanning. No manufacturer drivers, no plug-ins,
+      no configuration.
+    </p>
+    <p>Features:</p>
+    <ul>
+      <li>Automatic network discovery of IPP printers and eSCL scanners (built-in mDNS — works with or without a running Avahi daemon)</li>
+      <li>Honest capability display: shows exactly what the device reports via its PPD</li>
+      <li>Default settings management: paper size, duplex, color mode, quality</li>
+      <li>Driverless scanning via eSCL/AirScan — flatbed and document feeder, single and multi-page</li>
+      <li>Printer actions: set default, pause/resume, test page</li>
+      <li>33 interface languages</li>
+    </ul>
+    <p>
+      Printing and printer management use the host CUPS service. Network
+      features (discovery, eSCL scanning) require network access; USB printers
+      configured in CUPS work regardless.
+    </p>
+  </description>
+
+  <launchable type="desktop-id">at.printease.PrintEase.desktop</launchable>
+
+  <url type="homepage">https://github.com/MrHaku81/print-ease</url>
+  <url type="bugtracker">https://github.com/MrHaku81/print-ease/issues</url>
+  <url type="vcs-browser">https://github.com/MrHaku81/print-ease</url>
+
+  <developer id="io.github.mrhaku81">
+    <name>Klaus (MrHaku81)</name>
+  </developer>
+
+  <content_rating type="oars-1.1" />
+
+  <!-- TODO für Flathub: Screenshots ergänzen, sobald die geplante
+       Screenshot-Reihe steht. Format:
+  <screenshots>
+    <screenshot type="default">
+      <image>https://raw.githubusercontent.com/MrHaku81/print-ease/main/data/screenshots/main.png</image>
+      <caption>Printer overview with capability details</caption>
+    </screenshot>
+  </screenshots>
+  -->
+
+  <releases>
+    <release version="0.2.1" date="2026-11-09">
+      <description>
+        <p>Built-in mDNS discovery fallback (python-zeroconf): network printer
+        and scanner (eSCL) discovery as well as .local host name resolution now
+        work without a running Avahi daemon — including inside the Flatpak
+        sandbox. More reliable discovery results. First Flatpak release.</p>
+      </description>
+    </release>
+    <release version="0.2.0" date="2026-05-17">
+      <description>
+        <p>Scanner support (eSCL/AirScan), 33 languages, PPA packaging.</p>
+      </description>
+    </release>
+  </releases>
+</component>

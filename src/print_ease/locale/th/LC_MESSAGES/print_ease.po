@@ -138,6 +138,10 @@ msgstr "เครื่องสแกน"
 msgid "Scanner wird erkannt…"
 msgstr "กำลังตรวจหาเครื่องสแกน…"
 
+#: src/print_ease/gui/printer_detail.py:110
+msgid "Kein Scanner gefunden"
+msgstr "ไม่พบเครื่องสแกน"
+
 #: src/print_ease/gui/printer_detail.py:139
 msgid "Druckerinformationen"
 msgstr "ข้อมูลเครื่องพิมพ์"

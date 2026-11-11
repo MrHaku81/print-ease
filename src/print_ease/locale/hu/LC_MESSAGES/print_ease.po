@@ -139,6 +139,10 @@ msgstr "Szkenner"
 msgid "Scanner wird erkannt…"
 msgstr "Szkenner felismerése…"
 
+#: src/print_ease/gui/printer_detail.py:110
+msgid "Kein Scanner gefunden"
+msgstr "Nem található szkenner"
+
 #: src/print_ease/gui/printer_detail.py:139
 msgid "Druckerinformationen"
 msgstr "Nyomtatóinformációk"

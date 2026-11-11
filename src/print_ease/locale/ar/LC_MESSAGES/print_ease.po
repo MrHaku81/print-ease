@@ -138,6 +138,10 @@ msgstr "الماسح الضوئي"
 msgid "Scanner wird erkannt…"
 msgstr "جارٍ اكتشاف الماسح…"
 
+#: src/print_ease/gui/printer_detail.py:110
+msgid "Kein Scanner gefunden"
+msgstr "لم يتم العثور على ماسح ضوئي"
+
 #: src/print_ease/gui/printer_detail.py:139
 msgid "Druckerinformationen"
 msgstr "معلومات الطابعة"

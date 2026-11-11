@@ -8,8 +8,6 @@ gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")
 from gi.repository import Adw, Gtk, GLib
 
-import urllib.parse
-
 from print_ease import cups_client, scanner_client
 from print_ease.media_names import get_media_display_name
 from print_ease._i18n import _
@@ -89,14 +87,10 @@ class PrinterDetail(Gtk.Box):
         page.add(self._build_jobs_group(printer, on_action))
 
         danger_group = self._build_danger_group(printer)
-        escl_url = _escl_url_for(printer)
-        if escl_url:
-            scanner_placeholder = self._build_scanner_placeholder()
-            page.add(scanner_placeholder)
-            page.add(danger_group)
-            self._load_scanner_async(escl_url, printer.name, scanner_placeholder, page, danger_group)
-        else:
-            page.add(danger_group)
+        scanner_placeholder = self._build_scanner_placeholder()
+        page.add(scanner_placeholder)
+        page.add(danger_group)
+        self._load_scanner_async(printer, scanner_placeholder, page, danger_group)
 
         return page
 
@@ -111,26 +105,33 @@ class PrinterDetail(Gtk.Box):
         group.add(row)
         return group
 
+    def _build_no_scanner_group(self) -> Adw.PreferencesGroup:
+        group = Adw.PreferencesGroup(title=_("Scanner"))
+        row = Adw.ActionRow(title=_("Kein Scanner gefunden"))
+        row.set_activatable(False)
+        group.add(row)
+        return group
+
     def _load_scanner_async(
         self,
-        escl_url: str,
-        printer_name: str,
+        printer: PrinterInfo,
         placeholder_group: Adw.PreferencesGroup,
         page: Adw.PreferencesPage,
         danger_group: Adw.PreferencesGroup,
     ) -> None:
         def _fetch():
-            scanner = scanner_client.get_scanner_capabilities(
-                escl_url, linked_printer=printer_name
-            )
+            scanner = None
+            try:
+                scanner = scanner_client.find_scanner_for_printer(printer)
+            except Exception:
+                log.exception("Scanner-Suche für '%s' fehlgeschlagen", printer.name)
             GLib.idle_add(_on_loaded, scanner)
 
         def _on_loaded(scanner) -> bool:
             page.remove(placeholder_group)
-            if scanner:
-                page.remove(danger_group)
-                page.add(ScannerPanel(scanner).get_group())
-                page.add(danger_group)
+            page.remove(danger_group)
+            page.add(ScannerPanel(scanner).get_group() if scanner else self._build_no_scanner_group())
+            page.add(danger_group)
             return GLib.SOURCE_REMOVE
 
         threading.Thread(target=_fetch, daemon=True).start()
@@ -536,21 +537,6 @@ class PrinterDetail(Gtk.Box):
             _("Entfernen"),
             self._on_printer_removed,
         )
-
-
-def _escl_url_for(printer: PrinterInfo) -> str | None:
-    parsed = urllib.parse.urlparse(printer.uri)
-    if parsed.scheme not in ("ipp", "ipps", "http", "https"):
-        return None
-    host = parsed.hostname
-    if not host:
-        return None
-    scheme = "https" if parsed.scheme == "ipps" else "http"
-    port = parsed.port
-    # Port nur einfügen wenn nicht Standard (80/443) und nicht IPP-Standard (631)
-    if port and port not in (80, 443, 631):
-        return f"{scheme}://{host}:{port}/eSCL"
-    return f"{scheme}://{host}/eSCL"
 
 
 def _state_label(printer: PrinterInfo) -> tuple[str, str]:

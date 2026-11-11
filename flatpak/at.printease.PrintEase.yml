@@ -1,0 +1,134 @@
+id: at.printease.PrintEase
+runtime: org.gnome.Platform
+runtime-version: '47'
+sdk: org.gnome.Sdk
+command: print-ease
+
+# Die GNOME Platform 47 liefert bereits:
+#   Python 3.12, PyGObject (gi), GTK4, libadwaita, Cairo, Pango, libcups.so.2
+#
+# PrintEase braucht zusätzlich:
+#   - pycups        (C-Extension → wird gegen CUPS-Header gebaut)
+#   - zeroconf      (mDNS-Discovery-Fallback, ersetzt avahi-browse in der Sandbox)
+#   - ifaddr        (Abhängigkeit von zeroconf, pure Python)
+
+finish-args:
+  - --socket=wayland
+  - --socket=fallback-x11
+  - --share=ipc
+  - --device=dri
+  # CUPS-Socket → pycups erreicht den Host-Druckdienst
+  - --socket=cups
+  # Netzwerk → mDNS-Multicast (zeroconf-Discovery) + eSCL-Scanner (HTTP)
+  - --share=network
+
+modules:
+
+  # ── 1. CUPS (nur zum Bauen — liefert Header für pycups) ───────────────────
+  # cleanup: ["*"] macht das Modul build-only: nichts davon landet im Bundle.
+  # pycups linkt gegen libcups.so.2, die die Runtime selbst mitbringt.
+  - name: cups
+    buildsystem: simple
+    cleanup: ["*"]
+    build-commands:
+      - ./configure
+          --prefix=/app
+          --with-system-groups=lpadmin
+          --disable-systemd
+          --without-rcdir
+          --disable-dbus
+          --disable-pam
+          --disable-avahi
+          --disable-acl
+          --disable-libusb
+          --without-php
+      - make -j4
+      - make install-headers install-libs  # nur Header+Libs; volles install schreibt nach /usr/share (read-only)
+    sources:
+      - type: archive
+        url: https://github.com/OpenPrinting/cups/releases/download/v2.4.11/cups-2.4.11-source.tar.gz
+        sha256: 9a88fe1da3a29a917c3fc67ce6eb3178399d68e1a548c6d86c70d9b13651fd71
+
+  # ── 2. pycups ─────────────────────────────────────────────────────────────
+  - name: python-pycups
+    buildsystem: simple
+    build-options:
+      env:
+        CPPFLAGS: -I/app/include
+        LDFLAGS: -L/app/lib
+    build-commands:
+      - pip3 install --no-index --no-build-isolation --prefix=/app .
+    sources:
+      - type: archive
+        url: https://files.pythonhosted.org/packages/96/c4/b077f0422cd031e4f3a47c75ce0bcf77f2f2e5bf3648f6945a4d09fd44a5/pycups-2.0.4.tar.gz
+        sha256: 843e385c1dbf694996ca84ef02a7f30c28376035588f5fbeacd6bae005cf7c8d
+
+  # ── 3. zeroconf + ifaddr (mDNS-Discovery ohne Host-Daemon) ────────────────
+  - name: python-zeroconf
+    buildsystem: simple
+    build-commands:
+      - pip3 install --no-index --find-links=. --prefix=/app ifaddr zeroconf
+    sources:
+      - type: file
+        url: https://files.pythonhosted.org/packages/9c/1f/19ebc343cc71a7ffa78f17018535adc5cbdd87afb31d7c34874680148b32/ifaddr-0.2.0-py3-none-any.whl
+        sha256: 085e0305cfe6f16ab12d72e2024030f5d52674afad6911bb1eee207177b8a748
+      - type: file
+        url: https://files.pythonhosted.org/packages/8a/0e/e9371da3ef71ac66bfe3b3429b2ce5c880afb1471a27d15e1fb266fbc0f7/zeroconf-0.151.3-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl
+        sha256: bbd2b73902a44426080190d653fa35638a93b6c6725c2be76888b4b614bc0b48
+
+  # ── 4. print-ease ─────────────────────────────────────────────────────────
+  - name: print-ease
+    buildsystem: simple
+    build-commands:
+      # Übersetzungen kompilieren (.po → .mo)
+      - |
+        for po in src/print_ease/locale/*/LC_MESSAGES/print_ease.po; do
+          msgfmt "$po" -o "${po%.po}.mo"
+        done
+      # Python-Paket in die site-packages der Runtime
+      - install -d /app/lib/python3.12/site-packages
+      - cp -r src/print_ease /app/lib/python3.12/site-packages/
+      # Startskript
+      - |
+        install -d /app/bin
+        cat > /app/bin/print-ease << 'LAUNCHER'
+        #!/usr/bin/python3
+        import sys
+        from print_ease.__main__ import main
+        sys.exit(main() or 0)
+        LAUNCHER
+        chmod 0755 /app/bin/print-ease
+      # Desktop-Integration — Icon muss nach App-ID benannt sein,
+      # daher Icon-Zeile im Desktop-File anpassen
+      - sed 's/^Icon=print-ease$/Icon=at.printease.PrintEase/'
+          data/at.printease.PrintEase.desktop
+          > /app/at.printease.PrintEase.desktop
+      - install -Dm644 /app/at.printease.PrintEase.desktop
+          /app/share/applications/at.printease.PrintEase.desktop
+      - rm /app/at.printease.PrintEase.desktop
+      - install -Dm644 data/icons/print-ease.svg
+          /app/share/icons/hicolor/scalable/apps/at.printease.PrintEase.svg
+      - install -Dm644 at.printease.PrintEase.metainfo.xml
+          /app/share/metainfo/at.printease.PrintEase.metainfo.xml
+      # Testseite: Die Runtime hat kein /usr/share/cups/data/testprint, pycups
+      # liest die Datei aber clientseitig. cups_client nutzt diese Kopie nur,
+      # wenn keine System-Datei da ist.
+      - install -Dm644 testprint /app/share/print-ease/testprint
+    sources:
+      # ── FÜR DIE HEUTIGE SESSION: lokales Verzeichnis (mit zeroconf-Fallback) ──
+      # Manifest liegt in <repo>/flatpak/, daher zeigt '..' auf die Repo-Wurzel.
+      - type: dir
+        path: ..
+      # ── FÜR DAS FINALE RELEASE: nach Tag v0.2.1 auf Archiv umstellen ──
+      # - type: archive
+      #   url: https://github.com/MrHaku81/print-ease/archive/refs/tags/v0.2.1.tar.gz
+      #   sha256: <NACH-DEM-TAGGEN-ERMITTELN: curl -sL <url> | sha256sum>
+      #   strip-components: 1
+      - type: file
+        path: at.printease.PrintEase.metainfo.xml
+      # Testseiten-Vorlage aus libcupsfilters (Apache-2.0), identisch mit
+      # /usr/share/cups/data/testprint der Distributionen
+      - type: file
+        url: https://raw.githubusercontent.com/OpenPrinting/libcupsfilters/2.1.1/data/testprint
+        sha256: 3eca072c6cc8d5445886c63ba47d4ff48d0e35ef00ed6c90b9ae9d443491c79a
+        dest-filename: testprint

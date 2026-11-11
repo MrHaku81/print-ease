@@ -139,6 +139,10 @@ msgstr "Scanner"
 msgid "Scanner wird erkannt…"
 msgstr "Détection du scanner…"
 
+#: src/print_ease/gui/printer_detail.py:110
+msgid "Kein Scanner gefunden"
+msgstr "Aucun scanner trouvé"
+
 #: src/print_ease/gui/printer_detail.py:139
 msgid "Druckerinformationen"
 msgstr "Informations sur l'imprimante"

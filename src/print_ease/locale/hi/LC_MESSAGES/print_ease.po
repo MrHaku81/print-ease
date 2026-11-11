@@ -138,6 +138,10 @@ msgstr "स्कैनर"
 msgid "Scanner wird erkannt…"
 msgstr "स्कैनर पहचाना जा रहा है…"
 
+#: src/print_ease/gui/printer_detail.py:110
+msgid "Kein Scanner gefunden"
+msgstr "कोई स्कैनर नहीं मिला"
+
 #: src/print_ease/gui/printer_detail.py:139
 msgid "Druckerinformationen"
 msgstr "प्रिंटर जानकारी"

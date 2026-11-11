@@ -138,6 +138,10 @@ msgstr "Skener"
 msgid "Scanner wird erkannt…"
 msgstr "Zisťovanie skenera…"
 
+#: src/print_ease/gui/printer_detail.py:110
+msgid "Kein Scanner gefunden"
+msgstr "Nenašiel sa žiadny skener"
+
 #: src/print_ease/gui/printer_detail.py:139
 msgid "Druckerinformationen"
 msgstr "Informácie o tlačiarni"

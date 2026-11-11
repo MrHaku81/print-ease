@@ -1,26 +1,40 @@
 """
 Scanner-Erkennung und Scan-Funktion via eSCL (AirScan / Mopria Scan).
 
-Primär: HTTP-Probe der eSCL-Endpunkte bekannter Netzwerkgeräte.
-Fallback: Avahi-Suche nach _uscan._tcp / _uscans._tcp.
+Kaskade je Drucker (find_scanner_for_printer):
+  a) eSCL-URL aus der CUPS-Geräte-URI
+  b) mDNS-Suche nach _uscan._tcp / _uscans._tcp (Avahi, sonst python-zeroconf)
+  c) HTTP-Probe aller bekannten Netzwerkdrucker-IPs
+
+Die gesamte Kaskade ist durch SCANNER_SEARCH_TIMEOUT begrenzt.
 """
 from __future__ import annotations
 
+import http.client
 import io
+import ipaddress
+import re
 import ssl
 import time
 import urllib.error
 import urllib.parse
 import urllib.request
 import xml.etree.ElementTree as ET
+from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime
 from pathlib import Path
 from typing import Callable
 
+from print_ease import avahi_client, cups_client
 from print_ease._i18n import _
 from print_ease._log import get_logger
-from print_ease.constants import AVAHI_TIMEOUT, CUPS_TIMEOUT, ESCL_TIMEOUT
-from print_ease.printer_model import ScannerInfo
+from print_ease.constants import (
+    CUPS_TIMEOUT,
+    ESCL_TIMEOUT,
+    SCANNER_MDNS_WINDOW,
+    SCANNER_SEARCH_TIMEOUT,
+)
+from print_ease.printer_model import NetworkPrinter, PrinterInfo, ScannerInfo
 
 log = get_logger(__name__)
 
@@ -29,6 +43,10 @@ _NS_PWG  = "http://www.pwg.org/schemas/2010/12/sm"
 _NS = {"scan": _NS_SCAN, "pwg": _NS_PWG}
 
 _ESCL_PATH = "/eSCL"
+
+# URI-Schemata, deren Host-Teil tatsächlich das Gerät im Netz benennt.
+# usb://Canon/TS700 hat zwar auch einen "Host", der ist aber der Hersteller.
+_HOST_URI_SCHEMES = ("ipp", "ipps", "http", "https", "socket", "lpd")
 
 # eSCL/AirScan-Standard: lokales Netzwerk, selbstsignierte Certs.
 # Apple Print, Mopria und andere Clients deaktivieren ebenfalls
@@ -87,7 +105,11 @@ def get_adf_state(escl_url: str) -> str | None:
         return None
 
 
-def get_scanner_capabilities(escl_url: str, linked_printer: str | None = None) -> ScannerInfo | None:
+def get_scanner_capabilities(
+    escl_url: str,
+    linked_printer: str | None = None,
+    timeout: float = ESCL_TIMEOUT,
+) -> ScannerInfo | None:
     """
     Ruft ScannerCapabilities ab und parst die XML-Antwort.
     Gibt None zurück wenn das Gerät kein eSCL unterstützt.
@@ -95,11 +117,11 @@ def get_scanner_capabilities(escl_url: str, linked_printer: str | None = None) -
     caps_url = f"{escl_url}/ScannerCapabilities"
     try:
         req = urllib.request.Request(caps_url, headers={"Accept": "application/xml"})
-        with urllib.request.urlopen(req, timeout=ESCL_TIMEOUT, context=_ESCL_SSL_CONTEXT) as resp:
+        with urllib.request.urlopen(req, timeout=timeout, context=_ESCL_SSL_CONTEXT) as resp:
             if resp.status != 200:
                 return None
             data = resp.read()
-    except (urllib.error.URLError, OSError) as exc:
+    except (urllib.error.URLError, OSError, http.client.HTTPException, ValueError) as exc:
         log.warning("Kein eSCL bei %s: %s", caps_url, exc)
         return None
 
@@ -112,38 +134,71 @@ def get_scanner_capabilities(escl_url: str, linked_printer: str | None = None) -
 
 def discover_scanners(linked_printers: dict[str, str] | None = None) -> list[ScannerInfo]:
     """
-    Findet eSCL-Scanner im Netzwerk.
+    Findet eSCL-Scanner im Netzwerk, jedes Gerät genau einmal.
 
-    Strategie:
-    1. Avahi nach _uscan._tcp / _uscans._tcp (falls vorhanden)
-    2. Alle bekannten Netzwerkdrucker-IPs zusätzlich proben
+    Strategie je Gerät, erster Treffer gewinnt:
+    1. Avahi nach _uscan._tcp / _uscans._tcp
+    2. Bekannte Netzwerkdrucker-IPs proben (http, dann https)
 
-    linked_printers: {ip_adresse: cups_druckername} — aus avahi_client
+    linked_printers: {ip_adresse: cups_druckername} — aus linked_printers_by_ip()
     """
-    candidate_urls: set[str] = set()
+    return _probe_hosts(_avahi_scanner_urls(), linked_printers or {}, ESCL_TIMEOUT)
 
-    # Strategie 1: Avahi _uscan
-    candidate_urls.update(_avahi_scanner_urls())
 
-    # Strategie 2: Netzwerkdrucker proben
-    if linked_printers:
-        for ip in linked_printers:
-            candidate_urls.add(f"http://{ip}{_ESCL_PATH}")
+def linked_printers_by_ip(prefer: str | None = None) -> dict[str, str]:
+    """
+    Liefert {ip_adresse: cups_druckername} für alle CUPS-Drucker, deren
+    IP sich aus der Geräte-URI oder der Avahi-Suche herleiten lässt.
 
-    scanners: list[ScannerInfo] = []
-    seen: set[str] = set()
+    Zeigen mehrere Queues auf dasselbe Gerät, gewinnt die Queue `prefer`.
+    """
+    network = avahi_client.discover_network_printers(timeout=SCANNER_MDNS_WINDOW)
+    linked: dict[str, str] = {}
+    for printer in sorted(cups_client.get_printers(), key=lambda p: p.name == prefer):
+        for ip in _printer_ips(printer, network):
+            linked[ip] = printer.name
+    return linked
 
-    for url in candidate_urls:
-        if url in seen:
-            continue
-        seen.add(url)
-        printer_name = (linked_printers or {}).get(_host_from_url(url))
-        scanner = get_scanner_capabilities(url, linked_printer=printer_name)
-        if scanner:
-            scanners.append(scanner)
-            log.info("Scanner gefunden: %s @ %s", scanner.name, scanner.escl_url)
 
-    return scanners
+def find_scanner_for_printer(printer: PrinterInfo) -> ScannerInfo | None:
+    """
+    Sucht den Scanner, der zu genau diesem Drucker gehört.
+
+    Scanner anderer Geräte werden nie zurückgegeben: Ohne bekannte IP
+    (USB, Datei, ...) gibt es keine Zuordnung und damit keinen Treffer.
+    """
+    deadline = time.monotonic() + SCANNER_SEARCH_TIMEOUT
+
+    # Avahi läuft schon während Schritt a, damit die Frist auch für b und c
+    # reicht. Das Ergebnis zählt trotzdem erst, wenn Schritt a gescheitert ist.
+    pool = ThreadPoolExecutor(max_workers=2)
+    linked_job = pool.submit(linked_printers_by_ip, printer.name)
+    avahi_job = pool.submit(_avahi_scanner_urls)
+    pool.shutdown(wait=False)
+
+    scanner = _probe_printer_uri(printer, deadline)
+    if scanner:
+        return scanner
+
+    try:
+        linked = linked_job.result(timeout=max(deadline - time.monotonic(), 0))
+        avahi_urls = avahi_job.result(timeout=max(deadline - time.monotonic(), 0))
+    except TimeoutError:
+        log.warning("Avahi-Suche für '%s' nicht rechtzeitig fertig", printer.name)
+        return None
+
+    if printer.name not in linked.values():
+        log.info("Keine IP für '%s' bekannt — kein Scanner zuordenbar", printer.name)
+        return None
+
+    remaining = deadline - time.monotonic()
+    if remaining > 0:
+        for scanner in _probe_hosts(avahi_urls, linked, min(remaining, ESCL_TIMEOUT)):
+            if scanner.linked_printer == printer.name:
+                return scanner
+
+    log.info("Kein Scanner für '%s' gefunden", printer.name)
+    return None
 
 
 def scan_document(
@@ -716,28 +771,155 @@ def _int(el: ET.Element, path: str) -> int:
 # Hilfsfunktionen
 # ---------------------------------------------------------------------------
 
+def _probe_printer_uri(printer: PrinterInfo, deadline: float) -> ScannerInfo | None:
+    """Schritt a der Kaskade: eSCL unter der Adresse aus der CUPS-URI."""
+    escl_url = _escl_url_for(printer)
+    if not escl_url:
+        return None
+
+    # .local-Namen vorab auflösen: Die libc-Auflösung blockiert bei
+    # ausgeschalteten Geräten bis zu 15 s, und kein Timeout greift dort.
+    host = _host_from_url(escl_url)
+    if host.rstrip(".").endswith(".local"):
+        ip = avahi_client.resolve_host(host.rstrip("."))
+        if not ip:
+            log.info("%s nicht auflösbar", host)
+            return None
+        escl_url = escl_url.replace(host, ip, 1)
+
+    remaining = deadline - time.monotonic()
+    if remaining <= 0:
+        return None
+    return get_scanner_capabilities(
+        escl_url, linked_printer=printer.name, timeout=min(remaining, ESCL_TIMEOUT)
+    )
+
+
+def _probe_hosts(
+    avahi_urls: list[str], linked: dict[str, str], timeout: float
+) -> list[ScannerInfo]:
+    """Probt alle Kandidaten gleichzeitig und liefert jedes Gerät einmal."""
+    # Ein Gerät meldet sich meist unter mehreren URLs (_uscan, _uscans, IP-Probe).
+    candidates: dict[str, list[str]] = {}
+    for url in avahi_urls:
+        candidates.setdefault(_host_from_url(url), []).append(url)
+    for ip in linked:
+        candidates.setdefault(ip, []).extend(
+            (f"http://{ip}{_ESCL_PATH}", f"https://{ip}{_ESCL_PATH}")
+        )
+
+    jobs = [(host, url) for host, urls in candidates.items() for url in dict.fromkeys(urls)]
+    if not jobs:
+        return []
+
+    def probe(job: tuple[str, str]) -> ScannerInfo | None:
+        host, url = job
+        return get_scanner_capabilities(url, linked_printer=linked.get(host), timeout=timeout)
+
+    with ThreadPoolExecutor(max_workers=len(jobs)) as pool:
+        results = list(pool.map(probe, jobs))
+
+    # Je Gerät gewinnt der erste Treffer in Kandidaten-Reihenfolge: Avahi vor IP-Probe.
+    scanners: dict[str, ScannerInfo] = {}
+    for (host, _url), scanner in zip(jobs, results):
+        if scanner and host not in scanners:
+            scanners[host] = scanner
+            log.info("Scanner gefunden: %s @ %s", scanner.name, scanner.escl_url)
+    return list(scanners.values())
+
+
+def _escl_url_for(printer: PrinterInfo) -> str | None:
+    try:
+        parsed = urllib.parse.urlparse(printer.uri)
+        port = parsed.port
+    except ValueError:
+        return None
+    if parsed.scheme not in ("ipp", "ipps", "http", "https"):
+        return None
+    host = parsed.hostname
+    if not host:
+        return None
+    scheme = "https" if parsed.scheme == "ipps" else "http"
+    # Port nur einfügen wenn nicht Standard (80/443) und nicht IPP-Standard (631)
+    if port and port not in (80, 443, 631):
+        return f"{scheme}://{host}:{port}/eSCL"
+    return f"{scheme}://{host}/eSCL"
+
+
+def _printer_ips(printer: PrinterInfo, network: list[NetworkPrinter]) -> set[str]:
+    """Leitet die IPv4-Adressen eines CUPS-Druckers her."""
+    try:
+        parsed = urllib.parse.urlparse(printer.uri)
+        host = (parsed.hostname or "").rstrip(".").lower()
+    except ValueError:
+        return set()
+
+    if parsed.scheme in _HOST_URI_SCHEMES:
+        if _is_ipv4(host):
+            return {host}
+        return {n.address for n in network if host and n.host.rstrip(".").lower() == host}
+
+    # dnssd://Name._ipp._tcp.local/?uuid=... und implicitclass://Queue_Name/
+    # nennen keinen Host, sondern nur den Dienst- bzw. Queue-Namen.
+    if parsed.scheme not in ("dnssd", "implicitclass"):
+        return set()
+
+    name = urllib.parse.unquote(parsed.netloc)
+    name = _normalize_name(re.sub(r"\._[a-z0-9-]+\._tcp\b.*$", "", name, flags=re.IGNORECASE))
+    uuid = urllib.parse.parse_qs(parsed.query).get("uuid", [""])[0].lower()
+
+    # Vom eindeutigsten zum unschärfsten Merkmal. Passt ein Merkmal auf
+    # mehrere Geräte (zwei gleiche Modelle), lieber keine Zuordnung als die falsche.
+    for matches in (
+        lambda n: uuid and n.txt_records.get("UUID", "").lower() == uuid,
+        lambda n: name and _normalize_name(n.instance_name) == name,
+        lambda n: name and _normalize_name(n.name) == name,
+    ):
+        addresses = {n.address for n in network if matches(n)}
+        if addresses:
+            return addresses if len(addresses) == 1 else set()
+    return set()
+
+
+def _is_ipv4(host: str) -> bool:
+    try:
+        ipaddress.IPv4Address(host)
+    except ValueError:
+        return False
+    return True
+
+
+def _normalize_name(name: str) -> str:
+    """'Canon_TS700_series' und 'Canon TS700 series' sollen gleich sein."""
+    return re.sub(r"[\W_]+", "", name).casefold()
+
+
 def _avahi_scanner_urls() -> list[str]:
-    """Sucht via Avahi nach _uscan._tcp / _uscans._tcp."""
-    import subprocess
+    """
+    Sucht nach _uscan._tcp / _uscans._tcp — via Avahi, ohne Avahi (Flatpak)
+    über den zeroconf-Fallback in avahi_client._browse.
+
+    Beide Typen laufen parallel, damit die Suche auch auf dem zeroconf-Weg
+    (festes Suchfenster je Aufruf) nur einmal SCANNER_MDNS_WINDOW dauert.
+    """
+    services = (("_uscan._tcp", "http", 80), ("_uscans._tcp", "https", 443))
+    with ThreadPoolExecutor(max_workers=len(services)) as pool:
+        browsed = list(pool.map(lambda svc: avahi_client._browse(svc[0], SCANNER_MDNS_WINDOW), services))
+
     urls: list[str] = []
-    for svc in ("_uscan._tcp", "_uscans._tcp"):
-        try:
-            proc = subprocess.run(
-                ["avahi-browse", "-r", "-t", "-p", svc],
-                capture_output=True, text=True, timeout=AVAHI_TIMEOUT + 1,
-            )
-            for line in proc.stdout.splitlines():
-                if not line.startswith("="):
-                    continue
-                parts = line.split(";", 9)
-                if len(parts) < 9 or parts[2] != "IPv4":
-                    continue
-                addr, port_str = parts[7], parts[8]
-                port = int(port_str) if port_str.isdigit() else 80
-                scheme = "https" if svc == "_uscans._tcp" else "http"
-                urls.append(f"{scheme}://{addr}:{port}{_ESCL_PATH}")
-        except Exception:
-            pass
+    for (_svc, scheme, default_port), lines in zip(services, browsed):
+        for line in lines:
+            if not line.startswith("="):
+                continue
+            parts = line.split(";", 9)
+            if len(parts) < 9 or parts[2] != "IPv4":
+                continue
+            addr, port_str = parts[7], parts[8]
+            port = int(port_str) if port_str.isdigit() else default_port
+            netloc = addr if port == default_port else f"{addr}:{port}"
+            txt = avahi_client._parse_txt(parts[9]) if len(parts) > 9 else {}
+            path = (txt.get("rs") or "eSCL").strip("/")
+            urls.append(f"{scheme}://{netloc}/{path}")
     return urls
 
 

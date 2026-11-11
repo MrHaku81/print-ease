@@ -49,3 +49,4 @@ class NetworkPrinter:
     uri: str            # Fertige IPP-URI (ipp://host:port/rp)
     service_type: str   # "_ipp._tcp" oder "_ipps._tcp"
     txt_records: dict   # TXT-Records: rp, ty, adminurl, Color, Duplex, ...
+    instance_name: str = ""  # mDNS-Dienstname, steht in dnssd://-URIs

@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import os
+
 import cups
 from contextlib import contextmanager
 from urllib.parse import urlparse
@@ -131,10 +133,39 @@ def resume_printer(printer_name: str) -> None:
             raise
 
 
+# pycups liest die Testseite clientseitig: $CUPS_DATADIR/data/testprint, sonst
+# /usr/share/cups bzw. /usr/local/share/cups (cupsconnection.c, printTestPage).
+_SYSTEM_DATADIRS = ("/usr/share/cups", "/usr/local/share/cups")
+# Im Flatpak fehlt die Datei in der Runtime; das Manifest legt sie hierhin
+# (testprint aus libcupsfilters, eine #PDF-BANNER-Vorlage, die der
+# Host-CUPS mit bannertopdf rendert).
+_BUNDLED_TESTPAGES = ("/app/share/print-ease/testprint",)
+
+
+def _test_page_file() -> str | None:
+    """
+    Pfad der Testseite für printTestPage, None = pycups sucht selbst.
+
+    Findet pycups die System-Datei (PPA/AUR/Quellinstallation), bleibt alles
+    wie bisher. Nur wenn sie fehlt (Flatpak), wird die gebündelte Datei benutzt.
+    """
+    datadirs = [os.environ.get("CUPS_DATADIR"), *_SYSTEM_DATADIRS]
+    for datadir in filter(None, datadirs):
+        for name in ("testprint", "testprint.ps"):
+            if os.path.isfile(os.path.join(datadir, "data", name)):
+                return None
+    return next((p for p in _BUNDLED_TESTPAGES if os.path.isfile(p)), None)
+
+
 def print_test_page(printer_name: str) -> None:
+    test_page = _test_page_file()
     with _cups_session() as conn:
         try:
-            job_id = conn.printTestPage(printer_name)
+            if test_page:
+                log.debug("Testseite aus %s", test_page)
+                job_id = conn.printTestPage(printer_name, file=test_page)
+            else:
+                job_id = conn.printTestPage(printer_name)
             log.info("Testseite gesendet an '%s', Job-ID: %d", printer_name, job_id)
         except cups.IPPError as exc:
             log.error("Fehler beim Drucken der Testseite auf '%s': %s", printer_name, exc)
