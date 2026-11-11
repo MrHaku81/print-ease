@@ -444,12 +444,16 @@ msgid "Stapel umdrehen und erneut einlegen"
 msgstr "Odwróć stos i włóż ponownie"
 
 #: src/print_ease/gui/scanner_panel.py:560
-msgid ""
-"Vorderseiten gescannt. Drehe den Stapel um, lege ihn erneut in den ADF ein "
-"und bestätige."
-msgstr ""
-"Strony przednie zeskanowane. Odwróć stos, włóż go ponownie do podajnika i "
-"potwierdź."
+msgid "Vorderseiten gescannt. Nimm den Stapel aus der Ablage, dreh ihn als Ganzes um, sodass er wieder in Einzugsrichtung liegt, lege ihn erneut ein und bestätige."
+msgstr "Strony przednie zeskanowane. Wyjmij stos z tacy odbiorczej, odwróć go w całości tak, aby znów leżał w kierunku podawania, włóż go ponownie i potwierdź."
+
+#: src/print_ease/gui/scanner_panel.py
+msgid "Rückseiten um 180° drehen"
+msgstr "Obróć strony tylne o 180°"
+
+#: src/print_ease/gui/scanner_panel.py
+msgid "Nur einschalten, wenn die Rückseiten kopfüber im Ergebnis landen"
+msgstr "Włącz tylko wtedy, gdy strony tylne są w wyniku do góry nogami"
 
 #: src/print_ease/gui/scanner_panel.py:565
 msgid "Weiter"

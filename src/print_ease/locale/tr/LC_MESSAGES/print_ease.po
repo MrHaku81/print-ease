@@ -444,12 +444,16 @@ msgid "Stapel umdrehen und erneut einlegen"
 msgstr "Kağıt destesini çevirin ve yeniden yükleyin"
 
 #: src/print_ease/gui/scanner_panel.py:560
-msgid ""
-"Vorderseiten gescannt. Drehe den Stapel um, lege ihn erneut in den ADF ein "
-"und bestätige."
-msgstr ""
-"Ön yüzler tarandı. Kağıt destesini çevirin, besleyiciye yeniden yükleyin ve "
-"onaylayın."
+msgid "Vorderseiten gescannt. Nimm den Stapel aus der Ablage, dreh ihn als Ganzes um, sodass er wieder in Einzugsrichtung liegt, lege ihn erneut ein und bestätige."
+msgstr "Ön yüzler tarandı. Desteyi çıkış tepsisinden alın, yeniden besleme yönünde duracak şekilde bütün olarak çevirin, yeniden yükleyin ve onaylayın."
+
+#: src/print_ease/gui/scanner_panel.py
+msgid "Rückseiten um 180° drehen"
+msgstr "Arka yüzleri 180° döndür"
+
+#: src/print_ease/gui/scanner_panel.py
+msgid "Nur einschalten, wenn die Rückseiten kopfüber im Ergebnis landen"
+msgstr "Yalnızca arka yüzler sonuçta baş aşağı çıkıyorsa açın"
 
 #: src/print_ease/gui/scanner_panel.py:565
 msgid "Weiter"

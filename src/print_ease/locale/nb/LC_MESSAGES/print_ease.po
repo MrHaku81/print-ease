@@ -444,10 +444,16 @@ msgid "Stapel umdrehen und erneut einlegen"
 msgstr "Snu bunken og legg inn igjen"
 
 #: src/print_ease/gui/scanner_panel.py:560
-msgid ""
-"Vorderseiten gescannt. Drehe den Stapel um, lege ihn erneut in den ADF ein "
-"und bestätige."
-msgstr "Forsider skannet. Snu bunken, legg den inn i materen igjen og bekreft."
+msgid "Vorderseiten gescannt. Nimm den Stapel aus der Ablage, dreh ihn als Ganzes um, sodass er wieder in Einzugsrichtung liegt, lege ihn erneut ein und bestätige."
+msgstr "Forsider skannet. Ta bunken ut av utskuffen, snu hele bunken slik at den igjen ligger i materetningen, legg den inn igjen og bekreft."
+
+#: src/print_ease/gui/scanner_panel.py
+msgid "Rückseiten um 180° drehen"
+msgstr "Roter baksider 180°"
+
+#: src/print_ease/gui/scanner_panel.py
+msgid "Nur einschalten, wenn die Rückseiten kopfüber im Ergebnis landen"
+msgstr "Slå bare på hvis baksidene havner opp ned i resultatet"
 
 #: src/print_ease/gui/scanner_panel.py:565
 msgid "Weiter"

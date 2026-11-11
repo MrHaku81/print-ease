@@ -6,7 +6,7 @@ import threading
 import gi
 gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")
-from gi.repository import Adw, Gtk, GLib
+from gi.repository import Adw, Gio, Gtk, GLib
 
 from print_ease import scanner_client, settings
 from print_ease._i18n import _
@@ -47,6 +47,22 @@ def _mode_labels() -> dict[str, str]:
     }
 
 
+# Wer einen Stapel einlegt, will in aller Regel ein Dokument, keinen Bilderordner.
+_DEFAULT_MODES = {"Platen": "single", "AdfSimplex": "multipage"}
+
+
+def _modes_from_saved(saved: dict) -> dict[str, str]:
+    """Liefert den Modus je Quelle aus gespeicherten Scan-Einstellungen."""
+    modes = dict(_DEFAULT_MODES)
+    if "modes" in saved:
+        modes.update(saved["modes"])
+    elif "mode" in saved:
+        # Altformat: Beim Einzug war der Modus nicht wählbar, der Wert gilt nur
+        # für das Flachbett und darf die Einzug-Voreinstellung nicht verdrängen.
+        modes["Platen"] = saved["mode"]
+    return modes
+
+
 class ScannerPanel:
     """Baut eine Adw.PreferencesGroup mit Scanner-Bedienelementen."""
 
@@ -59,11 +75,15 @@ class ScannerPanel:
         self._duplex_modes = self._build_duplex_list(scanner)
         self._duplex_drop: Gtk.DropDown | None = None
         self._duplex_row: Adw.ActionRow | None = None
+        self._rotate_row: Adw.ActionRow | None = None
+        self._rotate_switch: Gtk.Switch | None = None
         self._mode_options: list[str] = self._build_mode_list()
         self._mode_drop: Gtk.DropDown | None = None
         self._mode_row: Adw.ActionRow | None = None
+        self._modes_by_source = dict(_DEFAULT_MODES)
         self._group = self._build()
         self._restore_scan_settings()
+        self._apply_source_mode()
 
     def get_group(self) -> Adw.PreferencesGroup:
         return self._group
@@ -120,7 +140,7 @@ class ScannerPanel:
             self._mode_row = Adw.ActionRow(title=_("Modus"))
             self._mode_row.set_activatable(False)
             self._mode_row.add_suffix(self._mode_drop)
-            self._mode_row.set_visible(self._get_selected_source() == "Platen")
+            self._mode_drop.connect("notify::selected", self._on_mode_changed)
             group.add(self._mode_row)
 
         if len(self._duplex_modes) > 1:
@@ -129,10 +149,26 @@ class ScannerPanel:
             self._duplex_row = Adw.ActionRow(title=_("Duplex"))
             self._duplex_row.set_activatable(False)
             self._duplex_row.add_suffix(self._duplex_drop)
-            self._duplex_row.set_visible(self._get_selected_source() == "AdfSimplex")
             group.add(self._duplex_row)
 
-        if self._src_drop is not None and (self._mode_row is not None or self._duplex_row is not None):
+        if "AdfDuplexSoftware" in self._duplex_modes:
+            # Andere Geräte ziehen oder wenden anders; kopfüber liegende
+            # Rückseiten lassen sich damit ohne Codeänderung korrigieren.
+            # ActionRow + Gtk.Switch statt Adw.SwitchRow (erst ab libadwaita 1.4).
+            self._rotate_switch = Gtk.Switch(active=False, valign=Gtk.Align.CENTER)
+            self._rotate_row = Adw.ActionRow(
+                title=_("Rückseiten um 180° drehen"),
+                subtitle=_("Nur einschalten, wenn die Rückseiten kopfüber im Ergebnis landen"),
+            )
+            self._rotate_row.add_suffix(self._rotate_switch)
+            self._rotate_row.set_activatable_widget(self._rotate_switch)
+            group.add(self._rotate_row)
+
+        if self._duplex_drop is not None:
+            self._duplex_drop.connect("notify::selected", self._on_duplex_changed)
+        self._update_duplex_rows()
+
+        if self._src_drop is not None:
             self._src_drop.connect("notify::selected", self._on_source_changed)
 
         scan_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=8)
@@ -197,6 +233,17 @@ class ScannerPanel:
             return self._duplex_modes[idx] if idx < len(self._duplex_modes) else "None"
         return "None"
 
+    def _get_rotate_back(self) -> bool:
+        return self._rotate_switch is not None and self._rotate_switch.get_active()
+
+    def _update_duplex_rows(self) -> None:
+        """Duplex nur beim Einzug, den Dreh-Schalter nur beim Software-Duplex zeigen."""
+        adf = self._get_selected_source() == "AdfSimplex"
+        if self._duplex_row is not None:
+            self._duplex_row.set_visible(adf)
+        if self._rotate_row is not None:
+            self._rotate_row.set_visible(adf and self._get_selected_duplex() == "AdfDuplexSoftware")
+
     def _get_selected_mode(self) -> str:
         if self._mode_drop is not None:
             idx = self._mode_drop.get_selected()
@@ -209,7 +256,8 @@ class ScannerPanel:
             "color_mode": self._get_selected_color_mode(),
             "source":     self._get_selected_source(),
             "duplex":     self._get_selected_duplex(),
-            "mode":       self._get_selected_mode(),
+            "rotate_back": self._get_rotate_back(),
+            "modes":      dict(self._modes_by_source),
         })
         log.debug("Scan-Einstellungen gespeichert für '%s'", self._scanner.name)
 
@@ -218,6 +266,7 @@ class ScannerPanel:
         if not saved:
             return
         s = self._scanner
+        self._modes_by_source = _modes_from_saved(saved)
 
         res = saved.get("resolution", 300)
         if res in s.resolutions:
@@ -235,9 +284,8 @@ class ScannerPanel:
         if self._duplex_drop is not None and dup in self._duplex_modes:
             self._duplex_drop.set_selected(self._duplex_modes.index(dup))
 
-        mode = saved.get("mode", "single")
-        if self._mode_drop is not None and mode in self._mode_options:
-            self._mode_drop.set_selected(self._mode_options.index(mode))
+        if self._rotate_switch is not None:
+            self._rotate_switch.set_active(bool(saved.get("rotate_back", False)))
 
         log.debug("Scan-Einstellungen wiederhergestellt für '%s'", self._scanner.name)
 
@@ -259,10 +307,10 @@ class ScannerPanel:
             self._run_archive_platen(btn, color_mode, resolution)
             return
         if source == "AdfSimplex" and duplex == "AdfDuplex":
-            self._run_hardware_duplex(btn, color_mode, resolution)
+            self._run_hardware_duplex(btn, color_mode, resolution, mode)
             return
         if source == "AdfSimplex" and duplex == "AdfDuplexSoftware":
-            self._run_software_duplex(btn, color_mode, resolution)
+            self._run_software_duplex(btn, color_mode, resolution, mode)
             return
 
         # Strings im Main-Thread vorübersetzen — thread-sicher
@@ -278,7 +326,7 @@ class ScannerPanel:
         self._cancel_event = threading.Event()
         threading.Thread(
             target=self._scan_thread,
-            args=(color_mode, resolution, source, self._cancel_event,
+            args=(color_mode, resolution, source, mode, self._cancel_event,
                   msg_no_paper, msg_cancelled),
             daemon=True,
         ).start()
@@ -290,17 +338,27 @@ class ScannerPanel:
         self._cancel_btn.set_sensitive(False)
 
     def _on_source_changed(self, _drop: Gtk.DropDown, _pspec) -> None:
-        source = self._get_selected_source()
-        if self._mode_row is not None:
-            self._mode_row.set_visible(source == "Platen")
-        if self._duplex_row is not None:
-            self._duplex_row.set_visible(source == "AdfSimplex")
+        self._update_duplex_rows()
+        self._apply_source_mode()
+
+    def _on_duplex_changed(self, _drop: Gtk.DropDown, _pspec) -> None:
+        self._update_duplex_rows()
+
+    def _on_mode_changed(self, _drop: Gtk.DropDown, _pspec) -> None:
+        self._modes_by_source[self._get_selected_source()] = self._get_selected_mode()
+
+    def _apply_source_mode(self) -> None:
+        """Stellt den Modus ein, der für die aktuelle Quelle gilt."""
+        mode = self._modes_by_source.get(self._get_selected_source())
+        if self._mode_drop is not None and mode in self._mode_options:
+            self._mode_drop.set_selected(self._mode_options.index(mode))
 
     def _scan_thread(
         self,
         color_mode: str,
         resolution: int,
         source: str,
+        mode: str,
         cancel_event: threading.Event,
         msg_no_paper: str,
         msg_cancelled: str,
@@ -314,10 +372,16 @@ class ScannerPanel:
                     return
 
         try:
-            path = scanner_client.scan_document(
-                self._scanner, color_mode, resolution, source,
-                cancel_event=cancel_event,
-            )
+            if source == "AdfSimplex":
+                path = scanner_client.scan_adf_document(
+                    self._scanner, color_mode, resolution, mode,
+                    cancel_event=cancel_event,
+                )
+            else:
+                path = scanner_client.scan_document(
+                    self._scanner, color_mode, resolution, source,
+                    cancel_event=cancel_event,
+                )
             GLib.idle_add(self._on_scan_done, True, path)
         except InterruptedError:
             log.info("Scan abgebrochen")
@@ -357,7 +421,7 @@ class ScannerPanel:
     # ------------------------------------------------------------------
 
     def _run_hardware_duplex(
-        self, btn: Gtk.Button, color_mode: str, resolution: int
+        self, btn: Gtk.Button, color_mode: str, resolution: int, mode: str
     ) -> None:
         msg_no_paper  = _("Kein Papier im Einzug")
         msg_cancelled = _("Hardware-Duplex-Scan abgebrochen")
@@ -383,6 +447,7 @@ class ScannerPanel:
                 path = scanner_client.scan_adf_hardware_duplex(
                     self._scanner, color_mode, resolution,
                     cancel_event=cancel_event,
+                    mode=mode,
                 )
                 GLib.idle_add(self._on_scan_done, True, path)
             except InterruptedError:
@@ -493,7 +558,7 @@ class ScannerPanel:
     # ------------------------------------------------------------------
 
     def _run_software_duplex(
-        self, btn: Gtk.Button, color_mode: str, resolution: int
+        self, btn: Gtk.Button, color_mode: str, resolution: int, mode: str
     ) -> None:
         # Strings im Main-Thread vorübersetzen — thread-sicher
         msg_front     = _("Vorderseiten werden gescannt…")
@@ -501,6 +566,7 @@ class ScannerPanel:
         msg_pdf       = _("PDF wird erstellt…")
         msg_no_paper  = _("Kein Papier im Einzug")
         msg_cancelled = _("Duplex-Scan abgebrochen")
+        rotate_back   = self._get_rotate_back()
 
         btn.set_sensitive(False)
         self._cancel_btn.set_visible(True)
@@ -536,6 +602,8 @@ class ScannerPanel:
                     cancel_event=cancel_event,
                     flip_callback=_flip_callback,
                     progress_callback=_progress,
+                    mode=mode,
+                    rotate_back=rotate_back,
                 )
                 GLib.idle_add(self._on_scan_done, True, path)
             except InterruptedError:
@@ -548,22 +616,32 @@ class ScannerPanel:
         threading.Thread(target=_do_scan, daemon=True).start()
 
     def _show_flip_dialog(self, confirmed_event: threading.Event) -> bool:
+        # Nach Aktualisieren oder Druckerwechsel hängt das Panel nicht mehr im
+        # Fenster, der Scan läuft aber weiter. Ohne Rückfrage nie weiterscannen.
         root = self._group.get_root()
         if root is None:
-            log.warning("_show_flip_dialog: get_root() ist None — Dialog übersprungen")
+            app = Gio.Application.get_default()
+            root = app.get_active_window() if app else None
+        if root is None:
+            log.warning("_show_flip_dialog: kein Fenster — Scan wird abgebrochen")
+            if self._cancel_event:
+                self._cancel_event.set()
             confirmed_event.set()
             return GLib.SOURCE_REMOVE
 
         dialog = Adw.AlertDialog(
             heading=_("Stapel umdrehen und erneut einlegen"),
             body=_(
-                "Vorderseiten gescannt. Drehe den Stapel um, "
-                "lege ihn erneut in den ADF ein und bestätige."
+                "Vorderseiten gescannt. Nimm den Stapel aus der Ablage, "
+                "dreh ihn als Ganzes um, sodass er wieder in Einzugsrichtung "
+                "liegt, lege ihn erneut ein und bestätige."
             ),
         )
         dialog.add_response("cancel", _("Abbrechen"))
         dialog.add_response("continue", _("Weiter"))
         dialog.set_response_appearance("continue", Adw.ResponseAppearance.SUGGESTED)
+        dialog.set_default_response("continue")
+        dialog.set_close_response("cancel")
 
         def _on_response(_dlg, response: str) -> None:
             if response == "cancel" and self._cancel_event:

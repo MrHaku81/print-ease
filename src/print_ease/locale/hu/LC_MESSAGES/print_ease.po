@@ -445,12 +445,16 @@ msgid "Stapel umdrehen und erneut einlegen"
 msgstr "Fordítsa meg a köteget és töltse be újra"
 
 #: src/print_ease/gui/scanner_panel.py:560
-msgid ""
-"Vorderseiten gescannt. Drehe den Stapel um, lege ihn erneut in den ADF ein "
-"und bestätige."
-msgstr ""
-"Az előlapok beolvasva. Fordítsa meg a köteget, tegye vissza az adagolóba és "
-"erősítse meg."
+msgid "Vorderseiten gescannt. Nimm den Stapel aus der Ablage, dreh ihn als Ganzes um, sodass er wieder in Einzugsrichtung liegt, lege ihn erneut ein und bestätige."
+msgstr "Az előlapok beolvasva. Vegye ki a köteget a kimeneti tálcából, fordítsa meg egészben úgy, hogy ismét adagolási irányban álljon, tegye vissza és erősítse meg."
+
+#: src/print_ease/gui/scanner_panel.py
+msgid "Rückseiten um 180° drehen"
+msgstr "Hátoldalak forgatása 180°-kal"
+
+#: src/print_ease/gui/scanner_panel.py
+msgid "Nur einschalten, wenn die Rückseiten kopfüber im Ergebnis landen"
+msgstr "Csak akkor kapcsolja be, ha a hátoldalak fejjel lefelé kerülnek az eredménybe"
 
 #: src/print_ease/gui/scanner_panel.py:565
 msgid "Weiter"

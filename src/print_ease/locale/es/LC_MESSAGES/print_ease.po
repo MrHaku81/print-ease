@@ -444,12 +444,16 @@ msgid "Stapel umdrehen und erneut einlegen"
 msgstr "Voltear la pila y recargar"
 
 #: src/print_ease/gui/scanner_panel.py:560
-msgid ""
-"Vorderseiten gescannt. Drehe den Stapel um, lege ihn erneut in den ADF ein "
-"und bestätige."
-msgstr ""
-"Anversos escaneados. Voltee la pila, vuélvala a colocar en el alimentador y "
-"confirme."
+msgid "Vorderseiten gescannt. Nimm den Stapel aus der Ablage, dreh ihn als Ganzes um, sodass er wieder in Einzugsrichtung liegt, lege ihn erneut ein und bestätige."
+msgstr "Anversos escaneados. Saque la pila de la bandeja de salida, dele la vuelta entera para que vuelva a quedar en el sentido de alimentación, vuelva a colocarla y confirme."
+
+#: src/print_ease/gui/scanner_panel.py
+msgid "Rückseiten um 180° drehen"
+msgstr "Girar los reversos 180°"
+
+#: src/print_ease/gui/scanner_panel.py
+msgid "Nur einschalten, wenn die Rückseiten kopfüber im Ergebnis landen"
+msgstr "Actívelo solo si los reversos aparecen al revés en el resultado"
 
 #: src/print_ease/gui/scanner_panel.py:565
 msgid "Weiter"

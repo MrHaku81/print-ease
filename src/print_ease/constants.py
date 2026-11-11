@@ -9,3 +9,7 @@ LOG_FILE    = "dev.log"   # relativ zum Projektverzeichnis während Entwicklung
 AVAHI_TIMEOUT = 5    # avahi-browse Wartezeit
 ESCL_TIMEOUT  = 3    # eSCL HTTP-Anfragen (Status, Capabilities)
 CUPS_TIMEOUT  = 10   # CUPS-Verbindungsaufbau / ScanJob-Erstellung
+# eSCL NextDocument: Das Gerät antwortet erst, wenn die Seite fertig gescannt ist.
+# Gemessen am Ricoh: leerer Flachbett-Scan mit 600 dpi in Farbe dauert 12,6 s.
+# Mit Inhalt dauert es länger, ein 600-dpi-Farblauf brach an den früheren 15 s ab.
+NEXT_DOCUMENT_TIMEOUT = 60

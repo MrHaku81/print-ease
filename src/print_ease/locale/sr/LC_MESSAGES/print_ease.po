@@ -444,12 +444,16 @@ msgid "Stapel umdrehen und erneut einlegen"
 msgstr "Okrenite hrpu i ponovo ubacite"
 
 #: src/print_ease/gui/scanner_panel.py:560
-msgid ""
-"Vorderseiten gescannt. Drehe den Stapel um, lege ihn erneut in den ADF ein "
-"und bestätige."
-msgstr ""
-"Prednje strane skenirane. Okrenite hrpu, ponovo je ubacite u uvlakač i "
-"potvrdite."
+msgid "Vorderseiten gescannt. Nimm den Stapel aus der Ablage, dreh ihn als Ganzes um, sodass er wieder in Einzugsrichtung liegt, lege ihn erneut ein und bestätige."
+msgstr "Prednje strane skenirane. Izvadite hrpu iz izlazne fioke, okrenite je celu tako da ponovo leži u smeru uvlačenja, ponovo je ubacite i potvrdite."
+
+#: src/print_ease/gui/scanner_panel.py
+msgid "Rückseiten um 180° drehen"
+msgstr "Rotiraj zadnje strane za 180°"
+
+#: src/print_ease/gui/scanner_panel.py
+msgid "Nur einschalten, wenn die Rückseiten kopfüber im Ergebnis landen"
+msgstr "Uključite samo ako su zadnje strane u rezultatu naopačke"
 
 #: src/print_ease/gui/scanner_panel.py:565
 msgid "Weiter"
