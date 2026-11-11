@@ -55,7 +55,7 @@
   -->
 
   <releases>
-    <release version="0.2.1" date="2026-11-09">
+    <release version="0.2.1" date="2026-11-11">
       <description>
         <p>Built-in mDNS discovery fallback (python-zeroconf): network printer
         and scanner (eSCL) discovery as well as .local host name resolution now
