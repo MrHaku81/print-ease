@@ -1,3 +1,39 @@
+print-ease (0.2.1+build1~noble1) noble; urgency=medium
+
+  * Re-target for Ubuntu 24.04 LTS (noble). Source identical to
+    0.2.1+build1 (resolute); only the changelog distribution differs.
+
+ -- MrHaku81 <haku81.kk@gmail.com>  Thu, 12 Nov 2026 20:12:51 +0100
+
+print-ease (0.2.1+build1) resolute; urgency=medium
+
+  * Disable the test suite during the package build: several tests need
+    network access or GUI libraries (PIL, GTK) that are not available
+    on the build daemons. No changes to the application itself.
+
+ -- MrHaku81 <haku81.kk@gmail.com>  Thu, 12 Nov 2026 20:12:26 +0100
+
+print-ease (0.2.1~noble1) noble; urgency=medium
+
+  * Re-target for Ubuntu 24.04 LTS (noble). Source identical to 0.2.1
+    (resolute); only the changelog distribution differs.
+
+ -- MrHaku81 <haku81.kk@gmail.com>  Thu, 12 Nov 2026 20:00:55 +0100
+
+print-ease (0.2.1) resolute; urgency=medium
+
+  * Built-in mDNS discovery fallback (python3-zeroconf): network printer
+    and scanner discovery works without a running Avahi daemon.
+  * Scanner discovery fixed: devices registered by CUPS with dnssd:// or
+    implicitclass:// URIs are now found; the scanner section is always
+    shown and reports "No scanner found" instead of staying silent.
+  * Multi-page ADF scanning and software duplex, with an optional
+    "rotate back sides 180°" switch for scanners that deliver
+    upside-down back pages.
+  * Fix decoding of escaped characters in mDNS service names.
+
+ -- MrHaku81 <haku81.kk@gmail.com>  Thu, 12 Nov 2026 20:00:40 +0100
+
 print-ease (0.2.0~noble1) noble; urgency=low
 
   * Re-target for Ubuntu 24.04 LTS (noble). Source identical to 0.2.0 (resolute);
