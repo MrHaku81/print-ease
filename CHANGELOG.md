@@ -20,6 +20,44 @@ Maintenance release.
   of the end-of-life GNOME 47 runtime; bundled zeroconf updated to
   0.154.0.
 
+## [0.2.1] - 2026-11-11
+
+### Added
+- **Built-in mDNS discovery fallback** (python-zeroconf): network
+  printer and scanner (eSCL) discovery and `.local` host name
+  resolution now work without a running Avahi daemon — including
+  inside the Flatpak sandbox. Multicast queries share one 3 s search
+  window for more stable results.
+- **First Flatpak release** (GNOME Platform 47): pycups built against
+  the CUPS headers, python-zeroconf and ifaddr bundled. The CUPS test
+  page falls back to a bundled copy when the system has none.
+- **Multi-page feeder (ADF) scanning**: the feeder now scans all pages
+  into one document (PDF by default) and keeps the mode selector.
+- **Software duplex** with an optional "rotate back sides by 180°"
+  switch (off by default, saved per scanner) for scanners that deliver
+  the backs upside down; shown only for feeder + software duplex.
+
+### Changed
+- Scanner discovery per printer reworked into a search cascade, limited
+  by `SCANNER_SEARCH_TIMEOUT`: eSCL at the address from the CUPS device
+  URI (now also for `dnssd://` and `implicitclass://` URIs), an mDNS
+  search for `_uscan`/`_uscans`, and an HTTP probe of known printer
+  addresses. Scanners of other devices are never assigned; the detail
+  page shows "Kein Scanner gefunden" (no scanner found) instead of
+  staying blank.
+- Software duplex flip prompt now blocks until confirmed and runs on the
+  GTK main thread; three cases that could pair a back with the wrong
+  front are handled (skipped dialog, Esc, empty feeder after
+  "continue").
+- PDFs embed the images at the actual scan resolution instead of a fixed
+  200 ppi. `NEXT_DOCUMENT_TIMEOUT` raised to 60 s for slow 600 dpi scans.
+
+### Fixed
+- Decoding of escaped mDNS service names: avahi's `\DDD` escapes are
+  decimal, not octal (`\032` is a space, not the control character
+  0x1A).
+- A Hindi mistranslation; new flip-dialog wording in all 33 languages.
+
 ## [0.2.0] - 2026-05-17
 
 ### Added
