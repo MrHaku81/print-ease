@@ -240,6 +240,12 @@ msgid ""
 "\n"
 "Anschließend einmal abmelden und wieder anmelden."
 msgstr ""
+"Có thể thiếu quyền quản trị CUPS cần thiết.\n"
+"\n"
+"Hãy thêm người dùng của bạn vào nhóm 'lp':\n"
+"    sudo gpasswd -a $USER lp\n"
+"\n"
+"Sau đó đăng xuất và đăng nhập lại."
 
 #: src/print_ease/gui/printer_detail.py:378
 #: src/print_ease/gui/scanner_panel.py:470
@@ -531,13 +537,15 @@ msgstr "Menu"
 #: src/print_ease/gui/window.py:227
 msgid ""
 "Verbindung zu CUPS fehlgeschlagen. Bitte prüfe ob der CUPS-Dienst läuft."
-msgstr ""
+msgstr "Không thể kết nối với CUPS. Vui lòng kiểm tra xem dịch vụ CUPS có đang chạy không."
 
 #: src/print_ease/__main__.py:56
 msgid ""
 "Universelle Linux-Druckerverwaltung —\n"
 "ein moderner Ersatz für system-config-printer."
 msgstr ""
+"Quản lý máy in đa năng cho Linux —\n"
+"một giải pháp thay thế hiện đại cho system-config-printer."
 
 #: src/print_ease/__main__.py:65
 msgid "translator-credits"

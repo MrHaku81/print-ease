@@ -240,6 +240,12 @@ msgid ""
 "\n"
 "Anschließend einmal abmelden und wieder anmelden."
 msgstr ""
+"Möglicherweise fehlen die nötigen CUPS-Admin-Rechte.\n"
+"\n"
+"Fügen Sie Ihren Benutzer der Gruppe 'lp' hinzu:\n"
+"    sudo gpasswd -a $USER lp\n"
+"\n"
+"Anschließend einmal abmelden und wieder anmelden."
 
 #: src/print_ease/gui/printer_detail.py:378
 #: src/print_ease/gui/scanner_panel.py:470
@@ -366,11 +372,11 @@ msgstr "Modus"
 
 #: src/print_ease/gui/scanner_panel.py:159
 msgid "Rückseiten um 180° drehen"
-msgstr ""
+msgstr "Rückseiten um 180° drehen"
 
 #: src/print_ease/gui/scanner_panel.py:160
 msgid "Nur einschalten, wenn die Rückseiten kopfüber im Ergebnis landen"
-msgstr ""
+msgstr "Nur einschalten, wenn die Rückseiten kopfüber im Ergebnis landen"
 
 #: src/print_ease/gui/scanner_panel.py:176
 msgid "Scan starten"
@@ -474,7 +480,7 @@ msgid ""
 "Vorderseiten gescannt. Nimm den Stapel aus der Ablage, dreh ihn als Ganzes "
 "um, sodass er wieder in Einzugsrichtung liegt, lege ihn erneut ein und "
 "bestätige."
-msgstr ""
+msgstr "Vorderseiten gescannt. Nimm den Stapel aus der Ablage, dreh ihn als Ganzes um, sodass er wieder in Einzugsrichtung liegt, lege ihn erneut ein und bestätige."
 
 #: src/print_ease/gui/scanner_panel.py:697
 msgid "Weiter"
@@ -529,13 +535,15 @@ msgstr "Menü"
 #: src/print_ease/gui/window.py:227
 msgid ""
 "Verbindung zu CUPS fehlgeschlagen. Bitte prüfe ob der CUPS-Dienst läuft."
-msgstr ""
+msgstr "Verbindung zu CUPS fehlgeschlagen. Bitte prüfe ob der CUPS-Dienst läuft."
 
 #: src/print_ease/__main__.py:56
 msgid ""
 "Universelle Linux-Druckerverwaltung —\n"
 "ein moderner Ersatz für system-config-printer."
 msgstr ""
+"Universelle Linux-Druckerverwaltung —\n"
+"ein moderner Ersatz für system-config-printer."
 
 #: src/print_ease/__main__.py:65
 msgid "translator-credits"

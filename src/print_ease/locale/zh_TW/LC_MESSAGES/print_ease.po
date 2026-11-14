@@ -240,6 +240,12 @@ msgid ""
 "\n"
 "Anschließend einmal abmelden und wieder anmelden."
 msgstr ""
+"可能缺少必要的 CUPS 管理權限。\n"
+"\n"
+"請將您的使用者加入 'lp' 群組：\n"
+"    sudo gpasswd -a $USER lp\n"
+"\n"
+"然後登出並重新登入。"
 
 #: src/print_ease/gui/printer_detail.py:378
 #: src/print_ease/gui/scanner_panel.py:470
@@ -531,13 +537,15 @@ msgstr "選單"
 #: src/print_ease/gui/window.py:227
 msgid ""
 "Verbindung zu CUPS fehlgeschlagen. Bitte prüfe ob der CUPS-Dienst läuft."
-msgstr ""
+msgstr "無法連線至 CUPS。請檢查 CUPS 服務是否正在執行。"
 
 #: src/print_ease/__main__.py:56
 msgid ""
 "Universelle Linux-Druckerverwaltung —\n"
 "ein moderner Ersatz für system-config-printer."
 msgstr ""
+"通用 Linux 印表機管理工具 —\n"
+"system-config-printer 的現代化替代方案。"
 
 #: src/print_ease/__main__.py:65
 msgid "translator-credits"

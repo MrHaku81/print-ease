@@ -240,6 +240,12 @@ msgid ""
 "\n"
 "Anschließend einmal abmelden und wieder anmelden."
 msgstr ""
+"Tarvittavat CUPS-ylläpito-oikeudet saattavat puuttua.\n"
+"\n"
+"Lisää käyttäjäsi ryhmään ”lp”:\n"
+"    sudo gpasswd -a $USER lp\n"
+"\n"
+"Kirjaudu sen jälkeen ulos ja takaisin sisään."
 
 #: src/print_ease/gui/printer_detail.py:378
 #: src/print_ease/gui/scanner_panel.py:470
@@ -531,13 +537,15 @@ msgstr "Valikko"
 #: src/print_ease/gui/window.py:227
 msgid ""
 "Verbindung zu CUPS fehlgeschlagen. Bitte prüfe ob der CUPS-Dienst läuft."
-msgstr ""
+msgstr "Yhteys CUPSiin epäonnistui. Tarkista, että CUPS-palvelu on käynnissä."
 
 #: src/print_ease/__main__.py:56
 msgid ""
 "Universelle Linux-Druckerverwaltung —\n"
 "ein moderner Ersatz für system-config-printer."
 msgstr ""
+"Yleiskäyttöinen tulostinten hallinta Linuxille —\n"
+"moderni korvaaja ohjelmalle system-config-printer."
 
 #: src/print_ease/__main__.py:65
 msgid "translator-credits"

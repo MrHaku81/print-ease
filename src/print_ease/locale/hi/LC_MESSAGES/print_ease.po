@@ -240,6 +240,12 @@ msgid ""
 "\n"
 "Anschließend einmal abmelden und wieder anmelden."
 msgstr ""
+"आवश्यक CUPS व्यवस्थापक अधिकार शायद उपलब्ध नहीं हैं।\n"
+"\n"
+"अपने उपयोगकर्ता को 'lp' समूह में जोड़ें:\n"
+"    sudo gpasswd -a $USER lp\n"
+"\n"
+"इसके बाद एक बार लॉग आउट करके फिर से लॉग इन करें।"
 
 #: src/print_ease/gui/printer_detail.py:378
 #: src/print_ease/gui/scanner_panel.py:470
@@ -531,13 +537,15 @@ msgstr "मेनू"
 #: src/print_ease/gui/window.py:227
 msgid ""
 "Verbindung zu CUPS fehlgeschlagen. Bitte prüfe ob der CUPS-Dienst läuft."
-msgstr ""
+msgstr "CUPS से कनेक्ट नहीं हो सका। कृपया जाँचें कि CUPS सेवा चल रही है।"
 
 #: src/print_ease/__main__.py:56
 msgid ""
 "Universelle Linux-Druckerverwaltung —\n"
 "ein moderner Ersatz für system-config-printer."
 msgstr ""
+"सार्वभौमिक Linux प्रिंटर प्रबंधन —\n"
+"system-config-printer का एक आधुनिक विकल्प।"
 
 #: src/print_ease/__main__.py:65
 msgid "translator-credits"

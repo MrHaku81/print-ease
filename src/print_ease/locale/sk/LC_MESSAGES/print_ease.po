@@ -240,6 +240,12 @@ msgid ""
 "\n"
 "Anschließend einmal abmelden und wieder anmelden."
 msgstr ""
+"Možno chýbajú potrebné administrátorské oprávnenia CUPS.\n"
+"\n"
+"Pridajte svojho používateľa do skupiny „lp“:\n"
+"    sudo gpasswd -a $USER lp\n"
+"\n"
+"Potom sa odhláste a znova prihláste."
 
 #: src/print_ease/gui/printer_detail.py:378
 #: src/print_ease/gui/scanner_panel.py:470
@@ -531,13 +537,15 @@ msgstr "Ponuka"
 #: src/print_ease/gui/window.py:227
 msgid ""
 "Verbindung zu CUPS fehlgeschlagen. Bitte prüfe ob der CUPS-Dienst läuft."
-msgstr ""
+msgstr "Pripojenie k CUPS zlyhalo. Skontrolujte, či je spustená služba CUPS."
 
 #: src/print_ease/__main__.py:56
 msgid ""
 "Universelle Linux-Druckerverwaltung —\n"
 "ein moderner Ersatz für system-config-printer."
 msgstr ""
+"Univerzálna správa tlačiarní pre Linux —\n"
+"moderná náhrada za system-config-printer."
 
 #: src/print_ease/__main__.py:65
 msgid "translator-credits"

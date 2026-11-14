@@ -240,6 +240,12 @@ msgid ""
 "\n"
 "Anschließend einmal abmelden und wieder anmelden."
 msgstr ""
+"Hak administrasi CUPS yang diperlukan mungkin tidak tersedia.\n"
+"\n"
+"Tambahkan pengguna Anda ke grup 'lp':\n"
+"    sudo gpasswd -a $USER lp\n"
+"\n"
+"Kemudian keluar dan masuk kembali."
 
 #: src/print_ease/gui/printer_detail.py:378
 #: src/print_ease/gui/scanner_panel.py:470
@@ -531,13 +537,15 @@ msgstr "Menu"
 #: src/print_ease/gui/window.py:227
 msgid ""
 "Verbindung zu CUPS fehlgeschlagen. Bitte prüfe ob der CUPS-Dienst läuft."
-msgstr ""
+msgstr "Gagal terhubung ke CUPS. Periksa apakah layanan CUPS sedang berjalan."
 
 #: src/print_ease/__main__.py:56
 msgid ""
 "Universelle Linux-Druckerverwaltung —\n"
 "ein moderner Ersatz für system-config-printer."
 msgstr ""
+"Manajemen printer universal untuk Linux —\n"
+"pengganti modern untuk system-config-printer."
 
 #: src/print_ease/__main__.py:65
 msgid "translator-credits"
