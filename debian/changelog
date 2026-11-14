@@ -1,3 +1,25 @@
+print-ease (0.2.2~noble1) noble; urgency=medium
+
+  * Re-target for Ubuntu 24.04 LTS (noble). Source identical to 0.2.2
+    (resolute); only the changelog distribution differs.
+
+ -- MrHaku81 <haku81.kk@gmail.com>  Sat, 14 Nov 2026 09:13:01 +0100
+
+print-ease (0.2.2) resolute; urgency=medium
+
+  * New "Open folder" button next to "Open"; both now report when
+    opening fails.
+  * The hint for missing CUPS admin rights names the correct group
+    (lpadmin on Debian and Ubuntu) instead of lp.
+  * Settings and logs follow the XDG user directories.
+  * All remaining UI strings are translated.
+  * The test suite no longer needs network access, Pillow or GTK and is
+    run again during the package build.
+  * Raise the minimum GTK (4.10) and libadwaita (1.5) versions; declare
+    the AppStream metadata licence (CC0-1.0) in debian/copyright.
+
+ -- MrHaku81 <haku81.kk@gmail.com>  Sat, 14 Nov 2026 09:12:32 +0100
+
 print-ease (0.2.1+build1~noble1) noble; urgency=medium
 
   * Re-target for Ubuntu 24.04 LTS (noble). Source identical to
