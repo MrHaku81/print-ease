@@ -4,12 +4,29 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PrintEase 0.1.0\n"
 "Report-Msgid-Bugs-To: haku81.kk@gmail.com\n"
-"POT-Creation-Date: 2026-11-14 08:22+0100\n"
+"POT-Creation-Date: 2026-11-14 08:40+0100\n"
 "PO-Revision-Date: 2026-05-01 00:00+0000\n"
 "Language: en\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+
+#: src/print_ease/cups_admin.py:79
+#, python-format
+msgid ""
+"Möglicherweise fehlen die nötigen CUPS-Admin-Rechte.\n"
+"\n"
+"Fügen Sie Ihren Benutzer der Gruppe '%(group)s' hinzu:\n"
+"    sudo gpasswd -a $USER %(group)s\n"
+"\n"
+"Anschließend einmal abmelden und wieder anmelden."
+msgstr ""
+"The required CUPS administration rights may be missing.\n"
+"\n"
+"Add your user to the '%(group)s' group:\n"
+"    sudo gpasswd -a $USER %(group)s\n"
+"\n"
+"Then log out and log back in."
 
 #: src/print_ease/gui/add_printer_dialog.py:40
 #: src/print_ease/gui/add_printer_dialog.py:83 src/print_ease/gui/window.py:34
@@ -18,8 +35,8 @@ msgid "Drucker hinzufügen"
 msgstr "Add printer"
 
 #: src/print_ease/gui/add_printer_dialog.py:48
-#: src/print_ease/gui/printer_detail.py:423
-#: src/print_ease/gui/printer_detail.py:521
+#: src/print_ease/gui/printer_detail.py:418
+#: src/print_ease/gui/printer_detail.py:516
 #: src/print_ease/gui/scanner_panel.py:180
 #: src/print_ease/gui/scanner_panel.py:696
 #: src/print_ease/gui/scanner_panel.py:724
@@ -231,89 +248,73 @@ msgstr "Print Quality"
 msgid "Standardeinstellung konnte nicht gespeichert werden"
 msgstr "Default setting could not be saved"
 
-#: src/print_ease/gui/printer_detail.py:372
-msgid ""
-"Möglicherweise fehlen die nötigen CUPS-Admin-Rechte.\n"
-"\n"
-"Fügen Sie Ihren Benutzer der Gruppe 'lp' hinzu:\n"
-"    sudo gpasswd -a $USER lp\n"
-"\n"
-"Anschließend einmal abmelden und wieder anmelden."
-msgstr ""
-"The required CUPS administration rights may be missing.\n"
-"\n"
-"Add your user to the 'lp' group:\n"
-"    sudo gpasswd -a $USER lp\n"
-"\n"
-"Then log out and log back in."
-
-#: src/print_ease/gui/printer_detail.py:378
+#: src/print_ease/gui/printer_detail.py:373
 #: src/print_ease/gui/scanner_panel.py:470
 msgid "OK"
 msgstr "OK"
 
-#: src/print_ease/gui/printer_detail.py:386
+#: src/print_ease/gui/printer_detail.py:381
 msgid "Aktive Druckjobs"
 msgstr "Active print jobs"
 
-#: src/print_ease/gui/printer_detail.py:388
+#: src/print_ease/gui/printer_detail.py:383
 msgid "Jobs werden geladen…"
 msgstr "Loading jobs…"
 
-#: src/print_ease/gui/printer_detail.py:409
+#: src/print_ease/gui/printer_detail.py:404
 msgid "Fehler beim Laden der Jobs"
 msgstr "Error loading jobs"
 
-#: src/print_ease/gui/printer_detail.py:413
+#: src/print_ease/gui/printer_detail.py:408
 msgid "Keine aktiven Jobs"
 msgstr "No active jobs"
 
-#: src/print_ease/gui/printer_detail.py:420
+#: src/print_ease/gui/printer_detail.py:415
 msgid "Job"
 msgstr "Job"
 
-#: src/print_ease/gui/printer_detail.py:453
+#: src/print_ease/gui/printer_detail.py:448
 msgid "Gefahrenzone"
 msgstr "Danger zone"
 
-#: src/print_ease/gui/printer_detail.py:456
+#: src/print_ease/gui/printer_detail.py:451
 msgid "Drucker entfernen"
 msgstr "Remove printer"
 
-#: src/print_ease/gui/printer_detail.py:457
+#: src/print_ease/gui/printer_detail.py:452
 msgid "Entfernt den Drucker dauerhaft aus CUPS"
 msgstr "Permanently removes the printer from CUPS"
 
-#: src/print_ease/gui/printer_detail.py:461
-#: src/print_ease/gui/printer_detail.py:522
-#: src/print_ease/gui/printer_detail.py:537
+#: src/print_ease/gui/printer_detail.py:456
+#: src/print_ease/gui/printer_detail.py:517
+#: src/print_ease/gui/printer_detail.py:532
 msgid "Entfernen"
 msgstr "Remove"
 
-#: src/print_ease/gui/printer_detail.py:502
+#: src/print_ease/gui/printer_detail.py:497
 #, python-brace-format
 msgid "Aktion fehlgeschlagen: {err}"
 msgstr "Action failed: {err}"
 
-#: src/print_ease/gui/printer_detail.py:518
+#: src/print_ease/gui/printer_detail.py:513
 msgid "Drucker entfernen?"
 msgstr "Remove printer?"
 
-#: src/print_ease/gui/printer_detail.py:519
+#: src/print_ease/gui/printer_detail.py:514
 msgid "wird dauerhaft aus CUPS entfernt."
 msgstr "will be permanently removed from CUPS."
 
-#: src/print_ease/gui/printer_detail.py:545
+#: src/print_ease/gui/printer_detail.py:540
 #: src/print_ease/gui/printer_row.py:63
 msgid "Bereit"
 msgstr "Ready"
 
-#: src/print_ease/gui/printer_detail.py:547
+#: src/print_ease/gui/printer_detail.py:542
 #: src/print_ease/gui/printer_row.py:65
 msgid "Druckt…"
 msgstr "Printing…"
 
-#: src/print_ease/gui/printer_detail.py:549
+#: src/print_ease/gui/printer_detail.py:544
 #: src/print_ease/gui/printer_row.py:67
 msgid "Gestoppt"
 msgstr "Stopped"
@@ -537,7 +538,8 @@ msgstr "Menu"
 #: src/print_ease/gui/window.py:227
 msgid ""
 "Verbindung zu CUPS fehlgeschlagen. Bitte prüfe ob der CUPS-Dienst läuft."
-msgstr "Could not connect to CUPS. Please check that the CUPS service is running."
+msgstr ""
+"Could not connect to CUPS. Please check that the CUPS service is running."
 
 #: src/print_ease/__main__.py:56
 msgid ""
@@ -600,6 +602,21 @@ msgid ""
 msgstr ""
 "Pillow (python-pillow) not installed — please install: sudo pacman -S python-"
 "pillow"
+
+#~ msgid ""
+#~ "Möglicherweise fehlen die nötigen CUPS-Admin-Rechte.\n"
+#~ "\n"
+#~ "Fügen Sie Ihren Benutzer der Gruppe 'lp' hinzu:\n"
+#~ "    sudo gpasswd -a $USER lp\n"
+#~ "\n"
+#~ "Anschließend einmal abmelden und wieder anmelden."
+#~ msgstr ""
+#~ "The required CUPS administration rights may be missing.\n"
+#~ "\n"
+#~ "Add your user to the 'lp' group:\n"
+#~ "    sudo gpasswd -a $USER lp\n"
+#~ "\n"
+#~ "Then log out and log back in."
 
 #~ msgid "ADF-Einzug ist leer — bitte Dokument einlegen"
 #~ msgstr "ADF feeder is empty — please insert document"

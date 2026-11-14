@@ -10,6 +10,12 @@ Maintenance release.
   selected (via the OpenURI portal in the Flatpak).
 
 ### Fixed
+- Missing CUPS admin rights: the hint recommended adding the user to the
+  group `lp`, which grants no CUPS administration rights. The correct
+  group is now determined from `SystemGroup` in
+  `/etc/cups/cups-files.conf` (e.g. `lpadmin` on Debian/Ubuntu/Mint,
+  `sys`/`wheel` on Arch/Fedora); if that file is not readable,
+  `lpadmin` is suggested where it exists, otherwise `wheel`.
 - Scanner: "Öffnen" (Open) did not check whether opening succeeded and
   logged "Datei geöffnet" even when it failed. Both buttons now use
   `Gtk.FileLauncher`; errors are shown in a dialog and logged. GTK 4.10

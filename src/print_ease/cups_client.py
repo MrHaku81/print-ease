@@ -314,8 +314,8 @@ def set_printer_default(name: str, attribute: str, value) -> None:
     """Setzt einen einzelnen Default-Wert für einen Drucker.
 
     Verwendet pycups conn.addPrinterOptionDefault() — funktioniert nur,
-    wenn der ausführende User CUPS-Admin-Rechte hat (typisch:
-    Mitglied der `lp`-Gruppe oder polkit-konfiguriert).
+    wenn der ausführende User CUPS-Admin-Rechte hat (Mitglied einer
+    SystemGroup aus cups-files.conf, siehe cups_admin.cups_admin_group()).
 
     Args:
         name: CUPS-Druckername.

@@ -8,7 +8,7 @@ gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")
 from gi.repository import Adw, Gtk, GLib
 
-from print_ease import cups_client, scanner_client
+from print_ease import cups_admin, cups_client, scanner_client
 from print_ease.media_names import get_media_display_name
 from print_ease._i18n import _
 from print_ease._log import get_logger
@@ -368,12 +368,7 @@ class PrinterDetail(Gtk.Box):
     def _show_permission_error_dialog(self) -> None:
         dialog = Adw.MessageDialog(
             heading=_("Standardeinstellung konnte nicht gespeichert werden"),
-            body=_(
-                "Möglicherweise fehlen die nötigen CUPS-Admin-Rechte.\n\n"
-                "Fügen Sie Ihren Benutzer der Gruppe 'lp' hinzu:\n"
-                "    sudo gpasswd -a $USER lp\n\n"
-                "Anschließend einmal abmelden und wieder anmelden."
-            ),
+            body=cups_admin.admin_rights_hint(),
         )
         dialog.add_response("ok", _("OK"))
         dialog.set_default_response("ok")
