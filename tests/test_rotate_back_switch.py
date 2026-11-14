@@ -10,9 +10,7 @@ from unittest import mock
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-from test_panel_mode_default import choose_source, panel  # noqa: E402
-
-from print_ease.gui import scanner_panel as sp  # noqa: E402
+from test_panel_mode_default import choose_source, panel, sp  # noqa: E402
 
 
 def choose_duplex(p, duplex):

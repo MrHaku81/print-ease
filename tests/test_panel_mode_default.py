@@ -8,8 +8,11 @@ from pathlib import Path
 from unittest import mock
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
+sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-from print_ease.gui import scanner_panel as sp
+from gui_import import import_scanner_panel  # noqa: E402
+
+sp = import_scanner_panel()   # läuft auch ohne PyGObject/GTK
 
 
 class FakeDrop:

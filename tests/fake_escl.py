@@ -1,9 +1,46 @@
-"""Gemockter eSCL-Server für die ADF-Tests."""
-import threading
-from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
+"""Gemockter eSCL-Scanner für die ADF-Tests – ohne echten Socket.
+
+Statt eines HTTP-Servers auf 127.0.0.1 wird ``urllib.request.urlopen``
+ersetzt. So laufen die Tests auch dort, wo kein Netz erreichbar ist oder
+ein Proxy gesetzt ist (pybuild exportiert ``http_proxy=http://127.0.0.1:9/``
+und ``no_proxy=localhost``; Anfragen an 127.0.0.1 liefen deshalb ins Leere).
+"""
+import email.message
+import io
+import urllib.error
+import urllib.parse
+import urllib.request
+from unittest import mock
 
 LOADED, EMPTY, JAM = "ScannerAdfLoaded", "ScannerAdfEmpty", "ScannerAdfJam"
 JOB = "/eSCL/ScanJobs/1"
+BASE = "http://scanner.invalid"
+
+
+class _Response:
+    """Das Nötige von http.client.HTTPResponse für scanner_client."""
+
+    def __init__(self, status, body=b"", headers=()):
+        self.status = status
+        self._body = io.BytesIO(body)
+        self.headers = email.message.Message()
+        for name, value in headers:
+            self.headers[name] = value
+
+    def read(self, *args):
+        return self._body.read(*args)
+
+    def getheader(self, name, default=None):
+        return self.headers.get(name, default)
+
+    def close(self):
+        pass
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, *exc):
+        return False
 
 
 class FakeScanner:
@@ -12,6 +49,8 @@ class FakeScanner:
     mit Antwort-Headern, int = HTTP-Status.
     Ist die Liste leer, kommt `exhausted`. ScannerStatus liefert der Reihe
     nach `states` (der letzte Wert bleibt stehen); None = Status nicht abrufbar.
+
+    Ersetzt ``urllib.request.urlopen`` bis ``close()``.
     """
 
     def __init__(self, documents, states=(EMPTY,), exhausted=404):
@@ -21,56 +60,49 @@ class FakeScanner:
         self.next_document_calls = 0
         self.status_calls = 0
         self.deleted = []
-        fake = self
-
-        class Handler(BaseHTTPRequestHandler):
-            def log_message(self, *_):
-                pass
-
-            def reply(self, status, body=b"", headers=()):
-                self.send_response(status)
-                for name, value in headers:
-                    self.send_header(name, value)
-                self.send_header("Content-Length", str(len(body)))
-                self.end_headers()
-                self.wfile.write(body)
-
-            def do_POST(self):
-                self.rfile.read(int(self.headers["Content-Length"]))
-                self.reply(201, headers=[("Location", JOB)])
-
-            def do_DELETE(self):
-                fake.deleted.append(self.path)
-                self.reply(200)
-
-            def do_GET(self):
-                if self.path == f"{JOB}/NextDocument":
-                    fake.next_document_calls += 1
-                    step = fake.documents.pop(0) if fake.documents else fake.exhausted
-                    if isinstance(step, int):
-                        self.reply(step)
-                    elif isinstance(step, bytes):
-                        self.reply(200, step)
-                    else:
-                        self.reply(200, step[0], step[1].items())
-                elif self.path == "/eSCL/ScannerStatus":
-                    fake.status_calls += 1
-                    state = fake.states.pop(0) if len(fake.states) > 1 else fake.states[0]
-                    if state is None:
-                        self.reply(500)
-                    else:
-                        self.reply(200, (
-                            '<scan:ScannerStatus xmlns:scan='
-                            '"http://schemas.hp.com/imaging/escl/2011/05/03">'
-                            f"<scan:AdfState>{state}</scan:AdfState></scan:ScannerStatus>"
-                        ).encode())
-                else:
-                    self.reply(500)
-
-        self.server = ThreadingHTTPServer(("127.0.0.1", 0), Handler)
-        threading.Thread(target=self.server.serve_forever, daemon=True).start()
-        self.url = f"http://127.0.0.1:{self.server.server_port}/eSCL"
+        self.url = f"{BASE}/eSCL"
+        self._patch = mock.patch.object(urllib.request, "urlopen", self._urlopen)
+        self._patch.start()
 
     def close(self):
-        self.server.shutdown()
-        self.server.server_close()
+        self._patch.stop()
+
+    def _urlopen(self, req, data=None, timeout=None, **_kwargs):
+        if isinstance(req, urllib.request.Request):
+            url, method = req.full_url, req.get_method()
+        else:
+            url, method = req, "POST" if data is not None else "GET"
+        if not url.startswith(BASE):
+            raise AssertionError(f"Unerwartete URL im Test: {url}")
+        path = urllib.parse.urlparse(url).path
+        status, body, headers = self._handle(method, path)
+        if status >= 400:
+            hdrs = email.message.Message()
+            raise urllib.error.HTTPError(url, status, f"HTTP {status}", hdrs, io.BytesIO(body))
+        return _Response(status, body, headers)
+
+    def _handle(self, method, path):
+        if method == "POST":
+            return 201, b"", [("Location", JOB)]
+        if method == "DELETE":
+            self.deleted.append(path)
+            return 200, b"", []
+        if path == f"{JOB}/NextDocument":
+            self.next_document_calls += 1
+            step = self.documents.pop(0) if self.documents else self.exhausted
+            if isinstance(step, int):
+                return step, b"", []
+            if isinstance(step, bytes):
+                return 200, step, []
+            return 200, step[0], list(step[1].items())
+        if path == "/eSCL/ScannerStatus":
+            self.status_calls += 1
+            state = self.states.pop(0) if len(self.states) > 1 else self.states[0]
+            if state is None:
+                return 500, b"", []
+            return 200, (
+                '<scan:ScannerStatus xmlns:scan='
+                '"http://schemas.hp.com/imaging/escl/2011/05/03">'
+                f"<scan:AdfState>{state}</scan:AdfState></scan:ScannerStatus>"
+            ).encode(), []
+        return 500, b"", []

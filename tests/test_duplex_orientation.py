@@ -9,7 +9,12 @@ import unittest
 from pathlib import Path
 from unittest import mock
 
-from PIL import Image
+try:
+    from PIL import Image
+except ImportError:  # z. B. im Debian-Paketbau ohne python3-pil
+    Image = None
+
+NEEDS_PIL = "braucht Pillow, um echte JPEG-/PDF-Dateien zu erzeugen und zu prüfen"
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
@@ -43,6 +48,7 @@ def pdf_page_sizes(path: str) -> list[tuple[float, float]]:
 
 
 class RotateBackPages(unittest.TestCase):
+    @unittest.skipUnless(Image, NEEDS_PIL)
     def test_rotation_turns_the_page_and_keeps_dpi(self):
         rotated = sc._rotate_jpeg_180(marked_jpeg(dpi=(300, 300)))
         self.assertTrue(corner_is_dark(rotated, "bottom-right"))
@@ -52,10 +58,18 @@ class RotateBackPages(unittest.TestCase):
     def test_unreadable_data_stays_unchanged(self):
         self.assertEqual(sc._rotate_jpeg_180(b"kein jpeg"), b"kein jpeg")
 
+    def test_without_pillow_the_page_stays_unchanged(self):
+        with mock.patch.dict(sys.modules, {"PIL": None}):
+            self.assertEqual(sc._rotate_jpeg_180(b"\xff\xd8seite"), b"\xff\xd8seite")
+
     def run_duplex(self, **kwargs):
-        """Software-Duplex mit erkennbarer Drehung; liefert die gespeicherten Seiten."""
-        self.fronts = [marked_jpeg() + b"F1", marked_jpeg() + b"F2"]
-        self.backs = [marked_jpeg() + b"B2", marked_jpeg() + b"B1"]  # kommen umgekehrt
+        """Software-Duplex mit erkennbarer Drehung; liefert die gespeicherten Seiten.
+
+        Die Drehung ist gemockt, die Seiten bleiben undurchsichtige Bytes –
+        dafür ist kein Pillow nötig.
+        """
+        self.fronts = [b"F1", b"F2"]
+        self.backs = [b"B2", b"B1"]  # kommen umgekehrt
         saved = {}
 
         def save(pages, mode, pdf_path=None, resolution=None):
@@ -80,6 +94,7 @@ class RotateBackPages(unittest.TestCase):
         self.assertEqual(pages, [self.fronts[0], b"R:" + self.backs[1],
                                  self.fronts[1], b"R:" + self.backs[0]])
 
+    @unittest.skipUnless(Image, NEEDS_PIL)
     def test_switch_on_turns_real_back_page_upside_down(self):
         results = []
 
@@ -99,6 +114,7 @@ class RotateBackPages(unittest.TestCase):
         self.assertTrue(corner_is_dark(on[0], "top-left"))  # Vorderseite bleibt
 
 
+@unittest.skipUnless(Image, NEEDS_PIL)
 class PdfResolution(unittest.TestCase):
     def setUp(self):
         tmp = tempfile.TemporaryDirectory()
@@ -126,10 +142,13 @@ class PdfResolution(unittest.TestCase):
         (w, _h), = pdf_page_sizes(self.out)
         self.assertAlmostEqual(w, 918, delta=1)
 
+
+class SavePagesResolution(unittest.TestCase):
     def test_save_pages_passes_resolution_to_pdf(self):
+        out = "/nirgends/x.pdf"   # _create_pdf ist gemockt, es wird nichts geschrieben
         with mock.patch.object(sc, "_create_pdf") as create:
-            sc._save_pages([b"a"], "multipage", pdf_path=lambda: self.out, resolution=600)
-        create.assert_called_once_with([b"a"], self.out, resolution=600)
+            sc._save_pages([b"a"], "multipage", pdf_path=lambda: out, resolution=600)
+        create.assert_called_once_with([b"a"], out, resolution=600)
 
 
 if __name__ == "__main__":
