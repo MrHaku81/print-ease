@@ -1,11 +1,11 @@
 id: at.printease.PrintEase
 runtime: org.gnome.Platform
-runtime-version: '47'
+runtime-version: '51'
 sdk: org.gnome.Sdk
 command: print-ease
 
-# Die GNOME Platform 47 liefert bereits:
-#   Python 3.12, PyGObject (gi), GTK4, libadwaita, Cairo, Pango, libcups.so.2
+# Die GNOME Platform 51 liefert bereits:
+#   Python 3.14, PyGObject (gi), GTK4, libadwaita, Cairo, Pango, libcups.so.2
 #
 # PrintEase braucht zusätzlich:
 #   - pycups        (C-Extension → wird gegen CUPS-Header gebaut)
@@ -73,8 +73,8 @@ modules:
         url: https://files.pythonhosted.org/packages/9c/1f/19ebc343cc71a7ffa78f17018535adc5cbdd87afb31d7c34874680148b32/ifaddr-0.2.0-py3-none-any.whl
         sha256: 085e0305cfe6f16ab12d72e2024030f5d52674afad6911bb1eee207177b8a748
       - type: file
-        url: https://files.pythonhosted.org/packages/8a/0e/e9371da3ef71ac66bfe3b3429b2ce5c880afb1471a27d15e1fb266fbc0f7/zeroconf-0.151.3-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl
-        sha256: bbd2b73902a44426080190d653fa35638a93b6c6725c2be76888b4b614bc0b48
+        url: https://files.pythonhosted.org/packages/c6/28/bb668a4d33352b57b660b2ebf19fecd8d74d4475606413f91c725b2b34cd/zeroconf-0.154.0-cp314-cp314-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl
+        sha256: 6d381533c64def2117928dd275343d74292ca0d4af0df7a5d38e62c1ed30e20e
 
   # ── 4. print-ease ─────────────────────────────────────────────────────────
   - name: print-ease
@@ -86,8 +86,8 @@ modules:
           msgfmt "$po" -o "${po%.po}.mo"
         done
       # Python-Paket in die site-packages der Runtime
-      - install -d /app/lib/python3.12/site-packages
-      - cp -r src/print_ease /app/lib/python3.12/site-packages/
+      - install -d /app/lib/python3.14/site-packages
+      - cp -r src/print_ease /app/lib/python3.14/site-packages/
       # Startskript
       - |
         install -d /app/bin
@@ -119,9 +119,9 @@ modules:
       # Manifest liegt in <repo>/flatpak/, daher zeigt '..' auf die Repo-Wurzel.
       - type: dir
         path: ..
-      # ── FÜR DAS FINALE RELEASE: nach Tag v0.2.1 auf Archiv umstellen ──
+      # ── FÜR DAS FINALE RELEASE: nach Tag v0.2.2 auf Archiv umstellen ──
       # - type: archive
-      #   url: https://github.com/MrHaku81/print-ease/archive/refs/tags/v0.2.1.tar.gz
+      #   url: https://github.com/MrHaku81/print-ease/archive/refs/tags/v0.2.2.tar.gz
       #   sha256: <NACH-DEM-TAGGEN-ERMITTELN: curl -sL <url> | sha256sum>
       #   strip-components: 1
       - type: file
