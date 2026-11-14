@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import subprocess
 import threading
 
 import gi
@@ -203,6 +202,15 @@ class ScannerPanel:
         self._open_btn.connect("clicked", lambda _: self._open_last_scan())
         self._saved_row.add_suffix(self._open_btn)
 
+        # Öffnet den Ordner des letzten Scans im Dateimanager und markiert
+        # die Datei (im Flatpak über das OpenURI-Portal).
+        self._folder_btn = Gtk.Button(label=_("Ordner öffnen"))
+        self._folder_btn.add_css_class("flat")
+        self._folder_btn.set_valign(Gtk.Align.CENTER)
+        self._folder_btn.set_sensitive(False)
+        self._folder_btn.connect("clicked", lambda _: self._open_last_scan_folder())
+        self._saved_row.add_suffix(self._folder_btn)
+
         group.add(self._saved_row)
 
         return group
@@ -400,6 +408,7 @@ class ScannerPanel:
             self._last_scan_path = result
             self._saved_row.set_subtitle(result)
             self._open_btn.set_visible(True)
+            self._folder_btn.set_sensitive(True)
             log.info("Scan abgeschlossen: %s", result)
         else:
             self._saved_row.set_subtitle(_("Fehler: {err}").format(err=result))
@@ -407,14 +416,61 @@ class ScannerPanel:
 
         return GLib.SOURCE_REMOVE
 
+    # ------------------------------------------------------------------
+    # Letzten Scan bzw. dessen Ordner öffnen (Gtk.FileLauncher, GTK >= 4.10)
+    # ------------------------------------------------------------------
+
     def _open_last_scan(self) -> None:
-        if not self._last_scan_path:
+        """Öffnet den letzten Scan mit der Standardanwendung."""
+        self._launch_last_scan(folder=False)
+
+    def _open_last_scan_folder(self) -> None:
+        """Öffnet den Ordner des letzten Scans und markiert die Datei."""
+        self._launch_last_scan(folder=True)
+
+    def _launch_last_scan(self, folder: bool) -> None:
+        path = self._last_scan_path
+        if not path:
             return
+        launcher = Gtk.FileLauncher.new(Gio.File.new_for_path(path))
+        parent = self._group.get_root()
+        start = launcher.open_containing_folder if folder else launcher.launch
+        start(parent, None, self._on_launch_finished, (folder, path))
+
+    def _on_launch_finished(self, launcher, result, data) -> None:
+        folder, path = data
+        finish = launcher.open_containing_folder_finish if folder else launcher.launch_finish
+        what = "Ordner" if folder else "Datei"
         try:
-            subprocess.Popen(["xdg-open", self._last_scan_path])
-            log.info("Datei geöffnet: %s", self._last_scan_path)
-        except Exception as exc:
-            log.error("Datei konnte nicht geöffnet werden: %s", exc)
+            ok = finish(result)
+            error = None
+        except Exception as exc:   # GLib.Error
+            ok = False
+            error = exc
+        if ok:
+            log.info("%s geöffnet: %s", what, path)
+            return
+        if error is not None and _is_dismissed(error):
+            # Auswahl (z. B. Anwendungswahl) vom Benutzer abgebrochen — kein Fehler.
+            log.info("%s öffnen abgebrochen: %s", what, path)
+            return
+        message = getattr(error, "message", None) or str(error or "")
+        log.error("%s konnte nicht geöffnet werden: %s — %s", what, path, message or "unbekannter Fehler")
+        self._show_open_error(folder, path, message)
+
+    def _show_open_error(self, folder: bool, path: str, message: str) -> None:
+        heading = (_("Ordner konnte nicht geöffnet werden") if folder
+                   else _("Datei konnte nicht geöffnet werden"))
+        body = path if not message else f"{path}\n\n{message}"
+        root = self._group.get_root()
+        if root is None:
+            self._saved_row.set_subtitle(heading)
+            return
+        dialog = Adw.AlertDialog(heading=heading, body=body)
+        dialog.add_response("ok", _("OK"))
+        dialog.set_default_response("ok")
+        dialog.set_close_response("ok")
+        dialog.present(root)
 
     # ------------------------------------------------------------------
     # Hardware-Duplex (BETA)
@@ -684,6 +740,16 @@ class ScannerPanel:
 
 
 # ---------------------------------------------------------------------------
+
+# Fehler, die nur heißen „Benutzer hat abgebrochen“ (Gtk.DialogError.CANCELLED/
+# DISMISSED, Gio.IOErrorEnum.CANCELLED).
+_DISMISSED = {("gtk-dialog-error-quark", 1), ("gtk-dialog-error-quark", 2),
+              ("g-io-error-quark", 19)}
+
+
+def _is_dismissed(error: Exception) -> bool:
+    return (getattr(error, "domain", None), getattr(error, "code", None)) in _DISMISSED
+
 
 def _make_dropdown(items: list[str], selected: int) -> Gtk.DropDown:
     model = Gtk.StringList.new(items)

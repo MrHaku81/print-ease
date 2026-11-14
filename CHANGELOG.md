@@ -4,7 +4,16 @@
 
 Maintenance release.
 
+### Added
+- Scanner: "Ordner öffnen" (Open folder) button next to "Öffnen" — opens
+  the folder of the last scan in the file manager with the file
+  selected (via the OpenURI portal in the Flatpak).
+
 ### Fixed
+- Scanner: "Öffnen" (Open) did not check whether opening succeeded and
+  logged "Datei geöffnet" even when it failed. Both buttons now use
+  `Gtk.FileLauncher`; errors are shown in a dialog and logged. GTK 4.10
+  or newer is now required.
 - Flatpak: scans and settings were lost when the app was closed (also
   affected 0.2.1). The sandbox had no access to the Pictures folder, so
   scans went to a temporary home directory inside the sandbox; settings

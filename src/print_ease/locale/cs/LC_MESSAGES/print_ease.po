@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PrintEase 0.1.0\n"
 "Report-Msgid-Bugs-To: haku81.kk@gmail.com\n"
-"POT-Creation-Date: 2026-05-17 12:42+0200\n"
+"POT-Creation-Date: 2026-11-14 08:22+0100\n"
 "PO-Revision-Date: 2026-05-01 00:00+0000\n"
 "Language: cs\n"
 "MIME-Version: 1.0\n"
@@ -18,11 +18,11 @@ msgid "Drucker hinzufügen"
 msgstr "Přidat tiskárnu"
 
 #: src/print_ease/gui/add_printer_dialog.py:48
-#: src/print_ease/gui/printer_detail.py:422
-#: src/print_ease/gui/printer_detail.py:520
-#: src/print_ease/gui/scanner_panel.py:145
-#: src/print_ease/gui/scanner_panel.py:564
-#: src/print_ease/gui/scanner_panel.py:590
+#: src/print_ease/gui/printer_detail.py:423
+#: src/print_ease/gui/printer_detail.py:521
+#: src/print_ease/gui/scanner_panel.py:180
+#: src/print_ease/gui/scanner_panel.py:696
+#: src/print_ease/gui/scanner_panel.py:724
 msgid "Abbrechen"
 msgstr "Zrušit"
 
@@ -35,17 +35,17 @@ msgid "Netzwerk"
 msgstr "Síť"
 
 #: src/print_ease/gui/add_printer_dialog.py:85
-#: src/print_ease/gui/printer_detail.py:142
+#: src/print_ease/gui/printer_detail.py:143
 msgid "Name"
 msgstr "Název"
 
 #: src/print_ease/gui/add_printer_dialog.py:97
-#: src/print_ease/gui/printer_detail.py:143
+#: src/print_ease/gui/printer_detail.py:144
 msgid "Beschreibung"
 msgstr "Popis"
 
 #: src/print_ease/gui/add_printer_dialog.py:100
-#: src/print_ease/gui/printer_detail.py:144
+#: src/print_ease/gui/printer_detail.py:145
 msgid "Standort"
 msgstr "Umístění"
 
@@ -54,7 +54,7 @@ msgid "Hinzufügen"
 msgstr "Přidat"
 
 #: src/print_ease/gui/add_printer_dialog.py:166
-#: src/print_ease/gui/scanner_panel.py:341
+#: src/print_ease/gui/scanner_panel.py:414
 #, python-brace-format
 msgid "Fehler: {err}"
 msgstr "Chyba: {err}"
@@ -83,58 +83,59 @@ msgstr "Načítání tiskáren…"
 msgid "Übernehmen"
 msgstr "Použít"
 
-#: src/print_ease/gui/printer_detail.py:26
+#: src/print_ease/gui/printer_detail.py:24
 msgid "Einseitig"
 msgstr "Jednostranný"
 
-#: src/print_ease/gui/printer_detail.py:27
+#: src/print_ease/gui/printer_detail.py:25
 msgid "Duplex (lange Kante)"
 msgstr "Oboustranný (dlouhá hrana)"
 
-#: src/print_ease/gui/printer_detail.py:28
+#: src/print_ease/gui/printer_detail.py:26
 msgid "Duplex (kurze Kante)"
 msgstr "Oboustranný (krátká hrana)"
 
-#: src/print_ease/gui/printer_detail.py:34
-#: src/print_ease/gui/scanner_panel.py:21
+#: src/print_ease/gui/printer_detail.py:32
+#: src/print_ease/gui/scanner_panel.py:20
 msgid "Farbe"
 msgstr "Barva"
 
-#: src/print_ease/gui/printer_detail.py:35
-#: src/print_ease/gui/scanner_panel.py:23
+#: src/print_ease/gui/printer_detail.py:33
+#: src/print_ease/gui/scanner_panel.py:22
 msgid "Schwarzweiß"
 msgstr "Černobíle"
 
-#: src/print_ease/gui/printer_detail.py:36
+#: src/print_ease/gui/printer_detail.py:34
 msgid "Automatisch"
 msgstr "Automaticky"
 
-#: src/print_ease/gui/printer_detail.py:42
+#: src/print_ease/gui/printer_detail.py:40
 msgid "Entwurf"
 msgstr "Koncept"
 
-#: src/print_ease/gui/printer_detail.py:43
+#: src/print_ease/gui/printer_detail.py:41
 msgid "Normal"
 msgstr "Normální"
 
-#: src/print_ease/gui/printer_detail.py:44
+#: src/print_ease/gui/printer_detail.py:42
 msgid "Hoch"
 msgstr "Vysoká"
 
-#: src/print_ease/gui/printer_detail.py:61
+#: src/print_ease/gui/printer_detail.py:59
 msgid "Kein Drucker ausgewählt"
 msgstr "Žádná tiskárna nevybrána"
 
-#: src/print_ease/gui/printer_detail.py:62
+#: src/print_ease/gui/printer_detail.py:60
 msgid "Wähle einen Drucker aus der Liste."
 msgstr "Vyberte tiskárnu ze seznamu."
 
-#: src/print_ease/gui/printer_detail.py:104
-#: src/print_ease/gui/scanner_panel.py:90
+#: src/print_ease/gui/printer_detail.py:98
+#: src/print_ease/gui/printer_detail.py:109
+#: src/print_ease/gui/scanner_panel.py:109
 msgid "Scanner"
 msgstr "Skener"
 
-#: src/print_ease/gui/printer_detail.py:108
+#: src/print_ease/gui/printer_detail.py:102
 msgid "Scanner wird erkannt…"
 msgstr "Zjišťování skeneru…"
 
@@ -142,95 +143,95 @@ msgstr "Zjišťování skeneru…"
 msgid "Kein Scanner gefunden"
 msgstr "Nebyl nalezen žádný skener"
 
-#: src/print_ease/gui/printer_detail.py:139
+#: src/print_ease/gui/printer_detail.py:140
 msgid "Druckerinformationen"
 msgstr "Informace o tiskárně"
 
-#: src/print_ease/gui/printer_detail.py:145
+#: src/print_ease/gui/printer_detail.py:146
 msgid "Verbindung"
 msgstr "Připojení"
 
-#: src/print_ease/gui/printer_detail.py:156
+#: src/print_ease/gui/printer_detail.py:157
 msgid "Status"
 msgstr "Stav"
 
-#: src/print_ease/gui/printer_detail.py:164
+#: src/print_ease/gui/printer_detail.py:165
 msgid "Aktionen"
 msgstr "Akce"
 
-#: src/print_ease/gui/printer_detail.py:166
+#: src/print_ease/gui/printer_detail.py:167
 msgid "Als Standard setzen"
 msgstr "Nastavit jako výchozí"
 
-#: src/print_ease/gui/printer_detail.py:169
+#: src/print_ease/gui/printer_detail.py:170
 msgid "✓ Ist Standard"
 msgstr "✓ Je výchozí"
 
-#: src/print_ease/gui/printer_detail.py:174
-#: src/print_ease/gui/printer_detail.py:181
+#: src/print_ease/gui/printer_detail.py:175
+#: src/print_ease/gui/printer_detail.py:182
 msgid "Standard setzen"
 msgstr "Nastavit jako výchozí"
 
-#: src/print_ease/gui/printer_detail.py:188
+#: src/print_ease/gui/printer_detail.py:189
 msgid "Drucker fortsetzen"
 msgstr "Obnovit tiskárnu"
 
-#: src/print_ease/gui/printer_detail.py:189
+#: src/print_ease/gui/printer_detail.py:190
 msgid "Fortsetzen"
 msgstr "Obnovit"
 
-#: src/print_ease/gui/printer_detail.py:192
+#: src/print_ease/gui/printer_detail.py:193
 msgid "Drucker pausieren"
 msgstr "Pozastavit tiskárnu"
 
-#: src/print_ease/gui/printer_detail.py:193
+#: src/print_ease/gui/printer_detail.py:194
 msgid "Pausieren"
 msgstr "Pozastavit"
 
-#: src/print_ease/gui/printer_detail.py:207
+#: src/print_ease/gui/printer_detail.py:208
 msgid "Testseite drucken"
 msgstr "Tisknout zkušební stránku"
 
-#: src/print_ease/gui/printer_detail.py:209
-#: src/print_ease/gui/printer_detail.py:215
+#: src/print_ease/gui/printer_detail.py:210
+#: src/print_ease/gui/printer_detail.py:216
 msgid "Drucken"
 msgstr "Tisknout"
 
-#: src/print_ease/gui/printer_detail.py:224
+#: src/print_ease/gui/printer_detail.py:225
 msgid "Standardeinstellungen"
 msgstr "Výchozí nastavení"
 
-#: src/print_ease/gui/printer_detail.py:226
+#: src/print_ease/gui/printer_detail.py:227
 msgid "Einstellungen werden geladen…"
 msgstr "Načítání nastavení…"
 
-#: src/print_ease/gui/printer_detail.py:254
+#: src/print_ease/gui/printer_detail.py:255
 msgid "Fehler beim Laden der Einstellungen"
 msgstr "Chyba při načítání nastavení"
 
-#: src/print_ease/gui/printer_detail.py:271
+#: src/print_ease/gui/printer_detail.py:272
 msgid "Papierformat"
 msgstr "Formát papíru"
 
-#: src/print_ease/gui/printer_detail.py:278
-#: src/print_ease/gui/scanner_panel.py:129
+#: src/print_ease/gui/printer_detail.py:279
+#: src/print_ease/gui/scanner_panel.py:148
 msgid "Duplex"
 msgstr "Oboustranný"
 
-#: src/print_ease/gui/printer_detail.py:285
-#: src/print_ease/gui/scanner_panel.py:102
+#: src/print_ease/gui/printer_detail.py:286
+#: src/print_ease/gui/scanner_panel.py:121
 msgid "Farbmodus"
 msgstr "Barevný režim"
 
-#: src/print_ease/gui/printer_detail.py:292
+#: src/print_ease/gui/printer_detail.py:293
 msgid "Druckqualität"
 msgstr "Kvalita tisku"
 
-#: src/print_ease/gui/printer_detail.py:369
+#: src/print_ease/gui/printer_detail.py:370
 msgid "Standardeinstellung konnte nicht gespeichert werden"
 msgstr "Výchozí nastavení nelze uložit"
 
-#: src/print_ease/gui/printer_detail.py:371
+#: src/print_ease/gui/printer_detail.py:372
 msgid ""
 "Möglicherweise fehlen die nötigen CUPS-Admin-Rechte.\n"
 "\n"
@@ -240,72 +241,73 @@ msgid ""
 "Anschließend einmal abmelden und wieder anmelden."
 msgstr ""
 
-#: src/print_ease/gui/printer_detail.py:377
+#: src/print_ease/gui/printer_detail.py:378
+#: src/print_ease/gui/scanner_panel.py:470
 msgid "OK"
 msgstr "OK"
 
-#: src/print_ease/gui/printer_detail.py:385
+#: src/print_ease/gui/printer_detail.py:386
 msgid "Aktive Druckjobs"
 msgstr "Aktivní tiskové úlohy"
 
-#: src/print_ease/gui/printer_detail.py:387
+#: src/print_ease/gui/printer_detail.py:388
 msgid "Jobs werden geladen…"
 msgstr "Načítání úloh…"
 
-#: src/print_ease/gui/printer_detail.py:408
+#: src/print_ease/gui/printer_detail.py:409
 msgid "Fehler beim Laden der Jobs"
 msgstr "Chyba při načítání úloh"
 
-#: src/print_ease/gui/printer_detail.py:412
+#: src/print_ease/gui/printer_detail.py:413
 msgid "Keine aktiven Jobs"
 msgstr "Žádné aktivní úlohy"
 
-#: src/print_ease/gui/printer_detail.py:419
+#: src/print_ease/gui/printer_detail.py:420
 msgid "Job"
 msgstr "Tisková úloha"
 
-#: src/print_ease/gui/printer_detail.py:452
+#: src/print_ease/gui/printer_detail.py:453
 msgid "Gefahrenzone"
 msgstr "Nebezpečná zóna"
 
-#: src/print_ease/gui/printer_detail.py:455
+#: src/print_ease/gui/printer_detail.py:456
 msgid "Drucker entfernen"
 msgstr "Odebrat tiskárnu"
 
-#: src/print_ease/gui/printer_detail.py:456
+#: src/print_ease/gui/printer_detail.py:457
 msgid "Entfernt den Drucker dauerhaft aus CUPS"
 msgstr "Trvale odebere tiskárnu z CUPS"
 
-#: src/print_ease/gui/printer_detail.py:460
-#: src/print_ease/gui/printer_detail.py:521
-#: src/print_ease/gui/printer_detail.py:536
+#: src/print_ease/gui/printer_detail.py:461
+#: src/print_ease/gui/printer_detail.py:522
+#: src/print_ease/gui/printer_detail.py:537
 msgid "Entfernen"
 msgstr "Odebrat"
 
-#: src/print_ease/gui/printer_detail.py:501
+#: src/print_ease/gui/printer_detail.py:502
 #, python-brace-format
 msgid "Aktion fehlgeschlagen: {err}"
 msgstr "Akce selhala: {err}"
 
-#: src/print_ease/gui/printer_detail.py:517
+#: src/print_ease/gui/printer_detail.py:518
 msgid "Drucker entfernen?"
 msgstr "Odebrat tiskárnu?"
 
-#: src/print_ease/gui/printer_detail.py:518
+#: src/print_ease/gui/printer_detail.py:519
 msgid "wird dauerhaft aus CUPS entfernt."
 msgstr "bude trvale odebrána z CUPS."
 
-#: src/print_ease/gui/printer_detail.py:559
+#: src/print_ease/gui/printer_detail.py:545
 #: src/print_ease/gui/printer_row.py:63
 msgid "Bereit"
 msgstr "Připravena"
 
-#: src/print_ease/gui/printer_detail.py:561
+#: src/print_ease/gui/printer_detail.py:547
 #: src/print_ease/gui/printer_row.py:65
 msgid "Druckt…"
 msgstr "Tisk…"
 
-#: src/print_ease/gui/printer_detail.py:563
+#: src/print_ease/gui/printer_detail.py:549
 #: src/print_ease/gui/printer_row.py:67
 msgid "Gestoppt"
 msgstr "Zastavena"
@@ -314,170 +316,187 @@ msgstr "Zastavena"
 msgid "Standard"
 msgstr "Výchozí"
 
-#: src/print_ease/gui/scanner_panel.py:22
+#: src/print_ease/gui/scanner_panel.py:21
 msgid "Graustufen"
 msgstr "Odstíny šedi"
 
-#: src/print_ease/gui/scanner_panel.py:29
+#: src/print_ease/gui/scanner_panel.py:28
 msgid "Flachbett"
 msgstr "Plochý skener"
 
-#: src/print_ease/gui/scanner_panel.py:30
+#: src/print_ease/gui/scanner_panel.py:29
 msgid "Einzug"
 msgstr "Podavač"
 
-#: src/print_ease/gui/scanner_panel.py:36
+#: src/print_ease/gui/scanner_panel.py:35
 msgid "Aus"
 msgstr "Vypnuto"
 
-#: src/print_ease/gui/scanner_panel.py:37
+#: src/print_ease/gui/scanner_panel.py:36
 msgid "Hardware (Beta)"
 msgstr "Hardware (Beta)"
 
-#: src/print_ease/gui/scanner_panel.py:38
+#: src/print_ease/gui/scanner_panel.py:37
 msgid "Software"
 msgstr "Softwarový"
 
-#: src/print_ease/gui/scanner_panel.py:44
+#: src/print_ease/gui/scanner_panel.py:43
 msgid "Einzelseite"
 msgstr "Jednotlivá strana"
 
-#: src/print_ease/gui/scanner_panel.py:45
+#: src/print_ease/gui/scanner_panel.py:44
 msgid "Multi-Page Dokument"
 msgstr "Vícestránkový dokument"
 
-#: src/print_ease/gui/scanner_panel.py:46
+#: src/print_ease/gui/scanner_panel.py:45
 msgid "Archiv (TIFF)"
 msgstr "Archiv (TIFF)"
 
-#: src/print_ease/gui/scanner_panel.py:95
+#: src/print_ease/gui/scanner_panel.py:114
 msgid "Auflösung"
 msgstr "Rozlišení"
 
-#: src/print_ease/gui/scanner_panel.py:110
+#: src/print_ease/gui/scanner_panel.py:129
 msgid "Quelle"
 msgstr "Zdroj"
 
-#: src/print_ease/gui/scanner_panel.py:120
+#: src/print_ease/gui/scanner_panel.py:139
 msgid "Modus"
 msgstr "Režim"
 
-#: src/print_ease/gui/scanner_panel.py:141
+#: src/print_ease/gui/scanner_panel.py:159
+msgid "Rückseiten um 180° drehen"
+msgstr "Otočit zadní strany o 180°"
+
+#: src/print_ease/gui/scanner_panel.py:160
+msgid "Nur einschalten, wenn die Rückseiten kopfüber im Ergebnis landen"
+msgstr "Zapněte jen tehdy, když jsou zadní strany ve výsledku vzhůru nohama"
+
+#: src/print_ease/gui/scanner_panel.py:176
 msgid "Scan starten"
 msgstr "Spustit skenování"
 
-#: src/print_ease/gui/scanner_panel.py:153
+#: src/print_ease/gui/scanner_panel.py:188
 msgid "Scannen"
 msgstr "Skenovat"
 
-#: src/print_ease/gui/scanner_panel.py:158
+#: src/print_ease/gui/scanner_panel.py:193
 msgid "Gespeichert unter"
 msgstr "Uloženo jako"
 
-#: src/print_ease/gui/scanner_panel.py:163
+#: src/print_ease/gui/scanner_panel.py:198
 msgid "Öffnen"
 msgstr "Otevřít"
 
-#: src/print_ease/gui/scanner_panel.py:269
-#: src/print_ease/gui/scanner_panel.py:362
-#: src/print_ease/gui/scanner_panel.py:502
+#: src/print_ease/gui/scanner_panel.py:207
+msgid "Ordner öffnen"
+msgstr "Otevřít složku"
+
+#: src/print_ease/gui/scanner_panel.py:325
+#: src/print_ease/gui/scanner_panel.py:482
+#: src/print_ease/gui/scanner_panel.py:623
 msgid "Kein Papier im Einzug"
 msgstr "Žádný papír v podavači"
 
-#: src/print_ease/gui/scanner_panel.py:270
+#: src/print_ease/gui/scanner_panel.py:326
 msgid "Scan abgebrochen"
 msgstr "Skenování zrušeno"
 
-#: src/print_ease/gui/scanner_panel.py:275
+#: src/print_ease/gui/scanner_panel.py:331
 msgid "Scannt…"
 msgstr "Skenování…"
 
-#: src/print_ease/gui/scanner_panel.py:363
+#: src/print_ease/gui/scanner_panel.py:462
+msgid "Ordner konnte nicht geöffnet werden"
+msgstr "Složku nelze otevřít"
+
+#: src/print_ease/gui/scanner_panel.py:463
+msgid "Datei konnte nicht geöffnet werden"
+msgstr "Soubor nelze otevřít"
+
+#: src/print_ease/gui/scanner_panel.py:483
 msgid "Hardware-Duplex-Scan abgebrochen"
 msgstr "Hardwarové oboustranné skenování zrušeno"
 
-#: src/print_ease/gui/scanner_panel.py:368
+#: src/print_ease/gui/scanner_panel.py:488
 msgid "Hardware-Duplex-Scan läuft… (Beta)"
 msgstr "Hardwarové oboustranné skenování probíhá… (Beta)"
 
-#: src/print_ease/gui/scanner_panel.py:404
-#: src/print_ease/gui/scanner_panel.py:449
+#: src/print_ease/gui/scanner_panel.py:525
+#: src/print_ease/gui/scanner_panel.py:570
 msgid "Seite wird gescannt…"
 msgstr "Skenování strany…"
 
-#: src/print_ease/gui/scanner_panel.py:405
+#: src/print_ease/gui/scanner_panel.py:526
 msgid "Multi-Page-Scan abgebrochen"
 msgstr "Vícestránkové skenování zrušeno"
 
-#: src/print_ease/gui/scanner_panel.py:419
-#: src/print_ease/gui/scanner_panel.py:464
+#: src/print_ease/gui/scanner_panel.py:540
+#: src/print_ease/gui/scanner_panel.py:585
 #, python-brace-format
 msgid "Seite {n} gescannt — warte auf Antwort…"
 msgstr "Strana {n} naskenována — čekání na odpověď…"
 
-#: src/print_ease/gui/scanner_panel.py:423
+#: src/print_ease/gui/scanner_panel.py:544
 msgid "Dokument"
 msgstr "Dokument"
 
-#: src/print_ease/gui/scanner_panel.py:450
+#: src/print_ease/gui/scanner_panel.py:571
 msgid "Archiv-Scan abgebrochen"
 msgstr "Archivní skenování zrušeno"
 
-#: src/print_ease/gui/scanner_panel.py:468
+#: src/print_ease/gui/scanner_panel.py:589
 msgid "Archiv"
 msgstr "Archiv"
 
-#: src/print_ease/gui/scanner_panel.py:499
+#: src/print_ease/gui/scanner_panel.py:620
 msgid "Vorderseiten werden gescannt…"
 msgstr "Skenování předních stran…"
 
-#: src/print_ease/gui/scanner_panel.py:500
+#: src/print_ease/gui/scanner_panel.py:621
 msgid "Rückseiten werden gescannt…"
 msgstr "Skenování zadních stran…"
 
-#: src/print_ease/gui/scanner_panel.py:501
+#: src/print_ease/gui/scanner_panel.py:622
 msgid "PDF wird erstellt…"
 msgstr "Vytváření PDF…"
 
-#: src/print_ease/gui/scanner_panel.py:503
+#: src/print_ease/gui/scanner_panel.py:624
 msgid "Duplex-Scan abgebrochen"
 msgstr "Oboustranné skenování zrušeno"
 
-#: src/print_ease/gui/scanner_panel.py:558
+#: src/print_ease/gui/scanner_panel.py:689
 msgid "Stapel umdrehen und erneut einlegen"
 msgstr "Otočte stoh a znovu vložte"
 
-#: src/print_ease/gui/scanner_panel.py:560
-msgid "Vorderseiten gescannt. Nimm den Stapel aus der Ablage, dreh ihn als Ganzes um, sodass er wieder in Einzugsrichtung liegt, lege ihn erneut ein und bestätige."
-msgstr "Přední strany naskenovány. Vyjměte stoh z výstupního zásobníku, otočte ho celý tak, aby opět ležel ve směru podávání, vložte ho znovu a potvrďte."
+#: src/print_ease/gui/scanner_panel.py:691
+msgid ""
+"Vorderseiten gescannt. Nimm den Stapel aus der Ablage, dreh ihn als Ganzes "
+"um, sodass er wieder in Einzugsrichtung liegt, lege ihn erneut ein und "
+"bestätige."
+msgstr ""
+"Přední strany naskenovány. Vyjměte stoh z výstupního zásobníku, otočte ho "
+"celý tak, aby opět ležel ve směru podávání, vložte ho znovu a potvrďte."
 
-#: src/print_ease/gui/scanner_panel.py
-msgid "Rückseiten um 180° drehen"
-msgstr "Otočit zadní strany o 180°"
-
-#: src/print_ease/gui/scanner_panel.py
-msgid "Nur einschalten, wenn die Rückseiten kopfüber im Ergebnis landen"
-msgstr "Zapněte jen tehdy, když jsou zadní strany ve výsledku vzhůru nohama"
-
-#: src/print_ease/gui/scanner_panel.py:565
+#: src/print_ease/gui/scanner_panel.py:697
 msgid "Weiter"
 msgstr "Pokračovat"
 
-#: src/print_ease/gui/scanner_panel.py:587
+#: src/print_ease/gui/scanner_panel.py:721
 #, python-brace-format
 msgid "Seite {n} gescannt"
 msgstr "Strana {n} naskenována"
 
-#: src/print_ease/gui/scanner_panel.py:588
+#: src/print_ease/gui/scanner_panel.py:722
 #, python-brace-format
 msgid "Bisher {n} Seiten im {container}."
 msgstr "Dosud {n} stran v {container}."
 
-#: src/print_ease/gui/scanner_panel.py:591
+#: src/print_ease/gui/scanner_panel.py:725
 msgid "Fertig"
 msgstr "Hotovo"
 
-#: src/print_ease/gui/scanner_panel.py:592
+#: src/print_ease/gui/scanner_panel.py:726
 msgid "Nächste Seite"
 msgstr "Další strana"
 
@@ -554,19 +573,19 @@ msgstr "Pohlednice"
 msgid "Benutzerdefiniert"
 msgstr "Vlastní"
 
-#: src/print_ease/scanner_client.py:236
+#: src/print_ease/scanner_client.py:289 src/print_ease/scanner_client.py:319
 msgid "Keine Seiten im ADF-Einzug gescannt"
 msgstr "Z podavače nebyly naskenovány žádné stránky"
 
-#: src/print_ease/scanner_client.py:362
+#: src/print_ease/scanner_client.py:417
 msgid "Keine Seiten vom Scanner empfangen"
 msgstr "Od skeneru nebyly přijaty žádné stránky"
 
-#: src/print_ease/scanner_client.py:446 src/print_ease/scanner_client.py:516
+#: src/print_ease/scanner_client.py:502 src/print_ease/scanner_client.py:572
 msgid "Keine Seiten gescannt"
 msgstr "Nebyly naskenovány žádné stránky"
 
-#: src/print_ease/scanner_client.py:806 src/print_ease/scanner_client.py:832
+#: src/print_ease/scanner_client.py:1152 src/print_ease/scanner_client.py:1214
 msgid ""
 "Pillow (python-pillow) nicht installiert — bitte installieren: sudo pacman "
 "-S python-pillow"
