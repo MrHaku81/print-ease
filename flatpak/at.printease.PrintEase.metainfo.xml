@@ -55,6 +55,14 @@
   -->
 
   <releases>
+    <release version="0.2.2" date="2026-11-14">
+      <description>
+        <p>Maintenance release: the Flatpak now uses the current GNOME 51
+        runtime, the test suite runs without network access, and the
+        license of the metadata file is declared correctly in the Debian
+        package.</p>
+      </description>
+    </release>
     <release version="0.2.1" date="2026-11-11">
       <description>
         <p>Built-in mDNS discovery fallback (python-zeroconf): network printer

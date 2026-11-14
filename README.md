@@ -82,10 +82,17 @@ Chinese (Simplified), Chinese (Traditional)
 A pre-built bundle that runs on any distribution, with CUPS printing and eSCL scanning included. Download `print-ease.flatpak` from the [latest release](https://github.com/MrHaku81/print-ease/releases/latest), then:
 
 ```bash
-flatpak install flathub org.gnome.Platform//47
+# Install the bundle
 flatpak install --user ./print-ease.flatpak
+
+# Run
 flatpak run at.printease.PrintEase
 ```
+
+> The bundle runs on the GNOME Platform 51 runtime. On the first install Flatpak fetches
+> it from Flathub (a few hundred MB), provided Flathub is set up as a remote, as it is
+> on most distributions. Coming from an older version, `flatpak uninstall --unused`
+> removes the previous runtime.
 
 ### Ubuntu / Mint / Pop!_OS / Zorin / Elementary (PPA)
 

@@ -1,5 +1,25 @@
 # Changelog
 
+## [0.2.2] - 2026-11-14
+
+Maintenance release.
+
+### Fixed
+- The test suite now runs without network access, without Pillow and
+  without PyGObject/GTK, as on package build machines. The eSCL tests
+  no longer start an HTTP server on 127.0.0.1 (which pybuild's
+  `http_proxy=http://127.0.0.1:9/` redirected) but mock `urlopen`.
+  Tests that really need Pillow are skipped when it is missing.
+- Debian package: the tests run again during the build
+  (`PYBUILD_DISABLE = test` removed).
+- Debian package: `debian/copyright` lists the AppStream metainfo
+  file under CC0-1.0, matching its `metadata_license`.
+
+### Changed
+- Flatpak: built on the current GNOME 51 runtime (Python 3.14) instead
+  of the end-of-life GNOME 47 runtime; bundled zeroconf updated to
+  0.154.0.
+
 ## [0.2.0] - 2026-05-17
 
 ### Added
