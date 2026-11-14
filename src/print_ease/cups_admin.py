@@ -16,6 +16,9 @@ from print_ease._log import get_logger
 log = get_logger(__name__)
 
 CUPS_FILES_CONF = Path("/etc/cups/cups-files.conf")
+FLATPAK_INFO = Path("/.flatpak-info")
+# Im Flatpak liegt die os-release des Hosts hier (die eigene beschreibt die Laufzeit).
+HOST_OS_RELEASE = Path("/run/host/os-release")
 
 
 def _system_groups(text: str) -> list[str]:
@@ -49,20 +52,55 @@ def _group_exists(name: str) -> bool:
     return True
 
 
-def cups_admin_group(conf_path: Path = CUPS_FILES_CONF) -> str:
+def _os_release_ids(path: Path) -> set[str] | None:
+    """ID und ID_LIKE aus einer os-release-Datei (kleingeschrieben); None, wenn nicht lesbar."""
+    try:
+        text = path.read_text(encoding="utf-8", errors="replace")
+    except OSError as exc:
+        log.debug("%s nicht lesbar: %s", path, exc)
+        return None
+    ids: set[str] = set()
+    for line in text.splitlines():
+        key, sep, value = line.strip().partition("=")
+        if sep and key in ("ID", "ID_LIKE"):
+            value = value.strip()
+            if len(value) >= 2 and value[0] == value[-1] and value[0] in "\"'":
+                value = value[1:-1]
+            ids.update(value.lower().split())
+    return ids
+
+
+def _flatpak_host_admin_group() -> str:
+    """
+    Im Flatpak: Die Sandbox hat weder cups-files.conf noch die Gruppen des
+    Hosts (/etc/group enthält nur den Benutzer). Daher die Distribution des
+    Hosts aus /run/host/os-release: Debian-Familie -> lpadmin, sonst wheel.
+    """
+    ids = _os_release_ids(HOST_OS_RELEASE)
+    group = "lpadmin" if ids and "debian" in ids else "wheel"
+    log.debug("Flatpak: Host-IDs %s -> CUPS-Admin-Gruppe %s", sorted(ids or ()), group)
+    return group
+
+
+def cups_admin_group(conf_path: Path | None = None) -> str:
     """
     Gruppe, die ein Benutzer für CUPS-Verwaltungsrechte braucht.
 
     1. Aus SystemGroup in cups-files.conf die erste Gruppe außer root, die
        auf dem System existiert.
-    2. Sonst (Datei nicht lesbar, z. B. Rechte root:cups 0640 oder
-       Flatpak-Sandbox, oder keine passende Gruppe): lpadmin, wenn es die
-       Gruppe gibt, sonst wheel.
+    2. Datei nicht lesbar und App im Flatpak: nach der os-release des Hosts
+       (ID/ID_LIKE enthält debian -> lpadmin, sonst wheel).
+    3. Sonst (Datei nicht lesbar, z. B. Rechte root:cups 0640, oder keine
+       passende Gruppe): lpadmin, wenn es die Gruppe gibt, sonst wheel.
     """
+    if conf_path is None:
+        conf_path = CUPS_FILES_CONF
     try:
         text = conf_path.read_text(encoding="utf-8", errors="replace")
     except OSError as exc:
         log.debug("%s nicht lesbar: %s", conf_path, exc)
+        if FLATPAK_INFO.exists():
+            return _flatpak_host_admin_group()
     else:
         for name in _system_groups(text):
             if name != "root" and _group_exists(name):

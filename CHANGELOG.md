@@ -15,7 +15,10 @@ Maintenance release.
   group is now determined from `SystemGroup` in
   `/etc/cups/cups-files.conf` (e.g. `lpadmin` on Debian/Ubuntu/Mint,
   `sys`/`wheel` on Arch/Fedora); if that file is not readable,
-  `lpadmin` is suggested where it exists, otherwise `wheel`.
+  `lpadmin` is suggested where it exists, otherwise `wheel`. In the
+  Flatpak, where neither that file nor the host's groups are visible,
+  the host's `/run/host/os-release` decides: Debian family (Debian,
+  Ubuntu, Mint, …) → `lpadmin`, otherwise `wheel`.
 - Scanner: "Öffnen" (Open) did not check whether opening succeeded and
   logged "Datei geöffnet" even when it failed. Both buttons now use
   `Gtk.FileLauncher`; errors are shown in a dialog and logged. GTK 4.10

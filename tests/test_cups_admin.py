@@ -27,10 +27,15 @@ def groups_exist(*names):
 
 
 class AdminGroup(unittest.TestCase):
+    """Außerhalb des Flatpaks (/.flatpak-info gibt es nicht)."""
+
     def setUp(self):
         tmp = tempfile.TemporaryDirectory()
         self.addCleanup(tmp.cleanup)
         self.conf = Path(tmp.name) / "cups-files.conf"
+        patcher = mock.patch.object(cups_admin, "FLATPAK_INFO", Path(tmp.name) / "keine-flatpak-info")
+        patcher.start()
+        self.addCleanup(patcher.stop)
 
     def group(self, conf_text, *existing):
         if conf_text is not None:
@@ -85,6 +90,73 @@ class AdminGroup(unittest.TestCase):
 
     def test_lp_is_never_the_answer_without_systemgroup(self):
         self.assertNotEqual(self.group(None, "lp"), "lp")
+
+
+OS_RELEASE = {
+    "ubuntu": 'NAME="Ubuntu"\nVERSION_ID="24.04"\nID=ubuntu\nID_LIKE=debian\nPRETTY_NAME="Ubuntu 24.04.1 LTS"\n',
+    "mint": 'NAME="Linux Mint"\nID=linuxmint\nID_LIKE="ubuntu debian"\n',
+    "debian": 'PRETTY_NAME="Debian GNU/Linux 13 (trixie)"\nID=debian\n',
+    "pop": "ID=pop\nID_LIKE='ubuntu debian'\n",
+    "fedora": 'NAME="Fedora Linux"\nID=fedora\nVERSION_ID=43\n',
+    "arch": 'NAME="Arch Linux"\nID=arch\n',
+    "cachyos": 'NAME="CachyOS Linux"\nID=cachyos\nID_LIKE=arch\n',
+    "opensuse": 'ID="opensuse-tumbleweed"\nID_LIKE="opensuse suse"\n',
+    "kein-debian-als-teilwort": "ID=debianish\nID_LIKE=notdebian\n",
+}
+
+
+class FlatpakHostOsRelease(unittest.TestCase):
+    """In der Sandbox: cups-files.conf fehlt, Gruppen des Hosts sind unbekannt."""
+
+    def setUp(self):
+        tmp = tempfile.TemporaryDirectory()
+        self.addCleanup(tmp.cleanup)
+        self.tmp = Path(tmp.name)
+        info = self.tmp / ".flatpak-info"
+        info.write_text("[Application]\nname=at.printease.PrintEase\n")
+        self.os_release = self.tmp / "os-release"
+        for name, value in (("FLATPAK_INFO", info), ("HOST_OS_RELEASE", self.os_release)):
+            patcher = mock.patch.object(cups_admin, name, value)
+            patcher.start()
+            self.addCleanup(patcher.stop)
+        self.missing_conf = self.tmp / "cups-files.conf"   # wie in der Sandbox: fehlt
+
+    def group(self, distro=None, *existing):
+        if distro is not None:
+            self.os_release.write_text(OS_RELEASE[distro], encoding="utf-8")
+        with groups_exist(*existing):
+            return cups_admin.cups_admin_group(self.missing_conf)
+
+    def test_debian_family_gets_lpadmin(self):
+        for distro in ("ubuntu", "mint", "debian", "pop"):
+            with self.subTest(distro=distro):
+                # wie in der echten Sandbox: lpadmin ist dort unbekannt
+                self.assertEqual(self.group(distro), "lpadmin")
+
+    def test_other_distributions_get_wheel(self):
+        for distro in ("fedora", "arch", "cachyos", "opensuse", "kein-debian-als-teilwort"):
+            with self.subTest(distro=distro):
+                self.assertEqual(self.group(distro, "lpadmin"), "wheel")
+
+    def test_missing_os_release_gets_wheel(self):
+        self.assertEqual(self.group(None, "lpadmin"), "wheel")
+
+    def test_readable_conf_still_wins_in_flatpak(self):
+        self.missing_conf.write_text("SystemGroup sys\n", encoding="utf-8")
+        self.assertEqual(self.group("ubuntu", "sys"), "sys")
+
+    def test_outside_flatpak_os_release_is_ignored(self):
+        self.os_release.write_text(OS_RELEASE["ubuntu"], encoding="utf-8")
+        with mock.patch.object(cups_admin, "FLATPAK_INFO", self.tmp / "fehlt"), groups_exist("wheel"):
+            self.assertEqual(cups_admin.cups_admin_group(self.missing_conf), "wheel")
+
+    def test_ubuntu_hint_in_flatpak(self):
+        self.os_release.write_text(OS_RELEASE["ubuntu"], encoding="utf-8")
+        with groups_exist(), mock.patch.object(cups_admin, "_", lambda s: s), \
+             mock.patch.object(cups_admin, "CUPS_FILES_CONF", self.missing_conf):
+            text = cups_admin.admin_rights_hint()
+        self.assertIn("Gruppe 'lpadmin'", text)
+        self.assertIn("sudo gpasswd -a $USER lpadmin", text)
 
 
 class Hint(unittest.TestCase):
