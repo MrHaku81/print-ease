@@ -1008,56 +1008,91 @@ def _host_from_url(url: str) -> str:
     return urllib.parse.urlparse(url).hostname or url
 
 
-def _default_output_path() -> str:
-    ts = datetime.now().strftime("%Y%m%d_%H%M%S")
+def _pictures_dir() -> Path | None:
+    """XDG-Bilder-Ordner (z. B. ~/Bilder) oder None, wenn nicht ermittelbar."""
     try:
         from gi.repository import GLib
         pictures = GLib.get_user_special_dir(GLib.UserDirectory.DIRECTORY_PICTURES)
-        base = Path(pictures) if pictures else Path.home()
+    except Exception as exc:
+        log.debug("Bilder-Ordner über GLib nicht ermittelbar: %s", exc)
+        return None
+    return Path(pictures) if isinstance(pictures, str) and pictures else None
+
+
+_FLATPAK_INFO = Path("/.flatpak-info")
+
+
+def _in_flatpak() -> bool:
+    return _FLATPAK_INFO.exists()
+
+
+def _user_data_dir() -> Path | None:
+    """XDG_DATA_HOME; im Flatpak ~/.var/app/<App-ID>/data (dauerhaft)."""
+    try:
+        from gi.repository import GLib
+        data = GLib.get_user_data_dir()
     except Exception:
-        base = Path.home()
+        return None
+    return Path(data) if isinstance(data, str) and data else None
+
+
+def _fallback_scan_base() -> Path:
+    """
+    Ausweichordner, wenn kein Bilder-Ordner ermittelbar ist.
+
+    Außerhalb des Flatpaks wie bisher ~. In der Sandbox wäre ~ ein flüchtiger
+    Platzhalter (Scans nach dem Beenden weg); dort daher das dauerhafte
+    App-Datenverzeichnis ~/.var/app/<App-ID>/data.
+    """
+    if _in_flatpak():
+        data = _user_data_dir()
+        if data is not None:
+            return data
+    return Path.home()
+
+
+def _scan_dir() -> Path:
+    """
+    Zielordner für Scans: <Bilder>/Scans.
+
+    Im Flatpak ist der Bilder-Ordner nur mit --filesystem=xdg-pictures
+    sichtbar, und auch dann nur, wenn er auf dem Host eingerichtet ist
+    (XDG_PICTURES_DIR). Ist kein Bilder-Ordner ermittelbar, wird
+    <Ausweichordner>/Scans genommen und gewarnt.
+    """
+    pictures = _pictures_dir()
+    if pictures is None:
+        base = _fallback_scan_base()
+        log.warning(
+            "Bilder-Ordner nicht ermittelbar (XDG_PICTURES_DIR) — Scans werden "
+            "in %s gespeichert", base / "Scans",
+        )
+    else:
+        base = pictures
     scan_dir = base / "Scans"
     scan_dir.mkdir(parents=True, exist_ok=True)
-    return str(scan_dir / f"scan_{ts}.jpg")
+    return scan_dir
+
+
+def _scan_output_path(prefix: str, suffix: str) -> str:
+    ts = datetime.now().strftime("%Y%m%d_%H%M%S")
+    return str(_scan_dir() / f"{prefix}_{ts}{suffix}")
+
+
+def _default_output_path() -> str:
+    return _scan_output_path("scan", ".jpg")
 
 
 def _default_duplex_output_path() -> str:
-    ts = datetime.now().strftime("%Y%m%d_%H%M%S")
-    try:
-        from gi.repository import GLib
-        pictures = GLib.get_user_special_dir(GLib.UserDirectory.DIRECTORY_PICTURES)
-        base = Path(pictures) if pictures else Path.home()
-    except Exception:
-        base = Path.home()
-    scan_dir = base / "Scans"
-    scan_dir.mkdir(parents=True, exist_ok=True)
-    return str(scan_dir / f"scan_duplex_{ts}.pdf")
+    return _scan_output_path("scan_duplex", ".pdf")
 
 
 def _default_platen_multipage_output_path() -> str:
-    ts = datetime.now().strftime("%Y%m%d_%H%M%S")
-    try:
-        from gi.repository import GLib
-        pictures = GLib.get_user_special_dir(GLib.UserDirectory.DIRECTORY_PICTURES)
-        base = Path(pictures) if pictures else Path.home()
-    except Exception:
-        base = Path.home()
-    scan_dir = base / "Scans"
-    scan_dir.mkdir(parents=True, exist_ok=True)
-    return str(scan_dir / f"scan_multipage_{ts}.pdf")
+    return _scan_output_path("scan_multipage", ".pdf")
 
 
 def _default_platen_archive_output_path() -> str:
-    ts = datetime.now().strftime("%Y%m%d_%H%M%S")
-    try:
-        from gi.repository import GLib
-        pictures = GLib.get_user_special_dir(GLib.UserDirectory.DIRECTORY_PICTURES)
-        base = Path(pictures) if pictures else Path.home()
-    except Exception:
-        base = Path.home()
-    scan_dir = base / "Scans"
-    scan_dir.mkdir(parents=True, exist_ok=True)
-    return str(scan_dir / f"scan_archive_{ts}.tif")
+    return _scan_output_path("scan_archive", ".tif")
 
 
 def _save_pages(

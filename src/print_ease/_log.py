@@ -3,13 +3,24 @@ import logging.handlers
 from pathlib import Path
 
 
-def _get_log_path() -> Path:
-    """XDG-konformer Log-Pfad: ~/.local/share/print-ease/print-ease.log"""
+def _data_dir() -> Path:
+    """<XDG_DATA_HOME>, ohne GLib wie bisher ~/.local/share."""
     try:
         from gi.repository import GLib
-        data_dir = Path(GLib.get_user_data_dir()) / "print-ease"
+        data = GLib.get_user_data_dir()
+        if isinstance(data, str) and data:
+            return Path(data)
     except Exception:
-        data_dir = Path.home() / ".local" / "share" / "print-ease"
+        pass
+    return Path.home() / ".local" / "share"
+
+
+def _get_log_path() -> Path:
+    """
+    XDG-konformer Log-Pfad: <XDG_DATA_HOME>/print-ease/print-ease.log,
+    also ~/.local/share/… bzw. im Flatpak ~/.var/app/<App-ID>/data/….
+    """
+    data_dir = _data_dir() / "print-ease"
     data_dir.mkdir(parents=True, exist_ok=True)
     return data_dir / "print-ease.log"
 

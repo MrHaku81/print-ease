@@ -5,6 +5,16 @@
 Maintenance release.
 
 ### Fixed
+- Flatpak: scans and settings were lost when the app was closed (also
+  affected 0.2.1). The sandbox had no access to the Pictures folder, so
+  scans went to a temporary home directory inside the sandbox; settings
+  used `~/.config` there instead of the app's persistent config
+  directory. Scans now land in Pictures/Scans
+  (`--filesystem=xdg-pictures`), settings and the log use the XDG user
+  directories. Outside the Flatpak the paths stay the same. If no
+  Pictures folder is configured on the host, the Flatpak saves scans to
+  `~/.var/app/at.printease.PrintEase/data/Scans` instead of losing them;
+  a warning is logged in that case.
 - The test suite now runs without network access, without Pillow and
   without PyGObject/GTK, as on package build machines. The eSCL tests
   no longer start an HTTP server on 127.0.0.1 (which pybuild's

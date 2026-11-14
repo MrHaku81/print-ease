@@ -21,6 +21,11 @@ finish-args:
   - --socket=cups
   # Netzwerk → mDNS-Multicast (zeroconf-Discovery) + eSCL-Scanner (HTTP)
   - --share=network
+  # Bilder-Ordner (XDG_PICTURES_DIR) → Scans landen in <Bilder>/Scans auf dem
+  # Host. Ohne diese Freigabe ist ~ in der Sandbox ein flüchtiger Platzhalter
+  # und die Scans sind nach dem Beenden weg. Bewusst kein Zugriff auf ganz ~.
+  # Einstellungen und Log liegen ohnehin in ~/.var/app/at.printease.PrintEase.
+  - --filesystem=xdg-pictures
 
 modules:
 
